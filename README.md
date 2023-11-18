@@ -2,69 +2,43 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+### `npm start`: dùng để chạy code(port 3000)
 
-In the project directory, you can run:
+### `npm install`: dùng để cập nhật package -> khi pull code về hoặc thêm package
+khi pull code 
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Cấu trúc code:
+api: lưu các API để lấy dữ liệu từ backend
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+page: nơi viết giao diện cho các thành phần của chương trình
 
-### `npm test`
+redux: lưu trữ các global state
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+routes: định tuyến từ đường dẫn đến các component ở trong page
 
-### `npm run build`
+App.js và index.js: thành phần bao bọc tất cả các code bên trong
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+----------
+Todo:
+Trong routes/index, định nghĩa đường dẫn đến trang và component sử dụng:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+VD: {path: '/home', component: <Home />}
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+khi đến URL: localhost:3000/home sẽ truy cập đến component Home trong page
 
-### `npm run eject`
+! Phần định tuyến URL viết thế nào cũng được, có thể điều chỉnh sau
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+! Chỉ cần làm phần giao diện, xử lý logic để sau
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
+nếu khó quá cứ hỏi chatgpt là được:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+VD: tạo trang Cấp tài khoản cho giao dịch viên tại điểm giao dịch.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+input gồm: username, password, name, transaction place
 
-## Learn More
+sử dụng mui
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+=> Trang CreateTransactionAccount
