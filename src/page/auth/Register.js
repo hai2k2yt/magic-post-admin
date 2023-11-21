@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { TextField, Button, Paper, Typography } from '@mui/material';
 
 const Register = () => {
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -13,6 +15,7 @@ const Register = () => {
     return (
         <Paper elevation={3} style={{ padding: '20px', maxWidth: '300px', margin: 'auto', marginTop: '50px' }}>
             <Typography variant="h5">Đăng ký</Typography>
+            <Typography variant="subtitle1" style={{ marginBottom: '20px' }}>Vui lòng điền thông tin để đăng ký</Typography>
             <TextField
                 label="Email"
                 variant="outlined"
@@ -42,6 +45,7 @@ const Register = () => {
             <Button variant="contained" color="primary" fullWidth onClick={handleRegister}>
                 Đăng ký
             </Button>
+            
         </Paper>
     );
 };
