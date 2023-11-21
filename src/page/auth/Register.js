@@ -5,6 +5,8 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
 
     const handleRegister = () => {
         // Xử lý đăng ký ở đây
@@ -13,6 +15,23 @@ const Register = () => {
     return (
         <Paper elevation={3} style={{ padding: '20px', maxWidth: '300px', margin: 'auto', marginTop: '50px' }}>
             <Typography variant="h5">Đăng ký</Typography>
+            <TextField
+                label="Họ"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                value={firstName}
+                onChange={(e) => setEmail(e.target.value)}
+            />
+            <TextField
+                label="Tên"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                type="lastName"
+                value={lastName}
+                onChange={(e) => setPassword(e.target.value)}
+            />
             <TextField
                 label="Email"
                 variant="outlined"
