@@ -10,6 +10,7 @@ import CreateOrder from "../page/CreateOrder";
 import CreateDeliveryToGatheringPoint from "../page/CreateDeliveryToGatheringPoint";
 import ManageLeaderAccount from "../page/ManageLeaderAccount";
 import CreateDeliveryToCustomer from "../page/CreateDeliveryToCustomer";
+import ManageOrder from "../page/ManageOrder";
 
 // ----------------------------------------------------------------------
 
@@ -23,6 +24,7 @@ const routes = [
     {path: '/order/statistics', component: <StatisticOrder />},
     {path: '/order/view', component: <ViewOrder />},
     {path: '/order/create', component: <CreateOrder />},
+    {path: '/order/manage', component: <ManageOrder />},
     {path: '/leader/manage', component: <ManageLeaderAccount />},
     {path: '/order/delivery/customer', component: <CreateDeliveryToCustomer />},
     {path: '/order/delivery/gathering', component: <CreateDeliveryToGatheringPoint />},

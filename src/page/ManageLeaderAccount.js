@@ -3,4 +3,4 @@ export default function ManageLeaderAccount() {
         <>
         </>
     )
-}// Manage transaction and gathering leader
+}
