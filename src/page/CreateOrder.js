@@ -110,11 +110,6 @@ const CreateOrder = () => {
                         <TextField label="Thu khác" fullWidth />
                         <TextField label="Tổng thu" fullWidth />
                     </Grid>
-
-
-
-
-
                 </Grid>
 
                 <Typography variant="h5" gutterBottom style={{ marginTop: '20px' }}>
