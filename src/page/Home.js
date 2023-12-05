@@ -1,14 +1,34 @@
 import * as React from 'react';
-import Navbar from '../component/layout/Navbar';
-import Header from './components/Header';
+import MainNavbar from '../component/layout/MainNavbar';
+import Header from '../component/layout/Header';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import '../index.css'
 
 export default function Home() {
-    return (
-        <div>
-            <Navbar />
-            <Header />
-        </div>
+    const theme = createTheme({
+        typography: {
+            "fontFamily": '"Montserrat", "sans-serif"',
+        },
+        palette: {
+            primary: {
+                main: '#161A30',
+            },
+            secondary: {
+                main: '#31304D',
+            },
+            third: '#B6BBC4'
+        }
         
+    })
+    return (
+        <ThemeProvider theme={theme}>
+        <div>
+            
+                <MainNavbar />
+                <Header />
+            
+        </div>
+        </ThemeProvider>
         
     );
 }
