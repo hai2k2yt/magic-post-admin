@@ -15,6 +15,7 @@ const Register = () => {
     return (
         <Paper elevation={3} style={{ padding: '20px', maxWidth: '300px', margin: 'auto', marginTop: '50px' }}>
             <Typography variant="h5">Đăng ký</Typography>
+            <Typography variant="subtitle1" style={{ marginBottom: '20px' }}>Vui lòng điền thông tin để đăng ký</Typography>
             <TextField
                 label="Họ"
                 variant="outlined"
@@ -61,6 +62,7 @@ const Register = () => {
             <Button variant="contained" color="primary" fullWidth onClick={handleRegister}>
                 Đăng ký
             </Button>
+            
         </Paper>
     );
 };
