@@ -1,81 +1,162 @@
-import React from 'react'
-import Button from '@mui/material/Button'
-import SearchIcon from '@mui/icons-material/Search';
-import { Link } from 'react-router-dom'
-import { ThemeProvider } from '@mui/material/styles'
-import { useState } from 'react';
-import { createTheme } from '@mui/material/styles'
-import { AppBar, Toolbar, Typography, Tabs, Tab, TextField } from '@mui/material'
-import InputAdornment from '@mui/material/InputAdornment';
-const theme = createTheme({
-    palette: {
-        secondary: {
-            main: '#ffffff'
-        }
-    }
-})
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import AdbIcon from '@mui/icons-material/Adb';
 
-const Navbar = () => {
-    const [keyword, setKeyword] = useState('');
-    const [value, setValue] = useState('');
-    const IconTextField = ({ iconStart, iconEnd, InputProps, ...props }) => {
-        return (
-            <TextField
-                {...props}
-                InputProps={{
-                    ...InputProps,
-                    startAdornment: iconStart ? (
-                        <InputAdornment position="start">{iconStart}</InputAdornment>
-                    ) : null,
-                    endAdornment: iconEnd ? (
-                        <InputAdornment position="end">{iconEnd}</InputAdornment>
-                    ) : null
-                }}
-            />
-        );
-    };
-    return (
-        <ThemeProvider theme={theme}>
-            <React.Fragment>
-                <AppBar>
-                    <Toolbar>
-                        <Typography
-                            sx={{ fontWeight: '600', color: '#ffffff' }}
-                        >MAGIC POST</Typography>
-                        <Tabs value={value} onChange={(e, value) => setValue(value)}
-                            textColor='inherit'
-                            sx={{
-                                flexGrow: 1,
-                                margin: '0 10px',
-                            }}
-                            indicatorColor='secondary'>
-                            <Tab label="Trang chủ" />
-                            <Tab label="Giới thiệu" />
-                        </Tabs>
-                        <IconTextField label="Tìm kiếm" iconEnd={<SearchIcon />} sx={{ bgcolor: '#ffffff', margin: '10px', borderRadius: '16px' }} />
+const pages = ['Products', 'Pricing', 'Blog'];
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
+function ResponsiveAppBar() {
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-                        <Button
-                            component={Link}
-                            to="/login"
-                            variant="contained"
-                            color="primary"
-                            sx={{
-                                bgcolor: '#ffffff',
-                                color: '#2d8fea',
-                                '&:hover': {
-                                    backgroundColor: '#ffffff',
-                                    color: '#1a4da6',
-                                }
-                            }}>
-                            Đăng nhập
-                        </Button>
-                    </Toolbar>
-                </AppBar>
-            </React.Fragment >
-        </ThemeProvider>
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
 
-    )
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+  return (
+    <AppBar position="static">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="#app-bar-with-responsive-menu"
+            sx={{
+              mr: 2,
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+            LOGO
+          </Typography>
+
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: 'block', md: 'none' },
+              }}
+            >
+              {pages.map((page) => (
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{page}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            href="#app-bar-with-responsive-menu"
+            sx={{
+              mr: 2,
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+            LOGO
+          </Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            {pages.map((page) => (
+              <Button
+                key={page}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                {page}
+              </Button>
+            ))}
+          </Box>
+
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
+  );
 }
-
-export default Navbar
+export default ResponsiveAppBar;
