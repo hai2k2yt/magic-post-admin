@@ -1,8 +1,10 @@
 import * as React from 'react';
 import MainNavbar from '../component/layout/MainNavbar';
 import Header from '../component/layout/Header';
+import Body from '../component/layout/Body'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import '../index.css'
+import Footer from '../component/layout/Footer';
 
 export default function Home() {
     const theme = createTheme({
@@ -21,14 +23,14 @@ export default function Home() {
         
     })
     return (
+        <>
         <ThemeProvider theme={theme}>
-        <div>
             
                 <MainNavbar />
                 <Header />
-            
-        </div>
+                <Body />
+                <Footer />
         </ThemeProvider>
-        
+        </>
     );
 }
