@@ -23,16 +23,15 @@ export default function Footer() {
         <Grid container spacing={5}>
           <Grid item xs={12} sm={4}>
             <Typography variant="h6" color="text.primary" gutterBottom>
-              About Us
+              Về chúng tôi
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              We are Magic Post company, dedicated to providing the best service to our
-              customers.
+              MagicPost là công ty hoạt động trong lĩnh vực chuyển phát, sẵn sàng phục vụ khách hàng trên toàn quốc.
             </Typography>
           </Grid>
           <Grid item xs={12} sm={4}>
             <Typography variant="h6" color="text.primary" gutterBottom>
-              Contact Us
+              Liên hệ
             </Typography>
             <Typography variant="body2" color="text.secondary">
               144 Xuan Thuy, Cau Giay, Ha Noi
@@ -41,12 +40,12 @@ export default function Footer() {
               Email: uet@example.com
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Phone: +1 234 567 8901
+              Điện thoại: +1 234 567 8901
             </Typography>
           </Grid>
           <Grid item xs={12} sm={4}>
             <Typography variant="h6" color="text.primary" gutterBottom>
-              Follow Us
+              Theo dõi chúng tôi qua
             </Typography>
             <Link href="https://www.facebook.com/" color="inherit">
               <Facebook />

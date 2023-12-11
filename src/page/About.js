@@ -1,8 +1,6 @@
 import * as React from 'react';
 import MainNavbar from '../component/layout/MainNavbar';
-import Hero from '../component/layout/Hero';
-import Category from '../component/layout/Category';
-import SearchOrder from '../component/layout/SearchOrder';
+import BodyAbout from '../component/layout/BodyAbout';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import '../index.css'
 import Footer from '../component/layout/Footer';
@@ -24,15 +22,12 @@ export default function Home() {
         }
 
     })
-    const categoryRef = useRef(null);
     return (
         <>
             <ThemeProvider theme={theme}>
                 <div style={{minHeight: '80vh',}}>
                 <MainNavbar />
-                <Hero />
-                <Category/>
-                <SearchOrder />
+                <BodyAbout />
                 </div>
                 <Footer />
             </ThemeProvider>

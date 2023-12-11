@@ -11,6 +11,8 @@ import CreateDeliveryToGatheringPoint from "../page/CreateDeliveryToGatheringPoi
 import ManageLeaderAccount from "../page/ManageLeaderAccount";
 import CreateDeliveryToCustomer from "../page/CreateDeliveryToCustomer";
 import ManageOrder from "../page/ManageOrder";
+import TransactionLeaderHome from '../page/TransactionLeaderHome.js';
+import About from '../page/About.js';
 
 // ----------------------------------------------------------------------
 
@@ -18,6 +20,8 @@ import ManageOrder from "../page/ManageOrder";
 
 const routes = [
     {path: '/home', component: <Home />},
+    {path: '/intro', component: <About />},
+    {path: '/transactionLeaderHomer', component: <TransactionLeaderHome />},
     {path: '/login', component: <Login />},
     {path: '/register', component: <Register />},
     {path: '/manage-place', component: <ManagePlace />},
