@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { LocalShipping } from "@mui/icons-material";
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
-import Link from '@mui/material/Link';
+import { useNavigate } from 'react-router-dom';
 const StyledToolbar = styled(Toolbar)({
     display: "flex",
     justifyContent: "space-between",
@@ -64,9 +64,11 @@ const Logo = styled(Box)(({ theme }) => ({
 }));
 
 const MainNavbar = () => {
+
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const pages = ["Trang chủ", "Tra cứu đơn hàng", "Dịch vụ"];
+    const page2 = ["Trang chủ", "Tra cứu đơn hàng", "Dịch vụ", "Đăng nhập"];
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -82,6 +84,10 @@ const MainNavbar = () => {
         setAnchorElUser(null);
     };
     const [open, setOpen] = useState(false);
+    const navigate = useNavigate();
+    const handleLogin = () => {
+        navigate('/login');
+    }
     return (
         <AppBar position="static">
             <StyledToolbar>
@@ -91,6 +97,7 @@ const MainNavbar = () => {
                         Magic Post
                     </Typography>
                 </Logo>
+
                 <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                     {pages.map((page) => (
                         <Button
@@ -102,6 +109,7 @@ const MainNavbar = () => {
                         </Button>
                     ))}
                 </Box>
+
                 <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                     <IconButton
                         size="large"
@@ -113,6 +121,7 @@ const MainNavbar = () => {
                     >
                         <MenuIcon />
                     </IconButton>
+
                     <Menu
                         id="menu-appbar"
                         anchorEl={anchorElNav}
@@ -131,15 +140,16 @@ const MainNavbar = () => {
                             display: { xs: 'block', md: 'none' },
                         }}
                     >
-                        {pages.map((page) => (
-                            <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                <Typography textAlign="center">{page}</Typography>
+                        {page2.map((page2) => (
+                            <MenuItem key={page2} onClick={handleCloseNavMenu} sx={{ my: 1, }}>
+                                <Typography textAlign="center">{page2}</Typography>
                             </MenuItem>
-                            
+
                         ))}
-                        
+
                     </Menu>
                 </Box>
+
                 <SearchBar>
                     <SearchIconWrapper>
                         <SearchIcon />
@@ -150,20 +160,20 @@ const MainNavbar = () => {
                     />
                 </SearchBar>
 
-
                 <Button
-                    onClick={handleCloseNavMenu}
+                    onClick={handleLogin}
                     sx={{
                         background: 'white',
                         color: '#31304D',
                         fontWeight: 'bold',
                         display: 'block',
                         margin: "0 10px",
-                        display: "xs: 'none'"
+                        display: { lg: 'block', md: 'block', xs: 'none', sm: 'none' }
                     }}
                 >
                     Đăng nhập
                 </Button>
+
 
             </StyledToolbar>
 
