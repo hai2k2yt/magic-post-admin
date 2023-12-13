@@ -1,5 +1,4 @@
 import React from 'react'
-
 const SearchOrder = () => {
     return (
         <div id="searchOrder" class="hero min-h-screen bg-base-200">

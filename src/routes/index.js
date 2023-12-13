@@ -13,6 +13,8 @@ import CreateDeliveryToCustomer from "../page/CreateDeliveryToCustomer";
 import ManageOrder from "../page/ManageOrder";
 import TransactionLeaderHome from '../page/TransactionLeaderHome.js';
 import About from '../page/About.js';
+import CreateAccount from '../page/CreateAccount.js';
+import Profile from '../page/Profile.js';
 
 // ----------------------------------------------------------------------
 
@@ -21,7 +23,9 @@ import About from '../page/About.js';
 const routes = [
     {path: '/home', component: <Home />},
     {path: '/intro', component: <About />},
-    {path: '/transactionLeaderHomer', component: <TransactionLeaderHome />},
+    {path: '/dashbroad', component: <TransactionLeaderHome />},
+    {path: "/profile", component: <Profile />},
+    {path: '/createAccount', component: <CreateAccount />},
     {path: '/login', component: <Login />},
     {path: '/register', component: <Register />},
     {path: '/manage-place', component: <ManagePlace />},

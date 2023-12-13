@@ -1,8 +1,10 @@
 
 import React, { useState } from "react";
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import { Badge, Notifications } from "@mui/material";
+import MenuIcon from '@mui/icons-material/Menu';
 
-
-const MainNavbar = () => {
+const Navbar = () => {
     return (
         <div class="navbar bg-primary text-neutral">
             <div class="flex-1">
@@ -78,9 +80,42 @@ const MainNavbar = () => {
                 </svg>
                 <a class="btn btn-ghost text-xl" href="/home">Magic Post</a>
             </div>
-            
-        </div >
+            <div class=" flex-none dropdown dropdown-end">
+
+                <div tabIndex={1} class="mr-3 m-1 btn btn-ghost btn-circle">
+
+                    <Badge badgeContent={10} color="warning">
+                        <NotificationsIcon />
+                    </Badge>
+
+                </div>
+                <ul tabIndex={1} class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-secondary text-base-100 rounded-lg w-52">
+                    <li>Notification 1</li>
+                </ul>
+            </div>
+            <div class="dropdown dropdown-end">
+
+                <div tabindex="0" role="button" class="mr-5 m-1 btn btn-ghost btn-circle avatar">
+                    <div class="w-10 rounded-full">
+                        <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                    </div>
+                </div>
+                <ul tabindex="0" class="mr-3 menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-secondary text-base-100 rounded-lg w-52">
+                    <li>
+                        <a href="/profile" class="justify-between">
+                            Trang cá nhân
+                        </a>
+                    </li>
+                    <li><a href="/home">Đăng xuất</a></li>
+                </ul>
+            </div>
+            {/*Menu for each roles*/}
+            <button class="lg:hidden mr-5">
+                <MenuIcon />
+            </button>
+        </div>
+
     );
 }
 
-export default MainNavbar;
+export default Navbar;
