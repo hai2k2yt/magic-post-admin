@@ -5,7 +5,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Navbar from '../component/layout/Navbar';
 import Footer from '../component/layout/Footer';
 import Register from './auth/Register';
-const Dashbroad = () => {
+const CreateAccount = () => {
     return (
         <div>
             <Navbar />
@@ -37,4 +37,4 @@ const Dashbroad = () => {
     );
 }
 
-export default Dashbroad
+export default CreateAccount

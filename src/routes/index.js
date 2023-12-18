@@ -1,4 +1,4 @@
-import {Route, Routes} from 'react-router-dom';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
 
 import Login from "../page/auth/Login";
 import Register from "../page/auth/Register";
@@ -15,36 +15,22 @@ import TransactionLeaderHome from '../page/TransactionLeaderHome.js';
 import About from '../page/About.js';
 import CreateAccount from '../page/CreateAccount.js';
 import Profile from '../page/Profile.js';
-
+import { React } from 'react';
+import { AuthProvider } from '../context/AuthProvider';
+import App from '../App.js';
 // ----------------------------------------------------------------------
 
 
-
-const routes = [
-    {path: '/home', component: <Home />},
-    {path: '/intro', component: <About />},
-    {path: '/dashbroad', component: <TransactionLeaderHome />},
-    {path: "/profile", component: <Profile />},
-    {path: '/createAccount', component: <CreateAccount />},
-    {path: '/login', component: <Login />},
-    {path: '/register', component: <Register />},
-    {path: '/manage-place', component: <ManagePlace />},
-    {path: '/order/statistics', component: <StatisticOrder />},
-    {path: '/order/view', component: <ViewOrder />},
-    {path: '/order/create', component: <CreateOrder />},
-    {path: '/order/manage', component: <ManageOrder />},
-    {path: '/leader/manage', component: <ManageLeaderAccount />},
-    {path: '/order/delivery/customer', component: <CreateDeliveryToCustomer />},
-    {path: '/order/delivery/gathering', component: <CreateDeliveryToGatheringPoint />},
-
-];
-
 export default function Router() {
     return (
-            <Routes>
-                {routes.map((route) => (
-                    <Route key={route.path} path={route.path} element={route.component}/>
-                ))}
-            </Routes>
+        <React.StrictMode>
+            <BrowserRouter>
+                <AuthProvider>
+                    <Routes>
+                        <Route path='/*' element={<App/>}></Route>
+                    </Routes>
+                </AuthProvider>
+            </BrowserRouter>
+        </React.StrictMode>
     )
 }

@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
 import { createTheme } from '@mui/material/styles';
 import { TextField, Button, Paper, Typography, ThemeProvider, Grid } from '@mui/material';
 import MainNavbar from '../../component/layout/MainNavbar';
 import Footer from '../../component/layout/Footer';
-
+import { useRef, useState, useEffect } from 'react';
 const Login = () => {
     const theme = createTheme({
         typography: {
@@ -20,11 +19,24 @@ const Login = () => {
         }
 
     })
+    const useRef = useRef();
+    const errRef = useRef();
+    const [errMsg, setErrMsg] = useState('');
+    const [successMsg, setSuccessMsg] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    useEffect(() => {
+        useRef.current.focus();
+    }, [])
+    useEffect(() => {
+        setErrMsg('');
+    }, [email, password])
+
     const handleLogin = () => {
         // Xử lý đăng nhập ở đây
+
+
     };
 
     return (
@@ -319,16 +331,22 @@ const Login = () => {
                     <Grid item xs={12} sm={4} md={4} lg={4}>
                         <Paper elevation={3} style={{ padding: '20px', maxWidth: '300px', margin: 'auto', marginTop: '50px', position: 'sticky' }}>
                             <Typography variant="h5">Đăng nhập</Typography>
+                            <p ref={errRef} className={errMsg ? "errMsg" : "offscreen"} aria-live='assertive'>{errMsg}</p>
                             <TextField
                                 label="Email"
+                                ref={useRef}
+                                id='email'
                                 variant="outlined"
                                 fullWidth
                                 margin="normal"
                                 value={email}
+                                required
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                             <TextField
+                                required 
                                 label="Mật khẩu"
+                                id='password'
                                 variant="outlined"
                                 fullWidth
                                 margin="normal"
