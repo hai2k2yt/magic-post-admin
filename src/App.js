@@ -3,19 +3,19 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Login from "./page/auth/Login";
 import Home from "./page/Home";
 import ManagePlace from "./page/ManagePlace";
-import StatisticOrder from "./page/StatisticOrder";
+import StatisticOrder from "./component/layout/StatisticOrder";
 import ViewOrder from "./page/ViewOrder";
 import CreateOrder from "./page/CreateOrder";
 import CreateDeliveryToGatheringPoint from "./page/CreateDeliveryToGatheringPoint";
 import ManageLeaderAccount from "./page/ManageLeaderAccount";
 import CreateDeliveryToCustomer from "./page/CreateDeliveryToCustomer";
-import ManageOrder from "./page/ManageOrder";
-import TransactionLeaderHome from './page/TransactionLeaderHome';
+import ManageOrder from "./component/layout/StatisticAllOrder";
 import About from './page/About';
-import CreateAccount from './page/CreateAccount';
+import CreateAccount from './page/CreateLeaderAccount';
 import Profile from './page/Profile';
 import { React } from 'react';
 import Layout from './component/Layout';
+import { Dashboard } from '@mui/icons-material';
 
 
 const admin = [
@@ -27,7 +27,7 @@ const admin = [
 const leader = [
     { path: '/createAccount', component: <CreateAccount /> },
     { path: '/profile', component: <Profile /> },
-    { path: '/dashbroad', component: <TransactionLeaderHome /> },
+    { path: '/dashbroad', component: <Dashboard /> },
 ]
 const staff = [
     { path: '/order/create', component: <CreateOrder /> },
