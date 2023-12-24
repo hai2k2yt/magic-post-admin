@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { TextField, Autocomplete, Button, Container, Typography } from '@mui/material';
-
+import Navbar from '../component/layout/Navbar';
+import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AddIcon from '@mui/icons-material/Add';
 const CreateDeliveryToCustomer = () => {
     const [orderId, setOrderId] = useState('');
     const [transactionEndpoint, setTransactionEndpoint] = useState('');
@@ -53,56 +57,82 @@ const CreateDeliveryToCustomer = () => {
     };
 
     return (
-        <Container maxWidth="sm">
-            <Typography variant="h4" gutterBottom>
-                Create Delivery to Customer
-            </Typography>
+        <div>
+            <Navbar />
+            <div class="drawer lg:drawer-open">
 
-            <form onSubmit={handleSubmit}>
-                <Autocomplete
-                    options={orders}
-                    getOptionLabel={(option) => option.name}
-                    onChange={handleOrderChange}
-                    renderInput={(params) => <TextField {...params} label="Order ID" />}
-                />
+                <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+                <div class="drawer-content flex flex-col items-left">
+                    <div>
+                        <Container maxWidth="sm">
+                            <Typography variant="h4" gutterBottom>
+                                Create Delivery to Customer
+                            </Typography>
 
-                <TextField
-                    label="Transaction Endpoint"
-                    fullWidth
-                    value={transactionEndpoint}
-                    onChange={(e) => setTransactionEndpoint(e.target.value)}
-                />
+                            <form onSubmit={handleSubmit}>
+                                <Autocomplete
+                                    options={orders}
+                                    getOptionLabel={(option) => option.name}
+                                    onChange={handleOrderChange}
+                                    renderInput={(params) => <TextField {...params} label="Order ID" />}
+                                />
 
-                <TextField
-                    label="Address"
-                    fullWidth
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                />
+                                <TextField
+                                    label="Transaction Endpoint"
+                                    fullWidth
+                                    value={transactionEndpoint}
+                                    onChange={(e) => setTransactionEndpoint(e.target.value)}
+                                />
 
-                <Autocomplete
-                    options={shippers}
-                    getOptionLabel={(option) => option.name}
-                    onChange={handleShipperChange}
-                    renderInput={(params) => <TextField {...params} label="Shipper ID" />}
-                />
+                                <TextField
+                                    label="Address"
+                                    fullWidth
+                                    value={address}
+                                    onChange={(e) => setAddress(e.target.value)}
+                                />
 
-                <Typography variant="h6" gutterBottom>
-                    Order Information:
-                </Typography>
-                <Typography>{`Order Name: ${orderName}`}</Typography>
-                <Typography>{`Customer: ${customerName}`}</Typography>
+                                <Autocomplete
+                                    options={shippers}
+                                    getOptionLabel={(option) => option.name}
+                                    onChange={handleShipperChange}
+                                    renderInput={(params) => <TextField {...params} label="Shipper ID" />}
+                                />
 
-                <Typography variant="h6" gutterBottom>
-                    Shipper Information:
-                </Typography>
-                <Typography>{shipperInfo}</Typography>
+                                <Typography variant="h6" gutterBottom>
+                                    Order Information:
+                                </Typography>
+                                <Typography>{`Order Name: ${orderName}`}</Typography>
+                                <Typography>{`Customer: ${customerName}`}</Typography>
 
-                <Button type="submit" variant="contained" color="primary">
-                    Create Delivery
-                </Button>
-            </form>
-        </Container>
+                                <Typography variant="h6" gutterBottom>
+                                    Shipper Information:
+                                </Typography>
+                                <Typography>{shipperInfo}</Typography>
+
+                                <Button type="submit" variant="contained" color="primary">
+                                    Create Delivery
+                                </Button>
+                            </form>
+                        </Container>
+                    </div>
+                    {/* <!-- Page content here --> */}
+
+                </div>
+                <div class="drawer-side">
+                    <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
+                    <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
+                        {/* <!-- Sidebar content here --> */}
+                        <li><a href='/dashbroad'><SpaceDashboardIcon />Bảng điều khiển</a></li>
+                        <li><a href='/createAccount'><PersonAddIcon />Cấp tài khoản</a></li>
+                        <li><a href="/profile"><AccountCircleIcon />Cá nhân</a></li>
+                        <li><a class="bg-neutral text-primary" href='#'><AddIcon/>Tạo đơn hàng đến người nhận</a></li>
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
     );
 };
 
