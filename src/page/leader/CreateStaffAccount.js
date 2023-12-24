@@ -1,6 +1,6 @@
 import React from 'react'
-import Navbar from '../component/layout/Navbar';
-import Register from './auth/Register';
+import Navbar from '../../component/layout/Navbar';
+import Register from '../auth/Register';
 
 const CreateStaffAccount = () => {
     return (

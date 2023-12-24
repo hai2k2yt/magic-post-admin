@@ -2,11 +2,11 @@ import React from 'react'
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Navbar from '../component/layout/Navbar';
-import Footer from '../component/layout/Footer';
+import Navbar from '../../component/layout/Navbar';
+import Footer from '../../component/layout/Footer';
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import AddLocationAlt from '@mui/icons-material/AddLocationAlt';
-import Register from './auth/Register';
+import Register from '../auth/Register';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import ManageLeaderAccount from './ManageLeaderAccount';
 import { Typography } from '@mui/material';

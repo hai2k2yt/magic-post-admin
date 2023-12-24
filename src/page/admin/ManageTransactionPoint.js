@@ -21,7 +21,7 @@ import Paper from '@mui/material/Paper';
 import { useMemo, useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import { redirect, useNavigate } from "react-router-dom";
-import Navbar from '../component/layout/Navbar';
+import Navbar from '../../component/layout/Navbar';
 
 const theme = createTheme({
     typography: {
@@ -100,11 +100,11 @@ const headCells = [
     },
     {
         id: 'name',
-        label: 'Tên điểm tập kết',
+        label: 'Tên điểm giao dịch',
     },
     {
         id: 'code',
-        label: 'Mã điểm tập kết',
+        label: 'Mã điểm giao dịch',
     },
     {
         id: 'address',
@@ -279,8 +279,8 @@ export default function ManagePlace() {
                     <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
                     <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
                         <li><a href='/dashboard'><SpaceDashboardIcon />Bảng điều khiển</a></li>
-                        <li><a href='/manage-transactionPoint'><AddLocationIcon />Quản lý điểm giao dịch</a></li>
-                        <li><a class="bg-neutral text-primary"  href='/manage-gatheringPoint'><AddLocationIconAlt /> Quản lý điểm tập kết</a></li>
+                        <li><a class="bg-neutral text-primary" href='/manage-transactionPoint'><AddLocationIcon />Quản lý điểm giao dịch</a></li>
+                        <li><a   href='/manage-gatheringPoint'><AddLocationIconAlt /> Quản lý điểm tập kết</a></li>
                         <li><a href='/leader/manage'><PersonAddIcon />Quản lý tài khoản trưởng điểm</a></li>
                         <li><a href="/profile"><AccountCircleIcon />Cá nhân</a></li>
                     </ul>

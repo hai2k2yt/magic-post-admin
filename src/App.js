@@ -2,24 +2,24 @@ import Router from './routes';
 import { Route, Routes } from "react-router-dom";
 import Login from "./page/auth/Login";
 import Home from "./page/Home";
-import ManagePlace from "./page/ManageGatheringPoints";
+import ManagePlace from "./page/admin/ManageGatheringPoints";
 import StatisticOrder from "./component/layout/StatisticOrder";
 import ViewOrder from "./page/ViewOrder";
-import CreateOrder from "./page/CreateOrder";
-import CreateDeliveryToGatheringPoint from "./page/CreateDeliveryToGatheringPoint";
-import CreateLeaderAccount from "./page/CreateLeaderAccount";
-import CreateDeliveryToCustomer from "./page/CreateDeliveryToCustomer";
+import CreateOrder from "./page/transactionStaff/CreateOrder";
+import CreateDeliveryToGatheringPoint from "./page/gatheringStaff/CreateDeliveryToGatheringPoint";
+import CreateLeaderAccount from "./page/admin/CreateLeaderAccount";
+import CreateDeliveryToCustomer from "./page/transactionStaff/CreateDeliveryToCustomer";
 import ManageOrder from "./component/layout/StatisticAllOrder";
 import About from './page/About';
-import CreateStaffAccount from './page/CreateStaffAccount';
+import CreateStaffAccount from './page/leader/CreateStaffAccount';
 import Profile from './page/Profile';
 import { React } from 'react';
 import Layout from './component/Layout';
-import Dashboard from './page/Dashboard';
-import NewOrder from './page/ConfirmNewOrderGatheringPoint';
-import MangageTransactionPoint from './page/ManageTransactionPoint';
-import ManageLeaderAccount from './page/ManageLeaderAccount';
-import OrderTransactionPoint from './page/OrderTransactionPoint';
+import Dashboard from './page/admin/Dashboard';
+import NewOrder from './page/gatheringStaff/ConfirmNewOrderGatheringPoint';
+import MangageTransactionPoint from './page/admin/ManageTransactionPoint';
+import ManageLeaderAccount from './page/admin/ManageLeaderAccount';
+import OrderTransactionPoint from './page/transactionStaff/OrderTransactionPoint';
 
 const admin = [
     { path: '/manage-gatheringPoint', component: <ManagePlace /> },

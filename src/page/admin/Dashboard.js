@@ -2,8 +2,8 @@ import React from 'react'
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Navbar from '../component/layout/Navbar';
-import StatisticOrder from '../component/layout/StatisticOrder';
+import Navbar from '../../component/layout/Navbar';
+import StatisticOrder from '../../component/layout/StatisticOrder';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import AddLocationIconAlt from '@mui/icons-material/AddLocationAlt';

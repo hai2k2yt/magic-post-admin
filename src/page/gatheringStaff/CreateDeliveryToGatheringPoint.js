@@ -8,12 +8,11 @@ import { useNavigate } from "react-router-dom";
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Navbar from '../component/layout/Navbar';
+import Navbar from '../../component/layout/Navbar';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import AddIcon from '@mui/icons-material/Add';
-import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
 const theme = createTheme({
     typography: {
         "fontFamily": '"Montserrat", "sans-serif"',
@@ -29,7 +28,7 @@ const theme = createTheme({
     }
 
 })
-const AddNewOrder = () => {
+const CreateDeliveryToGatheringPoint = () => {
     //     const [gatheringPoints, setGatheringPoints] = useState([{ id: '', orderIds: [''] }]);
 
     //     const handleAddGatheringPoint = () => {
@@ -122,7 +121,7 @@ const AddNewOrder = () => {
                     <div class="mx-10">
                         <div class='mt-10'>
                             <Typography variant='h4' fontWeight={700} my={5}>
-                                Xác nhận đơn hàng
+                                Chuyển hàng tới điểm tập kết
                             </Typography>
                         </div>
                         <div>
@@ -140,15 +139,16 @@ const AddNewOrder = () => {
                         </div>
                         <div class='flex justify-end mt-5'>
                             <select class="select select-primary w-full max-w-xs">
-                                <option disabled selected>Chọn trạng thái đơn hàng</option>
-                                <option>Đơn hàng về từ điểm tập kết</option>
-                                <option>Giao hàng thành công</option>
-                                <option>Hoàn hàng</option>
+                                <option disabled selected>Chọn điểm tập kết đích</option>
+                                <option>Xuân Thủy</option>
+                                <option>Hai Bà Trưng</option>
+                                <option>Hàng Bài</option>
+                                <option>Nguyên Chí Thanh</option>
                             </select>
                         </div>
                         <div class='flex justify-end mt-5'>
                             <Button variant="contained" color="secondary">
-                                Xác nhận đơn hàng
+                                Chuyến giao hàng
                             </Button>
                         </div>
 
@@ -159,9 +159,8 @@ const AddNewOrder = () => {
                     <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
                     <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
                         <li><a href='/dashboard'><SpaceDashboardIcon />Bảng điều khiển</a></li>
-                        <li><a class="bg-neutral text-primary"><AddIcon />Xác nhận đơn</a></li>
-                        <li><a href='/order/delivery/gathering'><SwapHorizIcon />Tạo đơn đến điểm tập kết</a></li>
-                        <li><a href='' ><DeliveryDiningIcon/>Chuyển hàng đến người nhận</a></li>
+                        <li><a href='/new'><AddIcon />Đơn mới</a></li>
+                        <li><a class="bg-neutral text-primary"><SwapHorizIcon />Tạo đơn đến điểm tập kết</a></li>
                         <li><a href="/profile"><AccountCircleIcon />Cá nhân</a></li>
                     </ul>
                 </div>
@@ -221,4 +220,4 @@ const AddNewOrder = () => {
     );
 };
 
-export default AddNewOrder;
+export default CreateDeliveryToGatheringPoint;
