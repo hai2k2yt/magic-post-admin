@@ -3,7 +3,7 @@ import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import Login from "../page/auth/Login";
 import Register from "../page/auth/Register";
 import Home from "../page/Home.js";
-import ManagePlace from "../page/ManagePlace";
+import ManagePlace from "../page/ManageGatheringPoints.js";
 import StatisticOrder from "../component/layout/StatisticOrder.js";
 import ViewOrder from "../page/ViewOrder";
 import CreateOrder from "../page/CreateOrder";

@@ -7,8 +7,10 @@ import Footer from '../component/layout/Footer';
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import AddLocationAlt from '@mui/icons-material/AddLocationAlt';
 import Register from './auth/Register';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import ManageLeaderAccount from './ManageLeaderAccount';
 import { Typography } from '@mui/material';
+import AddLocationIconAlt from '@mui/icons-material/AddLocationAlt';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 const theme = createTheme({
     typography: {
@@ -35,27 +37,23 @@ const CreateLeaderAccount = () => {
                 <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
                 <div class="drawer-content flex flex-col items-left">
                     {/* <!-- Page content here --> */}
-                    <div class="m-10">
-                        <div>
-                            <Typography variant='h4' fontWeight={700} mb={5}>
-                                Quản lý tài khoản trưởng điểm
-                            </Typography>
-                            <ManageLeaderAccount /></div>
-                        <div>
-                            <Typography variant='h4' fontWeight={700} mt={5}>
-                                Tạo tài khoản trưởng điểm
-                            </Typography>
-                            <Register />
-                        </div>
+                    <div class="mx-10">
+                        <Typography variant='h4' fontWeight={700} mt={5}>
+                            Tạo tài khoản trưởng điểm
+                        </Typography>
+                        <Register />
+
                     </div>
+
                 </div>
                 <div class="drawer-side">
                     <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
                     <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
                         <li><a href='/dashboard'><SpaceDashboardIcon />Bảng điều khiển</a></li>
-                        <li><a href='/manage-place'><AddLocationIcon />Quản lý điểm giao dịch</a></li>
-                        <li><a href='/manage-place'><AddLocationIcon /> Quản lý điểm tập kết</a></li>
-                        <li><a class="bg-neutral text-primary"><PersonAddIcon />Quản lý tài khoản trưởng điểm</a></li>
+                        <li><a href='/manage-transactionPoint'><AddLocationIcon />Quản lý điểm giao dịch</a></li>
+                        <li><a href='/manage-gatheringPoint'><AddLocationIconAlt /> Quản lý điểm tập kết</a></li>
+                        <li><a class="bg-neutral text-primary" href='/leader/create'><PersonAddIcon />Tạo tài khoản trưởng điểm</a></li>
+                        <li><a  href='/leader/manage'><ManageAccountsIcon />Quản lý tài khoản trưởng điểm</a></li>
                         <li><a href="/profile"><AccountCircleIcon />Cá nhân</a></li>
                     </ul>
                 </div>
