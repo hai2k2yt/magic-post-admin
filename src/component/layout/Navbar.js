@@ -80,19 +80,6 @@ const Navbar = () => {
                 </svg>
                 <a class="btn btn-ghost text-xl" href="/home">Magic Post</a>
             </div>
-            <div class=" flex-none dropdown dropdown-end">
-
-                <div tabIndex={1} class="mr-3 m-1 btn btn-ghost btn-circle">
-
-                    <Badge badgeContent={10} color="warning">
-                        <NotificationsIcon />
-                    </Badge>
-
-                </div>
-                <ul tabIndex={1} class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-secondary text-base-100 rounded-lg w-52">
-                    <li>Notification 1</li>
-                </ul>
-            </div>
             <div class="dropdown dropdown-end">
 
                 <div tabindex="0" role="button" class="mr-5 m-1 btn btn-ghost btn-circle avatar">

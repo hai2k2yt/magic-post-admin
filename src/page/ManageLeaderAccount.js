@@ -1,7 +1,10 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import PageviewIcon from '@mui/icons-material/Pageview';
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Navbar from '../component/layout/Navbar';
+import { Drawer } from '@mui/material';
+import DrawerSideAdmin from '../component/layout/DrawerSideAdmin';
 
 const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
@@ -72,5 +75,7 @@ export default function ManageLeaderAccount() {
                 checkboxSelection
             />
         </div>
+
+
     );
 }
