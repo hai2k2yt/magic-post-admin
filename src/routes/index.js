@@ -8,6 +8,7 @@ import StatisticOrder from "../page/StatisticOrder";
 import ViewOrder from "../page/ViewOrder";
 import CreateOrder from "../page/CreateOrder";
 import CreateDeliveryToGatheringPoint from "../page/CreateDeliveryToGatheringPoint";
+import CreateDeliveryToTransactionPoint from "../page/CreateDeliveryToTransactionPoint";
 import ManageLeaderAccount from "../page/ManageLeaderAccount";
 import CreateDeliveryToCustomer from "../page/CreateDeliveryToCustomer";
 import ManageOrder from "../page/ManageOrder";
@@ -17,6 +18,7 @@ import CreateAccount from '../page/CreateAccount.js';
 import Profile from '../page/Profile.js';
 
 // ----------------------------------------------------------------------
+
 
 
 
@@ -35,6 +37,7 @@ const routes = [
     {path: '/order/manage', component: <ManageOrder />},
     {path: '/leader/manage', component: <ManageLeaderAccount />},
     {path: '/order/delivery/customer', component: <CreateDeliveryToCustomer />},
+    {path: '/order/delivery/transaction', component: <CreateDeliveryToTransactionPoint />},
     {path: '/order/delivery/gathering', component: <CreateDeliveryToGatheringPoint />},
 
 ];
