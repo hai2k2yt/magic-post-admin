@@ -15,7 +15,7 @@ import CreateAccount from './page/CreateLeaderAccount';
 import Profile from './page/Profile';
 import { React } from 'react';
 import Layout from './component/Layout';
-import { Dashboard } from '@mui/icons-material';
+import Dashboard from './page/Dashboard';
 
 
 const admin = [
@@ -27,7 +27,7 @@ const admin = [
 const leader = [
     { path: '/createAccount', component: <CreateAccount /> },
     { path: '/profile', component: <Profile /> },
-    { path: '/dashbroad', component: <Dashboard /> },
+    { path: '/dashboard', component: <Dashboard /> },
 ]
 const staff = [
     { path: '/order/create', component: <CreateOrder /> },
