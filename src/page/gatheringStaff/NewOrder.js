@@ -149,9 +149,8 @@ const AddNewOrder = () => {
                 <div class="drawer-side">
                     <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
                     <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
-                        <li><a href='/dashboard'><SpaceDashboardIcon />Bảng điều khiển</a></li>
                         <li><a class="bg-neutral text-primary"><AddIcon/>Đơn mới</a></li>
-                        <li><a href='/order/delivery/gathering'><SwapHorizIcon/>Tạo đơn đến điểm tập kết</a></li>
+                        <li><a href='/order/delivery/gathering'><SwapHorizIcon/>Tạo đơn chuyển đi</a></li>
                         <li><a href="/profile"><AccountCircleIcon />Cá nhân</a></li>
                     </ul>
                 </div>

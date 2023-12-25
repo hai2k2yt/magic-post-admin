@@ -16,7 +16,7 @@ import Profile from './page/Profile';
 import { React } from 'react';
 import Layout from './component/Layout';
 import Dashboard from './page/admin/Dashboard';
-import NewOrder from './page/gatheringStaff/ConfirmNewOrderGatheringPoint';
+import NewOrder from './page/gatheringStaff/NewOrder';
 import MangageTransactionPoint from './page/admin/ManageTransactionPoint';
 import ManageLeaderAccount from './page/admin/ManageLeaderAccount';
 import OrderTransactionPoint from './page/transactionStaff/OrderTransactionPoint';
