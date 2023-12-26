@@ -1,7 +1,6 @@
 import {useState, useEffect} from 'react';
-import {listGatheringPoints} from "../../../api/point";
+import { listGatheringPoints } from '../../../api/point';
 import {DataGrid} from "@mui/x-data-grid";
-
 
 const columns = [
     {
@@ -15,6 +14,11 @@ const columns = [
         flex: 2
     },
     {
+        field: 'zipcode',
+        headerName: 'Zip code',
+        flex: 1
+    },
+    {
         field: 'address',
         headerName: 'Address',
         flex: 2
@@ -26,47 +30,51 @@ const columns = [
     },
 ];
 
-
-
 export default function GatheringPointTable() {
-    const [rows, setRows] = useState([]);
+  const [rows, setRows] = useState([]);
 
-    const [paginationModel, setPaginationModel] = useState({
-        page: 0,
-        pageSize: 10
-    });
-    const [filterModel, setFilterModel] = useState({
-        items: []
-    });
-    const [sortModel, setSortModel] = useState([]);
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 10
+  });
 
-    useEffect(() => {
-        const fetcher = async () => {
-            // fetch data from server
-            const data = await listGatheringPoints();
-            const render = data.map(row => {
-                return {
-                    ...row,
-                    address: row.address?.street,
-                    gatheringLeader: row.gatheringLeader?.username
-                }
-            })
-            setRows(render);
-        }
-        fetcher();
-    }, []);
+  const [filterModel, setFilterModel] = useState({
+    items: []
+  });
+  const [sortModel, setSortModel] = useState([]);
 
-    return (
-        <DataGrid
-            columns={columns}
-            rows={rows}
-            pagination
-            sortingMode="server"
-            filterMode="server"
-            paginationMode="server"
-            onPaginationModelChange={setPaginationModel}
-            onSortModelChange={setSortModel}
-            onFilterModelChange={setFilterModel}
-        />
-    );
+  useEffect(() => {
+    const fetcher = async () => {
+      try {
+          const data = await listGatheringPoints();
+          const render = data.map(row => (
+              {
+                  ...row,
+                  zipcode: row.address.zipcode,
+                  address: row.address.street,
+                  gatheringLeader: row.gatheringLeader?.username
+              })
+          )
+          setRows(render)
+      } catch (e) {
+          console.error(e);
+      }
+    }
+
+    fetcher();
+  }, [])
+
+  return (
+    <DataGrid
+      columns={columns}
+      rows={rows}
+      pagination
+      sortingMode="server"
+      filterMode="server"
+      paginationMode="server"
+      onPaginationModelChange={setPaginationModel}
+      onSortModelChange={setSortModel}
+      onFilterModelChange={setFilterModel}
+    />
+  );
 }
