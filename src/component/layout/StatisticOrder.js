@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useState } from "react";
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import StatisticCard from "../StatisticCard";
 import InventoryIcon from '@mui/icons-material/Inventory';
 import { FormControl, Grid, InputLabel, MenuItem, Select } from "@mui/material";
 import Typography from "@mui/material/Typography";

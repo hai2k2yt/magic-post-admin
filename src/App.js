@@ -1,37 +1,49 @@
 import Router from './routes';
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Login from "./page/auth/Login";
 import Home from "./page/Home";
-import ManagePlace from "./page/ManagePlace";
+import ManagePlace from "./page/admin/ManageGatheringPoints";
 import StatisticOrder from "./component/layout/StatisticOrder";
 import ViewOrder from "./page/ViewOrder";
-import CreateOrder from "./page/CreateOrder";
-import CreateDeliveryToGatheringPoint from "./page/CreateDeliveryToGatheringPoint";
-import ManageLeaderAccount from "./page/ManageLeaderAccount";
-import CreateDeliveryToCustomer from "./page/CreateDeliveryToCustomer";
+import CreateOrder from "./page/transactionStaff/CreateOrder";
+import CreateDeliveryToGatheringPoint from "./page/gatheringStaff/CreateDeliveryToGatheringPoint";
+import CreateLeaderAccount from "./page/admin/CreateLeaderAccount";
+import CreateDeliveryToCustomer from "./page/transactionStaff/CreateDeliveryToCustomer";
 import ManageOrder from "./component/layout/StatisticAllOrder";
 import About from './page/About';
-import CreateAccount from './page/CreateLeaderAccount';
+import CreateStaffAccount from './page/leader/CreateStaffAccount';
 import Profile from './page/Profile';
 import { React } from 'react';
 import Layout from './component/Layout';
-import { Dashboard } from '@mui/icons-material';
-
+import Dashboard from './page/admin/Dashboard';
+import NewOrder from './page/gatheringStaff/ConfirmNewOrderGatheringPoint';
+import MangageTransactionPoint from './page/admin/ManageTransactionPoint';
+import ManageLeaderAccount from './page/admin/ManageLeaderAccount';
+import OrderTransactionPoint from './page/transactionStaff/OrderTransactionPoint';
 
 const admin = [
-    { path: '/manage-place', component: <ManagePlace /> },
-    { path: '/order/statistics', component: <StatisticOrder /> },    
+    { path: '/manage-gatheringPoint', component: <ManagePlace /> },
+    { path: 'manage-transactionPoint', component: <MangageTransactionPoint /> },
+    { path: '/order/statistics', component: <StatisticOrder /> },
     { path: '/leader/manage', component: <ManageLeaderAccount /> },
-    
+    { path: '/leader/create', component: <CreateLeaderAccount /> }
+
 ];
 const leader = [
-    { path: '/createAccount', component: <CreateAccount /> },
+    { path: '/createStaffAccount', component: <CreateStaffAccount /> },
     { path: '/profile', component: <Profile /> },
-    { path: '/dashbroad', component: <Dashboard /> },
+    { path: '/dashboard', component: <Dashboard /> },
 ]
-const staff = [
+const tStaff = [
     { path: '/order/create', component: <CreateOrder /> },
+    { path: '/transaction/order', component: <OrderTransactionPoint />},
     { path: '/order/delivery/customer', component: <CreateDeliveryToCustomer /> },
+    { path: '/order/delivery/gathering', component: <CreateDeliveryToGatheringPoint /> },
+    { path: '/order/manage', component: <ManageOrder /> },
+]
+const gStaff = [
+    { path: '/gathering/order', component: <NewOrder /> },
+    { path: '/order/create', component: <CreateOrder /> },
     { path: '/order/delivery/gathering', component: <CreateDeliveryToGatheringPoint /> },
     { path: '/order/manage', component: <ManageOrder /> },
 ]
@@ -46,21 +58,26 @@ const unauthorizedUser = [
 function App() {
     return (
         <Routes>
-            <Route path="/" element={<Layout/>}>
+            <Route path="/" element={<Layout />}>
                 {/* public routes */}
                 {unauthorizedUser.map((route) => (
                     <Route key={route.path} path={route.path} element={route.component} />
-                ))} 
-                
-                {/* staff routes */}
-                {staff.map((route) => (
-                    <Route key={route.path} path={route.path} element={route.component} />
-                ))} 
+                ))}
 
-                {/* leader routes */}   
+                {/*transaction staff routes */}
+                {tStaff.map((route) => (
+                    <Route key={route.path} path={route.path} element={route.component} />
+                ))}
+
+                {/* gathering staff routes */}
+                {gStaff.map((route) => (
+                    <Route key={route.path} path={route.path} element={route.component} />
+                ))}
+
+                {/* leader routes */}
                 {leader.map((route) => (
                     <Route key={route.path} path={route.path} element={route.component} />
-                ))} 
+                ))}
 
                 {/* admin routes */}
                 {admin.map((route) => (
