@@ -3,6 +3,7 @@ import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Navbar from '../component/layout/Navbar';
+
 const Profile = () => {
     return (
         <div>

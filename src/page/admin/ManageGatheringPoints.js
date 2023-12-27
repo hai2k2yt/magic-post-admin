@@ -153,7 +153,7 @@ export default function ManageGatheringPoint() {
                         id: item.id,
                         name: item.name,
                         code: item.address.zipcode,
-                        address: `${item.address.street}, ${item.address.commune}-${item.address.district}-${item.address.province}`,
+                        address: `${item.address.street}, ${item.address.commune}, ${item.address.district}, ${item.address.province}`,
                         leader: item.gatheringLeaderId
                     }
                 ))

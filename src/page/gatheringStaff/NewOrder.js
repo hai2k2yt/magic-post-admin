@@ -1,15 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Typography from '@mui/material/Typography';
-import {useNavigate, useParams} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Navbar from '../../component/layout/Navbar';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import AddIcon from '@mui/icons-material/Add';
-import {confirmP2PGatheringArrival, confirmP2PTransactionArrival, listP2PGatheringOrders} from "../../api/transport";
-import {IconButton} from "@mui/material";
+import { confirmP2PGatheringArrival, confirmP2PTransactionArrival, listP2PGatheringOrders } from "../../api/transport";
+import { IconButton } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import CheckIcon from "@mui/icons-material/Check";
 const theme = createTheme({
@@ -28,7 +28,7 @@ const theme = createTheme({
 
 })
 const AddNewOrder = () => {
-    let {id} = useParams();
+    let { id } = useParams();
     const navigate = useNavigate()
     const [orders, setOrders] = useState([])
     const handleViewDetail = (orderId) => {
@@ -36,12 +36,12 @@ const AddNewOrder = () => {
     };
 
     const columns = [
-        {field: 'id', headerName: 'Order ID', flex: 2, sortable: false},
-        {field: 'sendFrom', headerName: 'Send from', flex: 2, sortable: false},
-        {field: 'sendTo', headerName: 'Send To', flex: 2, sortable: false},
-        {field: 'departureTime', headerName: 'Departure time', flex: 2, sortable: false},
-        {field: 'arrivalTime', headerName: 'Arrival time', flex: 2, sortable: false},
-        {field: 'status', headerName: 'Status', flex: 1, sortable: true},
+        { field: 'id', headerName: 'ID', flex: 2, sortable: false },
+        { field: 'sendFrom', headerName: 'Nơi gửi', flex: 2, sortable: false },
+        { field: 'sendTo', headerName: 'Nơi nhận', flex: 2, sortable: false },
+        { field: 'departureTime', headerName: 'Thời gian gửi', flex: 2, sortable: false },
+        { field: 'arrivalTime', headerName: 'Thời gian nhận', flex: 2, sortable: false },
+        { field: 'status', headerName: 'Trạng thái', flex: 1, sortable: true },
         {
             field: 'action',
             headerName: 'Action',
@@ -50,12 +50,12 @@ const AddNewOrder = () => {
             renderCell: (params) => (
                 <>
                     <IconButton onClick={() => handleViewDetail(params.row.OrderID)}>
-                        <VisibilityIcon/>
+                        <VisibilityIcon />
                     </IconButton>
                     <IconButton onClick={async () => {
                         await confirmP2PGatheringArrival(id, params.row.id)
                     }}>
-                        <CheckIcon/>
+                        <CheckIcon />
                     </IconButton>
                 </>
 
@@ -123,8 +123,8 @@ const AddNewOrder = () => {
                 <div class="drawer-side">
                     <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
                     <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
-                        <li><a class="bg-neutral text-primary"><AddIcon/>Đơn mới</a></li>
-                        <li><a href='/order/delivery/gathering'><SwapHorizIcon/>Tạo đơn chuyển đi</a></li>
+                        <li><a class="bg-neutral text-primary"><AddIcon />Đơn mới</a></li>
+                        <li><a href='/order/delivery/gathering'><SwapHorizIcon />Tạo đơn chuyển đi</a></li>
                         <li><a href="/profile"><AccountCircleIcon />Cá nhân</a></li>
                     </ul>
                 </div>

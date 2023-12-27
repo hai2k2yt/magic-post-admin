@@ -1,6 +1,5 @@
 import { createTheme } from '@mui/material/styles';
 import { TextField, Button, Paper, Typography, ThemeProvider, Grid } from '@mui/material';
-import MainNavbar from '../../component/layout/MainNavbar';
 import Footer from '../../component/layout/Footer';
 import { useRef, useState, useEffect } from 'react';
 const Login = () => {

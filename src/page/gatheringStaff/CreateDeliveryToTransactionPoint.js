@@ -66,11 +66,11 @@ const CreateDeliveryToGatheringPoint = () => {
 
 
         const columns = [
-            {field: 'id', headerName: 'Order ID', flex: 2, sortable: false},
-            {field: 'sendFrom', headerName: 'Send from', flex: 2, sortable: false},
-            {field: 'sendTo', headerName: 'Send To', flex: 2, sortable: false},
-            {field: 'arrivalTime', headerName: 'Arrival time', flex: 2, sortable: false},
-            {field: 'status', headerName: 'Status', flex: 1, sortable: true},
+            {field: 'id', headerName: 'ID', flex: 2, sortable: false},
+            {field: 'sendFrom', headerName: 'Nơi gửi', flex: 2, sortable: false},
+            {field: 'sendTo', headerName: 'Nơi nhận', flex: 2, sortable: false},
+            {field: 'arrivalTime', headerName: 'Ngày nhận', flex: 2, sortable: false},
+            {field: 'status', headerName: 'Trạng thái đơn hàng', flex: 1, sortable: true},
             {
                 field: 'action',
                 headerName: 'Action',
