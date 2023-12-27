@@ -1,15 +1,78 @@
 import * as React from 'react';
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import { FormControl, Grid, InputLabel, MenuItem, Select } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import StatisticOrderByPlace from "./StatisticOrderByPlace";
 import ManageOrder from './StatisticAllOrder';
+import {listGatheringPoints, listTransactionPoints} from "../../api/point";
+import {getGatheringStatistic, getTransactionStatistic} from "../../api/statistics";
 
 export default function StatisticOrder() {
+    const [listTransactionPoint, setListTransactionPoint] = useState([]);
+    const [listGatheringPoint, setListGatheringPoint] = useState([]);
     const [transactionPoint, setTransactionPoint] = useState('');
     const [gatheringPoint, setGatheringPoint] = useState('');
+    const [transactionPointData, setTransactionPointData] = useState(null);
+    const [gatheringPointData, setGatheringPointData] = useState(null);
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const gatheringPlaces = await listGatheringPoints();
+                const data = gatheringPlaces?.map(item => (
+                    {
+                        id: item.id,
+                        name: item.name,
+                    }
+                ))
+                setListGatheringPoint(data);
+                const transactionPlaces = await listTransactionPoints();
+                const data2 = transactionPlaces.map(i => (
+                    {
+                        id: i.id,
+                        name: i.name
+                    }
+                ))
+                setListTransactionPoint(data2)
+            } catch (e) {
+                console.log(e)
+            }
+        }
+        fetchData();
+    }, []);
+
+    useEffect( () => {
+        async function fetchTransactionData() {
+            if(transactionPoint) {
+                try {
+                    const data = await getTransactionStatistic(transactionPoint);
+                    setTransactionPointData(data);
+                } catch (e) {
+                    console.log(e)
+                }
+            }
+        }
+        fetchTransactionData();
+
+
+    }, [transactionPoint]);
+
+    useEffect( () => {
+        async function fetchGatheringData() {
+            if(gatheringPoint) {
+                try {
+                    const data = await getGatheringStatistic(gatheringPoint);
+                    setGatheringPointData(data);
+                } catch (e) {
+                    console.log(e)
+                }
+            }
+        }
+
+        fetchGatheringData();
+    }, [gatheringPoint]);
 
     const handleChangeTransaction = (event) => {
         setTransactionPoint(event.target.value);
@@ -61,9 +124,9 @@ export default function StatisticOrder() {
                     <MenuItem value="">
                         <em>None</em>
                     </MenuItem>
-                    <MenuItem value="point1">Điểm 1</MenuItem>
-                    <MenuItem value="point2">Điểm 2</MenuItem>
-                    <MenuItem value="point3">Điểm 3</MenuItem>
+                    {listTransactionPoint.map(i => (
+                        <MenuItem value={i.id}>{i.name}</MenuItem>
+                    ))}
                 </Select>
             </FormControl>
             <div class="stats shadow mb-10">
@@ -72,7 +135,7 @@ export default function StatisticOrder() {
                         <InventoryIcon />
                     </div>
                     <div class="stat-title">Đơn hàng nhận</div>
-                    <div class="stat-value text-primary">25.6K</div>
+                    <div class="stat-value text-primary">{transactionPointData?.totalReceiveOrders}</div>
                 </div>
 
                 <div class="stat">
@@ -80,7 +143,7 @@ export default function StatisticOrder() {
                         <LocalShippingIcon />
                     </div>
                     <div class="stat-title">Đơn hàng gửi</div>
-                    <div class="stat-value text-secondary">2.6M</div>
+                    <div class="stat-value text-secondary">{transactionPointData?.totalSendOrders}</div>
                 </div>
             </div>
             <div class='mb-10'>
@@ -103,9 +166,9 @@ export default function StatisticOrder() {
                     <MenuItem value="">
                         <em>None</em>
                     </MenuItem>
-                    <MenuItem value="point1">Điểm 1</MenuItem>
-                    <MenuItem value="point2">Điểm 2</MenuItem>
-                    <MenuItem value="point3">Điểm 3</MenuItem>
+                    {listGatheringPoint.map(i => (
+                        <MenuItem value={i.id}>{i.name}</MenuItem>
+                    ))}
                 </Select>
             </FormControl>
             <div class="stats shadow mb-10">
@@ -114,7 +177,7 @@ export default function StatisticOrder() {
                         <InventoryIcon />
                     </div>
                     <div class="stat-title">Đơn hàng nhận</div>
-                    <div class="stat-value text-primary">25.6K</div>
+                    <div class="stat-value text-primary">{gatheringPointData?.totalReceiveOrders}</div>
                 </div>
 
                 <div class="stat">
@@ -122,7 +185,7 @@ export default function StatisticOrder() {
                         <LocalShippingIcon />
                     </div>
                     <div class="stat-title">Đơn hàng gửi</div>
-                    <div class="stat-value text-secondary">2.6M</div>
+                    <div class="stat-value text-secondary">{gatheringPointData?.totalSendOrders}</div>
                 </div>
             </div>
             <div class='mb-10'>

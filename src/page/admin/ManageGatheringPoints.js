@@ -11,17 +11,19 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
-import { createTheme, ThemeProvider } from '@mui/material';
+import {createTheme, ThemeProvider} from '@mui/material';
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import AddLocationIconAlt from '@mui/icons-material/AddLocationAlt';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Paper from '@mui/material/Paper';
-import { useMemo, useState } from "react";
+import {useEffect, useMemo, useState} from "react";
 import EditIcon from '@mui/icons-material/Edit';
-import { redirect, useNavigate } from "react-router-dom";
+import {redirect, useNavigate} from "react-router-dom";
 import Navbar from '../../component/layout/Navbar';
+import {listP2PGatheringOrders} from "../../api/transport";
+import {listGatheringPoints} from "../../api/point";
 
 const theme = createTheme({
     typography: {
@@ -38,32 +40,7 @@ const theme = createTheme({
     }
 
 })
-//copy từ Sorting & selecting:  https://mui.com/material-ui/react-table/
-function createData(id, name, code, address, leader) {
-    return {
-        id,
-        name,
-        code,
-        address,
-        leader,
-    };
-}
 
-const rows = [
-    createData(1, 'Cupcake', 305, 'ha noi', 'test leader'),
-    createData(2, 'Donut', 452, 'ha noi', 'test leader'),
-    createData(3, 'Eclair', 262, 'ha noi', 'test leader'),
-    createData(4, 'Frozen yoghurt', 159, 'ha noi', 'test leader'),
-    createData(5, 'Gingerbread', 356, 'ha noi', 'test leader'),
-    createData(6, 'Honeycomb', 408, 'ha noi', 'test leader'),
-    createData(7, 'Ice cream sandwich', 237, 'ha noi', 'test leader'),
-    createData(8, 'Jelly Bean', 375, 'ha noi', 'test leader'),
-    createData(9, 'KitKat', 518, 'ha noi', 'test leader'),
-    createData(10, 'Lollipop', 392, 'ha noi', 'test leader'),
-    createData(11, 'Marshmallow', 318, 'ha noi', 'test leader'),
-    createData(12, 'Nougat', 360, 'ha noi', 'test leader'),
-    createData(13, 'Oreo', 437, 'ha noi', 'test leader'),
-];
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -96,7 +73,7 @@ function stableSort(array, comparator) {
 const headCells = [
     {
         id: 'id',
-        label: 'STT',
+        label: 'ID',
     },
     {
         id: 'name',
@@ -116,17 +93,16 @@ const headCells = [
     },
     {
         id: 'action',
-        label: 'Chỉnh sửa'
+        label: ''
     }
 ];
 
 function EnhancedTableHead(props) {
-    const { order, orderBy, onRequestSort } =
+    const {order, orderBy, onRequestSort} =
         props;
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
     };
-
 
 
     return (
@@ -158,14 +134,37 @@ EnhancedTableHead.propTypes = {
 };
 
 
+export default function ManageGatheringPoint() {
+    const [rows, setRows] = useState([])
 
-export default function ManagePlace() {
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('calories');
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await listGatheringPoints();
+                const data = response?.map(item => (
+                    {
+                        id: item.id,
+                        name: item.name,
+                        code: item.address.zipcode,
+                        address: `${item.address.street}, ${item.address.commune}-${item.address.district}-${item.address.province}`,
+                        leader: item.gatheringLeaderId
+                    }
+                ))
+                setRows(data);
+            } catch (e) {
+                console.log(e)
+            }
+        }
+
+        fetchData();
+    }, [])
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -195,7 +194,7 @@ export default function ManagePlace() {
                 page * rowsPerPage,
                 page * rowsPerPage + rowsPerPage,
             ),
-        [order, orderBy, page, rowsPerPage],
+        [order, orderBy, page, rowsPerPage, rows],
     );
 
     return (
@@ -204,15 +203,15 @@ export default function ManagePlace() {
                 <Navbar/>
             </div>
             <div class="drawer lg:drawer-open">
-                <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+                <input id="my-drawer-2" type="checkbox" class="drawer-toggle"/>
                 <div class="drawer-content flex flex-col items-left">
                     {/* <!-- Page content here --> */}
                     <div class="m-10">
-                        <Box sx={{ width: '100%' }}>
-                            <Paper sx={{ width: '100%', mb: 2 }}>
+                        <Box sx={{width: '100%'}}>
+                            <Paper sx={{width: '100%', mb: 2}}>
                                 <TableContainer>
                                     <Table
-                                        sx={{ minWidth: 750 }}
+                                        sx={{minWidth: 750}}
                                         aria-labelledby="tableTitle"
                                         size='medium'
                                     >
@@ -230,7 +229,7 @@ export default function ManagePlace() {
                                                         role="checkbox"
                                                         tabIndex={-1}
                                                         key={row.id}
-                                                        sx={{ cursor: 'pointer' }}
+                                                        sx={{cursor: 'pointer'}}
                                                     >
                                                         <TableCell
                                                             component="th"
@@ -245,7 +244,7 @@ export default function ManagePlace() {
                                                         <TableCell>{row.address}</TableCell>
                                                         <TableCell>{row.leader}</TableCell>
                                                         <TableCell>
-                                                            <EditIcon onClick={() => editPlace(row.id)} />
+                                                            <EditIcon onClick={() => editPlace(row.id)}/>
                                                         </TableCell>
                                                     </TableRow>
                                                 );
@@ -256,7 +255,7 @@ export default function ManagePlace() {
                                                         height: (53) * emptyRows,
                                                     }}
                                                 >
-                                                    <TableCell colSpan={6} />
+                                                    <TableCell colSpan={6}/>
                                                 </TableRow>
                                             )}
                                         </TableBody>
@@ -278,11 +277,12 @@ export default function ManagePlace() {
                 <div class="drawer-side">
                     <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
                     <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
-                        <li><a href='/dashboard'><SpaceDashboardIcon />Bảng điều khiển</a></li>
-                        <li><a href='/manage-transactionPoint'><AddLocationIcon />Quản lý điểm giao dịch</a></li>
-                        <li><a class="bg-neutral text-primary"  href='/manage-gatheringPoint'><AddLocationIconAlt /> Quản lý điểm tập kết</a></li>
-                        <li><a href='/leader/manage'><PersonAddIcon />Quản lý tài khoản trưởng điểm</a></li>
-                        <li><a href="/profile"><AccountCircleIcon />Cá nhân</a></li>
+                        <li><a href='/dashboard'><SpaceDashboardIcon/>Bảng điều khiển</a></li>
+                        <li><a href='/manage-transactionPoint'><AddLocationIcon/>Quản lý điểm giao dịch</a></li>
+                        <li><a class="bg-neutral text-primary" href='/manage-gatheringPoint'><AddLocationIconAlt/> Quản
+                            lý điểm tập kết</a></li>
+                        <li><a href='/leader/manage'><PersonAddIcon/>Quản lý tài khoản trưởng điểm</a></li>
+                        <li><a href="/profile"><AccountCircleIcon/>Cá nhân</a></li>
                     </ul>
                 </div>
             </div>
