@@ -10,6 +10,8 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import InputAdornment from '@mui/material/InputAdornment';
+import SearchIcon from '@mui/icons-material/Search';
 
 const ManageOrder = () => {
     const navigate = useNavigate();
@@ -126,16 +128,22 @@ const ManageOrder = () => {
             {/* Search Fields */}
             <div class='mb-10'>
                 <Grid container spacing={2}>
-                    <Grid item xs={6} sm={3}>
+                    <Grid item xs={6}>
                         <TextField
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <SearchIcon />
+                                    </InputAdornment>
+                                ),
+                            }}
                             fullWidth
                             label="Nhập mã vận đơn"
                             value={searchOrder}
                             onChange={(e) => setSearchOrder(e.target.value)}
                         />
                     </Grid>
-
-                    <Grid item xs={6} sm={3}>
+                    <Grid item xs={3}>
                         <FormControl fullWidth sx={{ marginRight: 2, marginBottom: 2 }}>
                             <InputLabel >Status</InputLabel>
                             <Select

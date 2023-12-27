@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TextField, Autocomplete, Button, Container, Typography } from '@mui/material';
-import Navbar from '../component/layout/Navbar';
+import Navbar from '../../component/layout/Navbar';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';

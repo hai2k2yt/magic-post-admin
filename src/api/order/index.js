@@ -4,3 +4,6 @@ export const createOrder = (transactionPointID, body) => post(`/transaction-poin
 
 export const trackingOrder = (orderId) => get(`/express-orders/${orderId}/tracking-events`)
 
+export const getOrder = (id) => get(`/express-orders/${id}`)
+
+export const getStatisticOrders = () => get(`/express-orders/statistics`)

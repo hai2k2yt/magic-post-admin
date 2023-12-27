@@ -14,6 +14,8 @@ export const updatePoint = (pointId, body) => patch(`/points/${pointId}`, body)
 
 export const listTransactionPoints = () => get(`/transaction-points`)
 
+export const listGatheringTransactionPoints = (id) => get(`/gathering-points/${id}/transaction-points`)
+
 export const listPoints = () => get(`/points`)
 
 export const getPointInventory = (pointId) => get(`/points/${pointId}/inventory`)

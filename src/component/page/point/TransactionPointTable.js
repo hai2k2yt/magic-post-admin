@@ -3,6 +3,7 @@ import {listTransactionPoints} from "../../../api/point";
 import {DataGrid} from "@mui/x-data-grid";
 
 
+
 const columns = [
     {
         field: 'id',
@@ -13,6 +14,11 @@ const columns = [
         field: 'name',
         headerName: 'Name',
         flex: 2
+    },
+    {
+        field: 'zipcode',
+        headerName: 'Zip code',
+        flex: 1
     },
     {
         field: 'address',
@@ -42,11 +48,12 @@ export default function TransactionPointTable() {
 
   useEffect(() => {
     const fetcher = async () => {
-      // fetch data from server
       const data = await listTransactionPoints();
+      console.log(data);
       const render = data.map(row => {
         return {
             ...row,
+            zipcode: row.address.zipcode,
             address: row.address?.street,
             transactionLeader: row.transactionLeader?.username
         }

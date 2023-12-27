@@ -11,15 +11,15 @@ import {
     Select,
     TextField, Typography,
 } from '@mui/material';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import {getPointInventory} from "../../api/point";
-import {createP2PTransactionOrder} from "../../api/transport";
-import InputAdornment from '@mui/material/InputAdornment';
-import SearchIcon from '@mui/icons-material/Search';
+import CheckIcon from '@mui/icons-material/Check';
 
-const ManageOrder = () => {
+import {createP2PGatheringOrder, listP2PGatheringOrders} from "../../api/transport";
+
+const ConfirmOrderArrival = () => {
     const navigate = useNavigate();
+    let {id} = useParams();
     const [orders, setOrders] = useState([]);
     const [orderSelection, setOrderSelection] = useState([])
     const [searchOrder, setSearchOrder] = useState('');
@@ -30,21 +30,27 @@ const ManageOrder = () => {
 
     const [sendOrderDialog, setSendOrderDialog] = useState(false)
 
-    useEffect( () => {
+    useEffect(() => {
         async function fetchData() {
-            const response = await getPointInventory(2);
-            const data = response.length && response?.map(item => (
-                {
-                    id: item.id,
-                    senderName: item.sender.name,
-                    receiverName: item.receiver.name,
-                    sendTo: `${item.receiver.address.street},${item.receiver.address.commune}-${item.receiver.address.district}-${item.receiver.address.province}`,
-                    sendTime: item.sendTime,
-                    status: item.status
-                }
-            ))
-            setOrders(data);
+            try {
+                const response = await listP2PGatheringOrders(id);
+                const data = response?.map(item => (
+                    {
+                        id: item.id,
+                        sendFrom: item.from.name,
+                        sendTo: item.to.name,
+                        departureTime: item.departureTime,
+                        arrivalTime: item.arrivalTime,
+                        expressOrders: item.expressOrders,
+                        status: item.status
+                    }
+                ))
+                setOrders(data);
+            } catch (e) {
+                console.log(e)
+            }
         }
+
         fetchData();
     }, [])
 
@@ -53,7 +59,7 @@ const ManageOrder = () => {
     };
 
     const sendOrdersToTransaction = async () => {
-        await createP2PTransactionOrder(2, {
+        await createP2PGatheringOrder(2, {
             expressOrderIdList: orderSelection,
             destinationPointId: 1
         })
@@ -62,21 +68,28 @@ const ManageOrder = () => {
 
 
     const columns = [
-        { field: 'id', headerName: 'Order ID', flex: 2, sortable: false },
-        { field: 'senderName', headerName: 'Sender Name', flex: 2, sortable: false },
-        { field: 'receiverName', headerName: 'Receiver Name', flex: 2, sortable: false },
-        { field: 'sendTo', headerName: 'Send to (Address)', flex: 2, sortable: false },
-        { field: 'sendTime', headerName: 'Created Time', flex: 2, sortable: true },
-        { field: 'status', headerName: 'Status', flex: 1, sortable: true },
+        {field: 'id', headerName: 'Order ID', flex: 2, sortable: false},
+        {field: 'sendFrom', headerName: 'Sender Name', flex: 2, sortable: false},
+        {field: 'sendTo', headerName: 'Send To', flex: 2, sortable: false},
+        {field: 'departureTime', headerName: 'Departure time', flex: 2, sortable: false},
+        {field: 'arrivalTime', headerName: 'Arrival time', flex: 2, sortable: false},
+        {field: 'expressOrders', headerName: 'Express order', flex: 2, sortable: false},
+        {field: 'status', headerName: 'Status', flex: 1, sortable: true},
         {
             field: 'action',
             headerName: 'Action',
             flex: 1,
             sortable: false,
             renderCell: (params) => (
-                <IconButton onClick={() => handleViewDetail(params.row.OrderID)}>
-                    <VisibilityIcon />
-                </IconButton>
+                <>
+                    <IconButton onClick={() => handleViewDetail(params.row.OrderID)}>
+                        <VisibilityIcon/>
+                    </IconButton>
+                    <IconButton onClick={() => handleViewDetail(params.row.OrderID)}>
+                        <CheckIcon/>
+                    </IconButton>
+                </>
+
             ),
         },
     ];
@@ -86,24 +99,39 @@ const ManageOrder = () => {
             {/* Search Fields */}
             <div class='mb-10'>
                 <Grid container spacing={2}>
-                    <Grid item xs={6}>
+                    <Grid item xs={6} sm={3}>
                         <TextField
-                        InputProps={{
-                            startAdornment: (
-                              <InputAdornment position="start">
-                                <SearchIcon />
-                              </InputAdornment>
-                            ),
-                          }}
                             fullWidth
                             label="Nhập mã vận đơn"
                             value={searchOrder}
                             onChange={(e) => setSearchOrder(e.target.value)}
                         />
                     </Grid>
-                    <Grid item xs={3}>
-                        <FormControl fullWidth sx={{ marginRight: 2, marginBottom: 2 }}>
-                            <InputLabel >Status</InputLabel>
+                    <Grid item xs={6} sm={3}>
+                        <FormControl fullWidth>
+                            <InputLabel>Province</InputLabel>
+                            <Select
+                                value={selectedProvince}
+                                onChange={(e) => setSelectedProvince(e.target.value)}
+                            >
+                                {/* Address options */}
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={6} sm={3}>
+                        <FormControl fullWidth>
+                            <InputLabel>District</InputLabel>
+                            <Select
+                                value={selectedDistrict}
+                                onChange={(e) => setSelectedDistrict(e.target.value)}
+                            >
+                                {/* Address options */}
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={6} sm={3}>
+                        <FormControl fullWidth sx={{marginRight: 2, marginBottom: 2}}>
+                            <InputLabel>Status</InputLabel>
                             <Select
                                 value={selectedStatus}
                                 onChange={(e) => setSelectedStatus(e.target.value)}
@@ -118,7 +146,6 @@ const ManageOrder = () => {
                 Send order
             </Button>
             <DataGrid
-                align='center'
                 rows={orders}
                 columns={columns}
                 pageSize={10}
@@ -132,7 +159,7 @@ const ManageOrder = () => {
                 rowSelectionModel={orderSelection}
             />
             <Dialog
-                sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 500 } }}
+                sx={{'& .MuiDialog-paper': {width: '80%', maxHeight: 500}}}
                 maxWidth="xs"
                 open={sendOrderDialog}
             >
@@ -153,4 +180,4 @@ const ManageOrder = () => {
     );
 };
 
-export default ManageOrder;
+export default ConfirmOrderArrival;
