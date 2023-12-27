@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import { TextField, Button, IconButton, Grid, Paper } from '@mui/material';
 // import DeleteIcon from '@mui/icons-material/Delete';
-import { DataGrid } from '@mui/x-data-grid';
+import {DataGrid} from '@mui/x-data-grid';
 import Typography from '@mui/material/Typography';
-import PageviewIcon from '@mui/icons-material/Pageview';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Navbar from '../../component/layout/Navbar';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import AddIcon from '@mui/icons-material/Add';
+import { FormControl, IconButton, InputLabel, MenuItem, Select } from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import { createP2PGatheringOrder, listP2PGatheringOrders } from "../../api/transport";
+import { listGatheringPoints } from "../../api/point";
+
 const theme = createTheme({
     typography: {
         "fontFamily": '"Montserrat", "sans-serif"',
@@ -29,86 +32,92 @@ const theme = createTheme({
 
 })
 const CreateDeliveryToGatheringPoint = () => {
-    //     const [gatheringPoints, setGatheringPoints] = useState([{ id: '', orderIds: [''] }]);
+    let { id } = useParams();
+    const navigate = useNavigate()
+    const [orders, setOrders] = useState([])
+    const [gatheringPoints, setGatheringPoints] = useState([])
+    const [selectedPoint, setSelectedPoint] = useState(null)
+    const [selectedRows, setSelectedRows] = useState([]);
 
-    //     const handleAddGatheringPoint = () => {
-    //         setGatheringPoints([...gatheringPoints, { id: '', orderIds: [''] }]);
-    //     };
+    const handleViewDetail = (orderId) => {
+        navigate(`/order-detail/${orderId}`);
+    };
 
-    //     const handleRemoveGatheringPoint = (index) => {
-    //         const newGatheringPoints = [...gatheringPoints];
-    //         newGatheringPoints.splice(index, 1);
-    //         setGatheringPoints(newGatheringPoints);
-    //     };
+    const handleSelectionChange = (selectionModel) => {
+        setSelectedRows(selectionModel);
+    };
 
-    //     const handleAddOrderId = (gatheringPointIndex) => {
-    //         const newGatheringPoints = [...gatheringPoints];
-    //         newGatheringPoints[gatheringPointIndex].orderIds.push('');
-    //         setGatheringPoints(newGatheringPoints);
-    //     };
+    const handleCreateDelivery = async () => {
+        try {
+            const res = await createP2PGatheringOrder(id, {
+                expressOrderIdList: selectedRows,
+                destinationPointId: selectedPoint
+            })
+        } catch (e) {
+            console.error(e)
+        }
+    }
 
-    //     const handleRemoveOrderId = (gatheringPointIndex, orderIdIndex) => {
-    //         const newGatheringPoints = [...gatheringPoints];
-    //         newGatheringPoints[gatheringPointIndex].orderIds.splice(orderIdIndex, 1);
-    //         setGatheringPoints(newGatheringPoints);
-    //     };
+    const handleChangeSelectedPoint = (e) => {
+        setSelectedPoint(e.target.value)
+    }
 
-    //     const handleInputChange = (e, gatheringPointIndex, orderIdIndex) => {
-    //         const newGatheringPoints = [...gatheringPoints];
-    //         if (orderIdIndex !== undefined) {
-    //             newGatheringPoints[gatheringPointIndex].orderIds[orderIdIndex] = e.target.value;
-    //         } else {
-    //             newGatheringPoints[gatheringPointIndex].id = e.target.value;
-    //         }
-    //         setGatheringPoints(newGatheringPoints);
-    //     };
 
     const columns = [
-        { field: 'id', headerName: 'ID', width: 70 },
-        { field: 'actualWeight', headerName: 'Cân nặng hàng hóa', width: 130 },
+        { field: 'id', headerName: 'Order ID', flex: 2, sortable: false },
+        { field: 'sendFrom', headerName: 'Send from', flex: 2, sortable: false },
+        { field: 'sendTo', headerName: 'Send To', flex: 2, sortable: false },
+        { field: 'arrivalTime', headerName: 'Arrival time', flex: 2, sortable: false },
+        { field: 'status', headerName: 'Status', flex: 1, sortable: true },
         {
-            field: 'currentPoint',
-            headerName: 'Nơi gửi',
-            description: 'This column has a value getter and is not sortable.',
+            field: 'action',
+            headerName: 'Action',
+            flex: 2,
             sortable: false,
-            destinationPoint: 'string',
-            width: 160,
+            renderCell: (params) => (
+                <>
+                    <IconButton onClick={() => handleViewDetail(params.row.OrderID)}>
+                        <VisibilityIcon />
+                    </IconButton>
+                </>
+
+            ),
         },
-        {
-            field: 'destinationPoint',
-            headerName: 'Nơi nhận',
-            description: 'This column has a value getter and is not sortable.',
-            sortable: false,
-            width: 160,
-        },
-        {
-            field: 'status',
-            headerName: 'Trạng thái đơn hàng',
-            description: 'Status column',
-            width: 160,
+    ];
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await listP2PGatheringOrders(id);
+                const data = response?.map(item => (
+                    {
+                        id: item.id,
+                        sendFromId: item.from.id,
+                        sendFrom: item.from.name,
+                        sendTo: item.to.name,
+                        arrivalTime: item.arrivalTime,
+                        status: item.status
+                    }
+                ))
+                setOrders(data);
+
+                const gatherPlace = await listGatheringPoints();
+                const dataPlace = gatherPlace?.map(item => (
+                    {
+                        id: item.id,
+                        address: `${item.address.street}, ${item.address.zipcode}/${item.address.commune}-${item.address.district}-${item.address.province}`
+                    }
+                ))
+                setGatheringPoints(dataPlace)
+            } catch (e) {
+                console.log(e)
+            }
         }
-    ];
 
-    const rows = [
-        { id: 1, actualWeight: '3', currentPoint: 'JonPO Box 61354', destinationPoint: 'Hà Nội', status: 'Đang vận chuyển' },
-        { id: 2, actualWeight: '5.4', currentPoint: 'PO Box 19454', destinationPoint: 'Hà Nội', status: 'Đang vận chuyển' },
-        { id: 3, actualWeight: '3.3', currentPoint: 'Suite 71', destinationPoint: 'Hà Nội', status: 'Đang vận chuyển' },
-        { id: 4, actualWeight: '2.2', currentPoint: 'Apt 1287', destinationPoint: 'Hà Nội', status: 'Đang vận chuyển' },
-        { id: 5, actualWeight: '2.2', currentPoint: 'Xuân Thủy', destinationPoint: 'Hà Nội', status: 'Đang vận chuyển' },
-        { id: 6, actualWeight: '3.1', currentPoint: 'Nguyên Hoàng Tôn', destinationPoint: 'Hà Nội', status: 'Đang vận chuyển' },
-        { id: 7, actualWeight: '3.4', currentPoint: 'Hoàng Mai', destinationPoint: 'Hà Nội', status: 'Đang vận chuyển' },
-        { id: 8, actualWeight: '9', currentPoint: 'Long Biên', destinationPoint: 'Hà Nội', status: 'Đang vận chuyển' },
-        { id: 9, actualWeight: '9.4', currentPoint: 'Cầu Giấy', destinationPoint: 'Hà Nội', status: 'Đang vận chuyển' },
-    ];
+        fetchData();
+    }, [])
 
-    // function RenderCellWithViewButton(params) {
-    //     const navigate = useNavigate();
-    //     return <PageviewIcon onClick={() => handleView(navigate, params.row.id)} />;
-    // }
 
-    // const handleView = (navigate, id) => {
-    //     navigate(`/leader/manage/${id}`);
-    // };
     return (
         <ThemeProvider theme={theme}>
             <div>
@@ -126,7 +135,7 @@ const CreateDeliveryToGatheringPoint = () => {
                         </div>
                         <div>
                             <DataGrid
-                                rows={rows}
+                                rows={orders}
                                 columns={columns}
                                 initialState={{
                                     pagination: {
@@ -135,19 +144,29 @@ const CreateDeliveryToGatheringPoint = () => {
                                 }}
                                 pageSizeOptions={[5, 10]}
                                 checkboxSelection
+                                rowSelectionModel={selectedRows}
+                                onRowSelectionModelChange={handleSelectionChange}
                             />
                         </div>
                         <div class='flex justify-end mt-5'>
-                            <select class="select select-primary w-full max-w-xs">
-                                <option disabled selected>Chọn điểm tập kết đích</option>
-                                <option>Xuân Thủy</option>
-                                <option>Hai Bà Trưng</option>
-                                <option>Hàng Bài</option>
-                                <option>Nguyên Chí Thanh</option>
-                            </select>
+                            <FormControl fullWidth>
+                                <InputLabel id="gathering-point-select-label">Select point</InputLabel>
+                                <Select
+                                    className="w-full max-w-xs"
+                                    labelId="gathering-point-select-label"
+                                    id="gathering-point-select"
+                                    value={selectedPoint}
+                                    label="Select point"
+                                    onChange={handleChangeSelectedPoint}
+                                >
+                                    {gatheringPoints.map(i => (
+                                        <MenuItem disabled={i.id === id} value={i.id}>{i.address}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
                         </div>
                         <div class='flex justify-end mt-5'>
-                            <Button variant="contained" color="secondary">
+                            <Button onClick={handleCreateDelivery} variant="contained" color="secondary">
                                 Chuyến giao hàng
                             </Button>
                         </div>
@@ -158,13 +177,14 @@ const CreateDeliveryToGatheringPoint = () => {
                 <div class="drawer-side">
                     <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
                     <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
-                        <li><a href='/gathering/order'><AddIcon />Đơn mới</a></li>
-                        <li><a class="bg-neutral text-primary" href='/order/delivery/gathering'><SwapHorizIcon/>Tạo đơn chuyển đi</a></li>
+                        <li><a href='/dashboard'><SpaceDashboardIcon />Bảng điều khiển</a></li>
+                        <li><a href='/new'><AddIcon />Đơn mới</a></li>
+                        <li><a class="bg-neutral text-primary"><SwapHorizIcon />Tạo đơn đến điểm tập kết</a></li>
                         <li><a href="/profile"><AccountCircleIcon />Cá nhân</a></li>
                     </ul>
                 </div>
             </div>
-        </ThemeProvider>
+        </ThemeProvider >
         //     <div>
         //         {gatheringPoints.map((gatheringPoint, gatheringPointIndex) => (
         //             <Paper key={gatheringPointIndex} style={{ padding: '16px', marginBottom: '16px' }}>
