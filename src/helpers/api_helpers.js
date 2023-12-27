@@ -1,7 +1,7 @@
 import axios from "axios"
 
 // apply base url for axios
-const API_URL = process.env.API_URL ?? '/api';
+const API_URL = process.env.API_URL ?? 'http://localhost:8080/api/v1';
 
 const axiosApi = axios.create({
     baseURL: API_URL,
@@ -67,6 +67,12 @@ export async function postMultipart(
 export async function put(url, data, config = {}) {
     return axiosApi
         .put(url, {...data}, {...config})
+        .then(response => response.data)
+}
+
+export async function patch(url, data, config = {}) {
+    return axiosApi
+        .patch(url, {...data}, {...config})
         .then(response => response.data)
 }
 
