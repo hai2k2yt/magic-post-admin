@@ -18,10 +18,11 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Paper from '@mui/material/Paper';
-import { useMemo, useState } from "react";
+import {useEffect, useMemo, useState} from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import { redirect, useNavigate } from "react-router-dom";
 import Navbar from '../../component/layout/Navbar';
+import {listGatheringPoints, listTransactionPoints} from "../../api/point";
 
 const theme = createTheme({
     typography: {
@@ -38,32 +39,6 @@ const theme = createTheme({
     }
 
 })
-//copy từ Sorting & selecting:  https://mui.com/material-ui/react-table/
-function createData(id, name, code, address, leader) {
-    return {
-        id,
-        name,
-        code,
-        address,
-        leader,
-    };
-}
-
-const rows = [
-    createData(1, 'Cupcake', 305, 'ha noi', 'test leader'),
-    createData(2, 'Donut', 452, 'ha noi', 'test leader'),
-    createData(3, 'Eclair', 262, 'ha noi', 'test leader'),
-    createData(4, 'Frozen yoghurt', 159, 'ha noi', 'test leader'),
-    createData(5, 'Gingerbread', 356, 'ha noi', 'test leader'),
-    createData(6, 'Honeycomb', 408, 'ha noi', 'test leader'),
-    createData(7, 'Ice cream sandwich', 237, 'ha noi', 'test leader'),
-    createData(8, 'Jelly Bean', 375, 'ha noi', 'test leader'),
-    createData(9, 'KitKat', 518, 'ha noi', 'test leader'),
-    createData(10, 'Lollipop', 392, 'ha noi', 'test leader'),
-    createData(11, 'Marshmallow', 318, 'ha noi', 'test leader'),
-    createData(12, 'Nougat', 360, 'ha noi', 'test leader'),
-    createData(13, 'Oreo', 437, 'ha noi', 'test leader'),
-];
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -96,7 +71,7 @@ function stableSort(array, comparator) {
 const headCells = [
     {
         id: 'id',
-        label: 'STT',
+        label: 'ID',
     },
     {
         id: 'name',
@@ -113,6 +88,10 @@ const headCells = [
     {
         id: 'leader',
         label: 'Tên trưởng điểm',
+    },
+    {
+        id: 'gatheringPoint',
+        label: 'Điểm tập kết',
     },
     {
         id: 'action',
@@ -160,12 +139,36 @@ EnhancedTableHead.propTypes = {
 
 
 export default function ManagePlace() {
+    const [rows, setRows] = useState([])
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('calories');
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await listTransactionPoints();
+                const data = response?.map(item => (
+                    {
+                        id: item.id,
+                        name: item.name,
+                        code: item.address.zipcode,
+                        address: `${item.address.street}, ${item.address.commune}-${item.address.district}-${item.address.province}`,
+                        leader: item.transactionLeaderId,
+                        gatheringPoint: item.gatheringPointId
+                    }
+                ))
+                setRows(data);
+            } catch (e) {
+                console.log(e)
+            }
+        }
+
+        fetchData();
+    }, [])
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -195,7 +198,7 @@ export default function ManagePlace() {
                 page * rowsPerPage,
                 page * rowsPerPage + rowsPerPage,
             ),
-        [order, orderBy, page, rowsPerPage],
+        [order, orderBy, page, rowsPerPage, rows],
     );
 
     return (
@@ -244,6 +247,8 @@ export default function ManagePlace() {
                                                         <TableCell>{row.code}</TableCell>
                                                         <TableCell>{row.address}</TableCell>
                                                         <TableCell>{row.leader}</TableCell>
+                                                        <TableCell>{row.gatheringPoint}</TableCell>
+
                                                         <TableCell>
                                                             <EditIcon onClick={() => editPlace(row.id)} />
                                                         </TableCell>

@@ -2,7 +2,7 @@ import Router from './routes';
 import { Route, Routes } from "react-router-dom";
 import Login from "./page/auth/Login";
 import Home from "./page/Home";
-import ManagePlace from "./page/admin/ManageGatheringPoints";
+import ManageGatheringPoint from "./page/admin/ManageGatheringPoints";
 import StatisticOrder from "./component/layout/StatisticOrder";
 import ViewOrder from "./page/ViewOrder";
 import CreateOrder from "./page/transactionStaff/CreateOrder";
@@ -24,8 +24,8 @@ import ConfirmOrderArrival from "./page/transactionStaff/ConfirmOrderArrival";
 import CreateDeliveryToTransactionPoint from "./page/gatheringStaff/CreateDeliveryToTransactionPoint";
 
 const admin = [
-    { path: '/manage-gatheringPoint', component: <ManagePlace /> },
-    { path: 'manage-transactionPoint', component: <MangageTransactionPoint /> },
+    { path: '/manage-gatheringPoint', component: <ManageGatheringPoint /> },
+    { path: '/manage-transactionPoint', component: <MangageTransactionPoint /> },
     { path: '/order/statistics', component: <StatisticOrder /> },
     { path: '/leader/manage', component: <ManageLeaderAccount /> },
     { path: '/leader/create', component: <CreateLeaderAccount /> }
