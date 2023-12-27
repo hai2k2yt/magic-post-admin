@@ -21,6 +21,7 @@ import MangageTransactionPoint from './page/admin/ManageTransactionPoint';
 import ManageLeaderAccount from './page/admin/ManageLeaderAccount';
 import OrderTransactionPoint from './page/transactionStaff/OrderTransactionPoint';
 import ConfirmOrderArrival from "./page/transactionStaff/ConfirmOrderArrival";
+import CreateDeliveryToTransactionPoint from "./page/gatheringStaff/CreateDeliveryToTransactionPoint";
 
 const admin = [
     { path: '/manage-gatheringPoint', component: <ManagePlace /> },
@@ -44,9 +45,10 @@ const tStaff = [
     { path: '/order/gathering/:id', component: <ConfirmOrderArrival /> },
 ]
 const gStaff = [
-    { path: '/gathering/order', component: <NewOrder /> },
+    { path: '/gathering/order/:id', component: <NewOrder /> },
     { path: '/order/create', component: <CreateOrder /> },
-    { path: '/order/delivery/gathering', component: <CreateDeliveryToGatheringPoint /> },
+    { path: '/order/delivery/gathering/:id', component: <CreateDeliveryToGatheringPoint /> },
+    { path: '/order/delivery/transaction/:id', component: <CreateDeliveryToTransactionPoint /> },
     { path: '/order/manage', component: <ManageOrder /> },
 ]
 
