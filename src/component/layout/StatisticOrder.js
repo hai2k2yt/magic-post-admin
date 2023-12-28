@@ -185,7 +185,7 @@ export default function StatisticOrder() {
                         <LocalShippingIcon />
                     </div>
                     <div class="stat-title">Đơn hàng gửi</div>
-                    <div class="stat-value text-secondary">{gatheringPointData?.totalReceiveOrders}</div>
+                    <div class="stat-value text-secondary">{gatheringPointData?.totalSendOrders}</div>
                 </div>
             </div>
             <div class='mb-10'>
