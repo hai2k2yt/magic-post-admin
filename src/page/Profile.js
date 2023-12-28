@@ -6,12 +6,6 @@ import Navbar from '../component/layout/Navbar';
 const Profile = () => {
     return (
         <div>
-            <Navbar />
-            <div class="drawer lg:drawer-open">
-
-                <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
-                <div class="drawer-content flex flex-col items-left">
-                    {/* <!-- Page content here --> */}
                     <section class="pt-16 bg-blueGray-50">
                         <div class="w-full lg:w-6/12 px-4 mx-auto">
                             <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg mt-16">
@@ -43,19 +37,7 @@ const Profile = () => {
                         </div>
                     </section>
                 </div>
-                <div class="drawer-side">
-                    <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
-                    <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
-                        {/* <!-- Sidebar content here --> */}
-                        <li><a href='/dashbroad'><SpaceDashboardIcon />Bảng điều khiển</a></li>
-                        <li><a href='/createAccount'><PersonAddIcon />Cấp tài khoản</a></li>
-                        <li><a class="bg-neutral text-primary" href='#'><AccountCircleIcon />Cá nhân</a></li>
-                    </ul>
-
-                </div>
-
-            </div>
-        </div>
+                
     )
 }
 
