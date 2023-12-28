@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {DataGrid} from '@mui/x-data-grid';
+import React, { useEffect, useState } from 'react';
+import { DataGrid } from '@mui/x-data-grid';
 import {
     Button, Dialog, DialogActions,
     DialogContent,
@@ -11,15 +11,22 @@ import {
     Select,
     TextField, Typography,
 } from '@mui/material';
-import {useNavigate, useParams} from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import CheckIcon from '@mui/icons-material/Check';
-
-import {createP2PGatheringOrder, listP2PGatheringOrders} from "../../api/transport";
+import { createTheme, ThemeProvider } from '@mui/material';
+import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
+import AddIcon from '@mui/icons-material/Add';
+import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard'
+import Navbar from '../../component/layout/Navbar';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { createP2PGatheringOrder, listP2PGatheringOrders } from "../../api/transport";
+import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
 
 const ConfirmOrderArrival = () => {
     const navigate = useNavigate();
-    let {id} = useParams();
+    let { id } = useParams();
     const [orders, setOrders] = useState([]);
     const [orderSelection, setOrderSelection] = useState([])
     const [searchOrder, setSearchOrder] = useState('');
@@ -68,13 +75,13 @@ const ConfirmOrderArrival = () => {
 
 
     const columns = [
-        {field: 'id', headerName: 'Order ID', flex: 2, sortable: false},
-        {field: 'sendFrom', headerName: 'Sender Name', flex: 2, sortable: false},
-        {field: 'sendTo', headerName: 'Send To', flex: 2, sortable: false},
-        {field: 'departureTime', headerName: 'Departure time', flex: 2, sortable: false},
-        {field: 'arrivalTime', headerName: 'Arrival time', flex: 2, sortable: false},
-        {field: 'expressOrders', headerName: 'Express order', flex: 2, sortable: false},
-        {field: 'status', headerName: 'Status', flex: 1, sortable: true},
+        { field: 'id', headerName: 'ID', flex: 1, sortable: false },
+        { field: 'sendFrom', headerName: 'Nơi gửi', flex: 2, sortable: false },
+        { field: 'sendTo', headerName: 'Nơi nhận', flex: 2, sortable: false },
+        { field: 'departureTime', headerName: 'Thời gian gửi', flex: 2, sortable: false },
+        { field: 'arrivalTime', headerName: 'Thời gian nhận', flex: 2, sortable: false },
+        { field: 'expressOrders', headerName: 'Express order', flex: 2, sortable: false },
+        { field: 'status', headerName: 'Trạng thái đơn hàng', flex: 1, sortable: true },
         {
             field: 'action',
             headerName: 'Action',
@@ -83,100 +90,143 @@ const ConfirmOrderArrival = () => {
             renderCell: (params) => (
                 <>
                     <IconButton onClick={() => handleViewDetail(params.row.OrderID)}>
-                        <VisibilityIcon/>
+                        <VisibilityIcon />
                     </IconButton>
                     <IconButton onClick={() => handleViewDetail(params.row.OrderID)}>
-                        <CheckIcon/>
+                        <CheckIcon />
                     </IconButton>
                 </>
 
             ),
         },
     ];
+    const theme = createTheme({
+        typography: {
+            "fontFamily": '"Montserrat", "sans-serif"',
+        },
+        palette: {
+            primary: {
+                main: '#161A30',
+            },
+            secondary: {
+                main: '#31304D',
+            },
+            third: '#B6BBC4'
+        }
 
+    })
     return (
-        <div>
-            {/* Search Fields */}
-            <div class='mb-10'>
-                <Grid container spacing={2}>
-                    <Grid item xs={6} sm={3}>
-                        <TextField
-                            fullWidth
-                            label="Nhập mã vận đơn"
-                            value={searchOrder}
-                            onChange={(e) => setSearchOrder(e.target.value)}
-                        />
-                    </Grid>
-                    <Grid item xs={6} sm={3}>
-                        <FormControl fullWidth>
-                            <InputLabel>Province</InputLabel>
-                            <Select
-                                value={selectedProvince}
-                                onChange={(e) => setSelectedProvince(e.target.value)}
-                            >
-                                {/* Address options */}
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={6} sm={3}>
-                        <FormControl fullWidth>
-                            <InputLabel>District</InputLabel>
-                            <Select
-                                value={selectedDistrict}
-                                onChange={(e) => setSelectedDistrict(e.target.value)}
-                            >
-                                {/* Address options */}
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={6} sm={3}>
-                        <FormControl fullWidth sx={{marginRight: 2, marginBottom: 2}}>
-                            <InputLabel>Status</InputLabel>
-                            <Select
-                                value={selectedStatus}
-                                onChange={(e) => setSelectedStatus(e.target.value)}
-                            >
-                                {/* Status options */}
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                </Grid>
+        <ThemeProvider theme={theme}>
+            <div>
+                <Navbar />
             </div>
-            <Button variant="contained" disabled={!orderSelection.length} onClick={() => setSendOrderDialog(true)}>
-                Send order
-            </Button>
-            <DataGrid
-                rows={orders}
-                columns={columns}
-                pageSize={10}
-                rowsPerPageOptions={[10, 20, 50]}
-                sortModel={sortModel}
-                onSortModelChange={(model) => setSortModel(model)}
-                checkboxSelection
-                onRowSelectionModelChange={(item) => {
-                    setOrderSelection(item);
-                }}
-                rowSelectionModel={orderSelection}
-            />
-            <Dialog
-                sx={{'& .MuiDialog-paper': {width: '80%', maxHeight: 500}}}
-                maxWidth="xs"
-                open={sendOrderDialog}
-            >
-                <DialogTitle>Send Order</DialogTitle>
-                <DialogContent dividers>
-                    <Typography>
-                        Are you want to send {orderSelection.length} items?
-                    </Typography>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => setSendOrderDialog(false)}>
-                        Cancel
-                    </Button>
-                    <Button onClick={sendOrdersToTransaction}>Ok</Button>
-                </DialogActions>
-            </Dialog>
-        </div>
+            <div class="drawer lg:drawer-open">
+                <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+                <div class="drawer-content flex flex-col items-left">
+                    {/* <!-- Page content here --> */}
+                    <div class="mx-10">
+                        <div class='mt-10'></div>
+                        <div>
+                            {/* Search Fields */}
+                            <div class='mb-5'>
+                                <Grid container spacing={2}>
+                                    <Grid item xs={6} sm={3}>
+                                        <TextField
+                                            fullWidth
+                                            label="Nhập mã vận đơn"
+                                            value={searchOrder}
+                                            onChange={(e) => setSearchOrder(e.target.value)}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={6} sm={3}>
+                                        <FormControl fullWidth>
+                                            <InputLabel>Tỉnh thành</InputLabel>
+                                            <Select
+                                                value={selectedProvince}
+                                                onChange={(e) => setSelectedProvince(e.target.value)}
+                                            >
+                                                {/* Address options */}
+                                            </Select>
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={6} sm={3}>
+                                        <FormControl fullWidth>
+                                            <InputLabel>Quận/Huyện</InputLabel>
+                                            <Select
+                                                value={selectedDistrict}
+                                                onChange={(e) => setSelectedDistrict(e.target.value)}
+                                            >
+                                                {/* Address options */}
+                                            </Select>
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={6} sm={3}>
+                                        <FormControl fullWidth sx={{ marginRight: 2, marginBottom: 2 }}>
+                                            <InputLabel>Trạng thái</InputLabel>
+                                            <Select
+                                                value={selectedStatus}
+                                                onChange={(e) => setSelectedStatus(e.target.value)}
+                                            >
+                                                {/* Status options */}
+                                            </Select>
+                                        </FormControl>
+                                    </Grid>
+                                </Grid>
+                            </div>
+
+                            <DataGrid
+                                rows={orders}
+                                columns={columns}
+                                pageSize={10}
+                                rowsPerPageOptions={[5, 10, 15]}
+                                sortModel={sortModel}
+                                onSortModelChange={(model) => setSortModel(model)}
+                                checkboxSelection
+                                onRowSelectionModelChange={(item) => {
+                                    setOrderSelection(item);
+                                }}
+                                rowSelectionModel={orderSelection}
+                            />
+                            <div class="flex justify-end mt-5">
+                                <Button variant="contained" sx={{ bgcolor: 'primary.main' }} disabled={!orderSelection.length} onClick={() => setSendOrderDialog(true)}>
+                                    Gửi đơn hàng
+                                </Button>
+                            </div>
+                            <Dialog
+                                sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 500 } }}
+                                maxWidth="xs"
+                                open={sendOrderDialog}
+                            >
+                                <DialogTitle>Send Order</DialogTitle>
+                                <DialogContent dividers>
+                                    <Typography>
+                                        Are you want to send {orderSelection.length} items?
+                                    </Typography>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button onClick={() => setSendOrderDialog(false)}>
+                                        Cancel
+                                    </Button>
+                                    <Button onClick={sendOrdersToTransaction}>Ok</Button>
+                                </DialogActions>
+                            </Dialog>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="drawer-side">
+                    <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
+                    <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
+                        <li><a href='/dashbroad/transaction'><SpaceDashboardIcon />Bảng điều khiển</a></li>
+                        <li><a href='/order/create'><AddCircleOutlineIcon />Ghi nhận hàng</a></li>
+                        {/* <li><a href='/transaction/order/:id'><SwapHorizIcon />Đơn mới</a></li> */}
+                        <li><a href='/order/delivery/gathering'><AddIcon />Tạo đơn hàng đến điểm tập kết</a></li>
+                        <li><a href='/order/delivery/customer' ><DeliveryDiningIcon />Chuyển hàng đến người nhận</a></li>
+                        <li><a href='/transaction/order'> <CheckIcon /> Xác nhận trạng thái đơn hàng</a></li>
+                    </ul>
+                </div>
+            </div>
+        </ThemeProvider>
     );
 };
 

@@ -18,12 +18,12 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Paper from '@mui/material/Paper';
-import {useEffect, useMemo, useState} from "react";
+import { useEffect, useMemo, useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import { redirect, useNavigate } from "react-router-dom";
 import Navbar from '../../component/layout/Navbar';
-import {listGatheringPoints, listTransactionPoints} from "../../api/point";
-
+import { listGatheringPoints, listTransactionPoints } from "../../api/point";
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 const theme = createTheme({
     typography: {
         "fontFamily": '"Montserrat", "sans-serif"',
@@ -93,10 +93,7 @@ const headCells = [
         id: 'gatheringPoint',
         label: 'Điểm tập kết',
     },
-    {
-        id: 'action',
-        label: 'Chỉnh sửa'
-    }
+
 ];
 
 function EnhancedTableHead(props) {
@@ -204,7 +201,7 @@ export default function ManagePlace() {
     return (
         <ThemeProvider theme={theme}>
             <div>
-                <Navbar/>
+                <Navbar />
             </div>
             <div class="drawer lg:drawer-open">
                 <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
@@ -285,9 +282,10 @@ export default function ManagePlace() {
                     <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
                         <li><a href='/dashboard'><SpaceDashboardIcon />Bảng điều khiển</a></li>
                         <li><a class="bg-neutral text-primary" href='/manage-transactionPoint'><AddLocationIcon />Quản lý điểm giao dịch</a></li>
-                        <li><a   href='/manage-gatheringPoint'><AddLocationIconAlt /> Quản lý điểm tập kết</a></li>
-                        <li><a href='/leader/manage'><PersonAddIcon />Quản lý tài khoản trưởng điểm</a></li>
-                        <li><a href="/profile"><AccountCircleIcon />Cá nhân</a></li>
+                        <li><a href='/manage-gatheringPoint'><AddLocationIconAlt /> Quản lý điểm tập kết</a></li>
+                        <li><a href='/leader/create'><PersonAddIcon />Tạo tài khoản trưởng điểm</a></li>
+                        <li><a href='/leader/manage'><ManageAccountsIcon />Quản lý tài khoản trưởng điểm</a></li>
+
                     </ul>
                 </div>
             </div>

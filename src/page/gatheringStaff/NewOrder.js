@@ -36,16 +36,16 @@ const AddNewOrder = () => {
     };
 
     const columns = [
-        { field: 'id', headerName: 'ID', flex: 2, sortable: false },
+        { field: 'id', headerName: 'ID', flex: 1, sortable: false },
         { field: 'sendFrom', headerName: 'Nơi gửi', flex: 2, sortable: false },
         { field: 'sendTo', headerName: 'Nơi nhận', flex: 2, sortable: false },
         { field: 'departureTime', headerName: 'Thời gian gửi', flex: 2, sortable: false },
         { field: 'arrivalTime', headerName: 'Thời gian nhận', flex: 2, sortable: false },
-        { field: 'status', headerName: 'Trạng thái', flex: 1, sortable: true },
+        { field: 'status', headerName: 'Trạng thái', flex: 2, sortable: true },
         {
             field: 'action',
             headerName: 'Action',
-            flex: 2,
+            flex: 1,
             sortable: false,
             renderCell: (params) => (
                 <>
@@ -123,9 +123,8 @@ const AddNewOrder = () => {
                 <div class="drawer-side">
                     <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
                     <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
-                        <li><a class="bg-neutral text-primary"><AddIcon />Đơn mới</a></li>
+                        <li><a class="bg-neutral text-primary" ><AddIcon />Đơn mới</a></li>
                         <li><a href='/order/delivery/gathering'><SwapHorizIcon />Tạo đơn chuyển đi</a></li>
-                        <li><a href="/profile"><AccountCircleIcon />Cá nhân</a></li>
                     </ul>
                 </div>
             </div>

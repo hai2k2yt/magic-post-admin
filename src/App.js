@@ -42,14 +42,12 @@ const tStaff = [
     { path: '/order/delivery/customer', component: <CreateDeliveryToCustomer /> },
     { path: '/order/delivery/gathering', component: <CreateDeliveryToGatheringPoint /> },
     { path: '/order/manage', component: <ManageOrder /> },
-    { path: '/order/gathering/:id', component: <ConfirmOrderArrival /> },
+    // { path: '/transaction/order/:id', component: <ConfirmOrderArrival /> },
 ]
 const gStaff = [
     { path: '/gathering/order/:id', component: <NewOrder /> },
-    { path: '/order/create', component: <CreateOrder /> },
     { path: '/order/delivery/gathering/:id', component: <CreateDeliveryToGatheringPoint /> },
     { path: '/order/delivery/transaction/:id', component: <CreateDeliveryToTransactionPoint /> },
-    { path: '/order/manage', component: <ManageOrder /> },
 ]
 
 const unauthorizedUser = [

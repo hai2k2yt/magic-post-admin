@@ -24,7 +24,7 @@ const Register = () => {
     };
 
     return (
-        <form className="m-10" onSubmit={handleRegister}>
+        <form className="m-5" onSubmit={handleRegister}>
             <div className="mb-6">
                 <label htmlFor="username"
                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tên</label>

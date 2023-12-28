@@ -41,6 +41,7 @@ const CreateLeaderAccount = () => {
                         <Typography variant='h4' fontWeight={700} mt={5}>
                             Tạo tài khoản trưởng điểm
                         </Typography>
+
                         <Register />
 
                     </div>
@@ -54,7 +55,7 @@ const CreateLeaderAccount = () => {
                         <li><a href='/manage-gatheringPoint'><AddLocationIconAlt /> Quản lý điểm tập kết</a></li>
                         <li><a class="bg-neutral text-primary" href='/leader/create'><PersonAddIcon />Tạo tài khoản trưởng điểm</a></li>
                         <li><a  href='/leader/manage'><ManageAccountsIcon />Quản lý tài khoản trưởng điểm</a></li>
-                        <li><a href="/profile"><AccountCircleIcon />Cá nhân</a></li>
+                       
                     </ul>
                 </div>
             </div>
