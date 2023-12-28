@@ -24,6 +24,7 @@ import { redirect, useNavigate } from "react-router-dom";
 import Navbar from '../../component/layout/Navbar';
 import { listGatheringPoints, listTransactionPoints } from "../../api/point";
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import Typography from '@mui/material/Typography';
 const theme = createTheme({
     typography: {
         "fontFamily": '"Montserrat", "sans-serif"',
@@ -209,6 +210,9 @@ export default function ManagePlace() {
                     {/* <!-- Page content here --> */}
                     <div class="m-10">
                         <Box sx={{ width: '100%' }}>
+                        <Typography variant='h4' fontWeight={700} marginBottom={3}>
+                                Quản lý điểm giao dịch 
+                            </Typography>
                             <Paper sx={{ width: '100%', mb: 2 }}>
                                 <TableContainer>
                                     <Table
@@ -283,7 +287,7 @@ export default function ManagePlace() {
                         <li><a href='/dashboard'><SpaceDashboardIcon />Bảng điều khiển</a></li>
                         <li><a class="bg-neutral text-primary" href='/manage-transactionPoint'><AddLocationIcon />Quản lý điểm giao dịch</a></li>
                         <li><a href='/manage-gatheringPoint'><AddLocationIconAlt /> Quản lý điểm tập kết</a></li>
-                        <li><a href='/leader/create'><PersonAddIcon />Tạo tài khoản trưởng điểm</a></li>
+                        <li><a href='/create-account'><PersonAddIcon />Tạo tài khoản trưởng điểm</a></li>
                         <li><a href='/leader/manage'><ManageAccountsIcon />Quản lý tài khoản trưởng điểm</a></li>
 
                     </ul>

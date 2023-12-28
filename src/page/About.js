@@ -4,7 +4,6 @@ import BodyAbout from '../component/layout/BodyAbout';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import '../index.css'
 import Footer from '../component/layout/Footer';
-import { useRef } from 'react';
 
 export default function Home() {
     const theme = createTheme({

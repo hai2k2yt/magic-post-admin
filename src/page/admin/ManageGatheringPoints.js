@@ -11,7 +11,7 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
-import { createTheme, ThemeProvider } from '@mui/material';
+import { createTheme, ThemeProvider, Typography } from '@mui/material';
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import AddLocationIconAlt from '@mui/icons-material/AddLocationAlt';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -208,6 +208,9 @@ export default function ManageGatheringPoint() {
                     {/* <!-- Page content here --> */}
                     <div class="m-10">
                         <Box sx={{ width: '100%' }}>
+                            <Typography variant='h4' fontWeight={700} marginBottom={3}>
+                                Quản lý điểm tập kết
+                            </Typography>
                             <Paper sx={{ width: '100%', mb: 2 }}>
                                 <TableContainer>
                                     <Table
@@ -280,7 +283,7 @@ export default function ManageGatheringPoint() {
                         <li><a href='/dashboard'><SpaceDashboardIcon />Bảng điều khiển</a></li>
                         <li><a href='/manage-transactionPoint'><AddLocationIcon />Quản lý điểm giao dịch</a></li>
                         <li><a class="bg-neutral text-primary" href='/manage-gatheringPoint'><AddLocationIconAlt /> Quản lý điểm tập kết</a></li>
-                        <li><a href='/leader/create'><PersonAddIcon />Tạo tài khoản trưởng điểm</a></li>
+                        <li><a href='/create-account'><PersonAddIcon />Tạo tài khoản trưởng điểm</a></li>
                         <li><a href='/leader/manage'><ManageAccountsIcon />Quản lý tài khoản trưởng điểm</a></li>
                     </ul>
                 </div>

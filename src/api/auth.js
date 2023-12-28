@@ -1,6 +1,6 @@
 import {get, post} from '../helpers/api_helpers'
 
-export const login = user => post('/login', user);
+export const login = (body) => post('/auth/authenticate', body);
 
 export const register = (params) => post('/register', params)
 

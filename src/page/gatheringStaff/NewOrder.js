@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Typography from '@mui/material/Typography';
 import { useNavigate, useParams } from "react-router-dom";
-import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Navbar from '../../component/layout/Navbar';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';

@@ -12,8 +12,12 @@ import { useNavigate } from 'react-router-dom';
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
+import Typography from '@mui/material/Typography';
+import InventoryIcon from '@mui/icons-material/Inventory';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 
-const ManageOrder = () => {
+
+const TransactionStatitstic = () => {
     const navigate = useNavigate();
     const [searchOrder, setSearchOrder] = useState('');
     const [selectedStatus, setSelectedStatus] = useState('');
@@ -125,8 +129,30 @@ const ManageOrder = () => {
 
     return (
         <div>
-            {/* Search Fields */}
+
+            
             <div class='mb-10'>
+                <Typography variant="h4" fontWeight={700} gutterBottom component="div">
+                    Thống kê đơn hàng
+                </Typography>
+                <div class="stats shadow mb-10">
+                    <div class="stat">
+                        <div class="stat-figure text-primary">
+                            <InventoryIcon />
+                        </div>
+                        <div class="stat-title">Đơn hàng thành công</div>
+                        <div class="stat-value text-primary">25.6K</div>
+                    </div>
+
+                    <div class="stat">
+                        <div class="stat-figure text-secondary">
+                            <LocalShippingIcon />
+                        </div>
+                        <div class="stat-title">Đơn hàng hoàn lại</div>
+                        <div class="stat-value text-secondary">2.6K</div>
+                    </div>
+                </div>
+                {/* Search Fields */}
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
                         <TextField
@@ -168,4 +194,4 @@ const ManageOrder = () => {
     );
 };
 
-export default ManageOrder;
+export default TransactionStatitstic;

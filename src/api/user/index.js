@@ -2,7 +2,7 @@ import {del, get, post, put} from '../../helpers/api_helpers'
 
 export const listUsers = () => get(`/users`)
 
-export const createUser = (type, body) => post(`/users?type=${type}`, body)
+export const createUser = (body, type) => post(body, `/users?type=${type}`)
 
 export const createTransactionStaff = (transactionPointId, body) => post(`/transaction-points/${transactionPointId}/transaction-staffs`, body)
 

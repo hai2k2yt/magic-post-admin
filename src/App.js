@@ -7,12 +7,9 @@ import StatisticOrder from "./component/layout/StatisticOrder";
 import ViewOrder from "./page/ViewOrder";
 import CreateOrder from "./page/transactionStaff/CreateOrder";
 import CreateDeliveryToGatheringPoint from "./page/gatheringStaff/CreateDeliveryToGatheringPoint";
-import CreateLeaderAccount from "./page/admin/CreateLeaderAccount";
+import CreateAccount from "./page/admin/CreateAccount";
 import CreateDeliveryToCustomer from "./page/transactionStaff/CreateDeliveryToCustomer";
-import ManageOrder from "./component/layout/StatisticAllOrder";
 import About from './page/About';
-import CreateStaffAccount from './page/leader/CreateStaffAccount';
-import Profile from './page/Profile';
 import { React } from 'react';
 import Layout from './component/Layout';
 import Dashboard from './page/admin/Dashboard';
@@ -20,28 +17,32 @@ import NewOrder from './page/gatheringStaff/NewOrder';
 import MangageTransactionPoint from './page/admin/ManageTransactionPoint';
 import ManageLeaderAccount from './page/admin/ManageLeaderAccount';
 import OrderTransactionPoint from './page/transactionStaff/OrderTransactionPoint';
-import ConfirmOrderArrival from "./page/transactionStaff/ConfirmOrderArrival";
+import DashboardTransaction from './page/transactionStaff/DashboardTransaction';
+import ROLES from './page/auth/Role';
+import NotFound from './page/NotFound';
+// import ConfirmOrderArrival from "./page/transactionStaff/ConfirmOrderArrival";
 import CreateDeliveryToTransactionPoint from "./page/gatheringStaff/CreateDeliveryToTransactionPoint";
 
 const admin = [
     { path: '/manage-gatheringPoint', component: <ManageGatheringPoint /> },
     { path: '/manage-transactionPoint', component: <MangageTransactionPoint /> },
-    { path: '/order/statistics', component: <StatisticOrder /> },
     { path: '/leader/manage', component: <ManageLeaderAccount /> },
-    { path: '/leader/create', component: <CreateLeaderAccount /> }
+    { path: '/dashboard', component: <Dashboard /> },
+    { path: '/create-account', component: <CreateAccount /> }
 
 ];
 const leader = [
-    { path: '/createStaffAccount', component: <CreateStaffAccount /> },
-    { path: '/profile', component: <Profile /> },
+    { path: '/create-account', component: <CreateAccount /> },
     { path: '/dashboard', component: <Dashboard /> },
+    // { path: '/dashboard/leader', component: <Dashboard /> },
 ]
 const tStaff = [
     { path: '/order/create', component: <CreateOrder /> },
-    { path: '/transaction/order', component: <OrderTransactionPoint />},
+    { path: '/transaction/order', component: <OrderTransactionPoint /> },
     { path: '/order/delivery/customer', component: <CreateDeliveryToCustomer /> },
     { path: '/order/delivery/gathering', component: <CreateDeliveryToGatheringPoint /> },
-    { path: '/order/manage', component: <ManageOrder /> },
+    { path: '/dashboard/transaction', component: <DashboardTransaction /> },
+    // { path: '/order/manage', component: <ManageOrder /> },
     // { path: '/transaction/order/:id', component: <ConfirmOrderArrival /> },
 ]
 const gStaff = [
@@ -57,34 +58,44 @@ const unauthorizedUser = [
     { path: '/order/view', component: <ViewOrder /> },
 ]
 
+const role = localStorage.getItem('role');
+
+
 function App() {
     return (
         <Routes>
             <Route path="/" element={<Layout />}>
+                <Route key='/not-found' path='/*' element={<NotFound/>}/>
+
                 {/* public routes */}
                 {unauthorizedUser.map((route) => (
                     <Route key={route.path} path={route.path} element={route.component} />
                 ))}
 
                 {/*transaction staff routes */}
-                {tStaff.map((route) => (
-                    <Route key={route.path} path={route.path} element={route.component} />
-                ))}
+                {role === ROLES[4] && (
+                    tStaff.map((route) => (
+                        <Route key={route.path} path={route.path} element={route.component} />
+                    ))
+                )}
 
                 {/* gathering staff routes */}
-                {gStaff.map((route) => (
-                    <Route key={route.path} path={route.path} element={route.component} />
-                ))}
+                {role === ROLES[3] && (
+                    gStaff.map((route) => (
+                        <Route key={route.path} path={route.path} element={route.component} />
+                    )))}
 
                 {/* leader routes */}
-                {leader.map((route) => (
-                    <Route key={route.path} path={route.path} element={route.component} />
-                ))}
+                {(role === ROLES[2] || role === ROLES[1]) && (
+                    leader.map((route) => (
+                        <Route key={route.path} path={route.path} element={route.component} />
+                    )))}
 
                 {/* admin routes */}
-                {admin.map((route) => (
-                    <Route key={route.path} path={route.path} element={route.component} />
-                ))}
+                {(role === ROLES[0] &&
+                    admin.map((route) => (
+                        <Route key={route.path} path={route.path} element={route.component} />
+                    )))}
             </Route>
         </Routes>
     );
