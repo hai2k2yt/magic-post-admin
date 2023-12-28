@@ -15,7 +15,7 @@ import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import AddIcon from '@mui/icons-material/Add';
 import {FormControl, IconButton, InputLabel, MenuItem, Select} from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import {createP2PGatheringOrder, listP2PGatheringOrders} from "../../api/transport";
+import {createP2PGatheringOrder, getP2PExpress, listP2PGatheringOrders} from "../../api/transport";
 import {listGatheringTransactionPoints} from "../../api/point";
 
 const theme = createTheme({
@@ -51,10 +51,18 @@ const CreateDeliveryToGatheringPoint = () => {
 
         const handleCreateDelivery = async () => {
             try {
+                const expressList = await Promise.all(selectedRows.map(async (element) => {
+                    const datas = await getP2PExpress(element);
+                    return datas[0];
+                }));
+
+
                 const res = await createP2PGatheringOrder(id, {
-                    expressOrderIdList: selectedRows,
+                    expressOrderIdList: expressList,
                     destinationPointId: selectedPoint
                 })
+
+                console.log(res);
             } catch (e) {
                 console.error(e)
             }

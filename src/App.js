@@ -47,8 +47,8 @@ const tStaff = [
 const gStaff = [
     { path: '/gathering/order/:id', component: <NewOrder /> },
     { path: '/order/create', component: <CreateOrder /> },
-    { path: '/order/delivery/gathering/:id', component: <CreateDeliveryToGatheringPoint /> },
-    { path: '/order/delivery/transaction/:id', component: <CreateDeliveryToTransactionPoint /> },
+    { path: '/order/delivery/:id/gathering', component: <CreateDeliveryToGatheringPoint /> },
+    { path: '/order/delivery/:id/transaction', component: <CreateDeliveryToTransactionPoint /> },
     { path: '/order/manage', component: <ManageOrder /> },
 ]
 

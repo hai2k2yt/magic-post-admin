@@ -22,3 +22,6 @@ export const createP2PGatheringOrder = (gatheringPointId, body) => post(`/gather
 
 export const listP2POrders = (pointId) => get(`/points/${pointId}/p2p-transport-orders`);
 
+export const getP2PExpress = (p2pId) => get(`/p2p-transport-orders/${p2pId}/express-orders`);
+
+export const getP2CExpress = (p2cId) => get(`/p2c-transport-orders/${p2cId}/express-orders`);
