@@ -3,15 +3,34 @@ import React, { useState } from "react";
 import ROLES from "../../page/auth/Role";
 import { Navigate } from "react-router-dom";
 import MenuIcon from '@mui/icons-material/Menu';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import { Typography } from "@mui/material";
 
 const role = localStorage.getItem('role');
 const name = localStorage.getItem('name');
+const email = localStorage.getItem('email');
+const phone = localStorage.getItem('phone');
 const handleLogOut = () => {
-    localStorage.removeItem('role'); 
-    localStorage.removeItem('name'); 
+    localStorage.removeItem('role');
+    localStorage.removeItem('name');
+    localStorage.removeItem('email');
+    // localStorage.removeItem('phone');
     <Navigate to='/home' />
 }
 const Navbar = () => {
+    const [open, setOpen] = React.useState(false);
+
+    console.log(name, role);
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
     return (
         <div class="navbar bg-primary text-neutral">
             <div class="flex-1">
@@ -96,11 +115,80 @@ const Navbar = () => {
                 </div>
                 <ul tabindex="0" class="mr-3 menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-secondary text-base-100 rounded-lg w-52">
                     <li>
-                        <a href="/profile" class="justify-between">
+                        <a onClick={handleClickOpen} class="justify-between">
                             Cá nhân
                         </a>
+                        {/* Profile Dialog */}
+                        <Dialog
+                            open={open}
+                            onClose={handleClose}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                            fullWidth={true}
+                        >
+                            <DialogContent>
+                                <Typography variant='h5' fontWeight={700} align='center'>
+                                    Thông tin cá nhân
+                                </Typography>
+                                <div class="bg-white my-12 pb-6 w-full justify-center items-center overflow-hidden  rounded-lg shadow-sm mx-auto">
+                                    <div class="relative h-40">
+                                        <img class="absolute h-full w-full object-cover" src="https://t4.ftcdn.net/jpg/05/31/79/83/360_F_531798391_XFz7gyPmDRTAfiEE5sRjFu5NpKrJt4rC.jpg" />
+                                    </div>
+                                    <div class="relative shadow mx-auto h-24 w-24 -my-12 rounded-full overflow-hidden border-2">
+                                        <img class="object-cover w-full h-full" src="https://img.myloview.com/stickers/default-avatar-profile-icon-vector-social-media-user-photo-700-205577532.jpg" />
+                                    </div>
+                                    <div class="mt-16 ">
+                                        <h3 class=" text-center text-xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
+                                            {name}
+                                        </h3>
+                                        <div class=" text-center text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                                            <i class="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
+                                            {
+                                                role === ROLES[0] && (
+                                                    <p>Lãnh đạo công ty</p>
+                                                )
+                                            }
+                                            {
+                                                role === ROLES[1] && (
+                                                    <>Trưởng điểm tập kết</>
+                                                )
+                                            }
+                                            {
+                                                role === ROLES[2] && (
+                                                    <>Trưởng điểm giao dịch</>
+                                                )
+                                            }
+                                            {
+                                                role === ROLES[3] && (
+                                                    <>Nhân viên tập kết</>
+                                                )
+                                            }
+                                            {
+                                                role === ROLES[4] && (
+                                                    <>Nhân viên giao dịch</>
+                                                )
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="divider divider-primary w-1/2 mx-auto"></div>
+                                    <div class="text-center mb-2 text-blueGray-600 ">
+                                        <i class="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>
+                                        Số điện thoại: 0123456789
+                                    </div>
+                                    <div class="text-center mb-2 text-blueGray-600">
+                                        <i class="fas fa-university mr-2 text-lg text-blueGray-400"></i>
+                                        Email: {email}
+                                    </div>
+                                </div>
+
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleClose}>Đóng</Button>
+
+                            </DialogActions>
+                        </Dialog>
                     </li>
-                    <li><a href="/home" onClick={handleLogOut}>Đăng xuất</a></li>
+                    <li><a onClick={handleLogOut}>Đăng xuất</a></li>
                 </ul>
             </div>
             {/*Menu for each roles*/}

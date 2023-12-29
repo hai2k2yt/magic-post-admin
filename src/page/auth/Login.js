@@ -27,7 +27,6 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const [emailErr, setEmailErr] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const validateEmail = (value) => {
         var regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
         if (regex.test(value) || value === '') {
@@ -48,6 +47,12 @@ const Login = () => {
             localStorage.removeItem('name'); 
         }
 
+        if (localStorage.getItem('email') !== null) {
+            localStorage.removeItem('email');
+        } 
+        // if (localStorage.getItem('phone') !== null) {
+        //     localStorage.removeItem('phone'); 
+        // }
         if (emailErr === '' && errorMsg === '') {
             try {
                 
@@ -60,7 +65,10 @@ const Login = () => {
                 const token = res.accessToken;
                 const decoded = jwtDecode(token);
                 const role = decoded.role;
-                const name = decoded.username;
+                const userEmail = decoded.email;
+                // const phone = decoded.phone;
+                const name = res.username;
+                localStorage.setItem('email', userEmail);
                 localStorage.setItem('name', name);
                 // console.log(role);
                 // save role into localStorage 
