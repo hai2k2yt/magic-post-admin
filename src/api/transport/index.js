@@ -2,6 +2,9 @@ import {get, post, put} from '../../helpers/api_helpers'
 
 export const confirmP2PTransactionArrival = (transactionPointId, p2pTransportOrderId) => put(`/transaction-points/${transactionPointId}/p2p-transport-orders/${p2pTransportOrderId}/confirm-arrival`)
 
+export const confirmMultiP2PTransactionArrival = (transactionPointId, body) => put(`/transaction-points/${transactionPointId}/p2p-transport-orders/confirm-arrival`, body)
+
+
 export const confirmP2CTransactionDelivery = (transactionPointId, p2cTransportOrderId, expressOrderId, body) => put(`/transaction-points/${transactionPointId}/p2c-transport-orders/${p2cTransportOrderId}/express-orders/${expressOrderId}/confirm-delivery`, body)
 
 export const cancelP2CTransaction = (transactionPointId, p2cTransportOrderId, expressOrderId, body) => put(`/transaction-points/${transactionPointId}/p2c-transport-orders/${p2cTransportOrderId}/express-orders/${expressOrderId}/cancel`, body)
@@ -22,3 +25,6 @@ export const createP2PGatheringOrder = (gatheringPointId, body) => post(`/gather
 
 export const listP2POrders = (pointId) => get(`/points/${pointId}/p2p-transport-orders`);
 
+export const getP2PExpress = (p2pId) => get(`/p2p-transport-orders/${p2pId}/express-orders`);
+
+export const getP2CExpress = (p2cId) => get(`/p2c-transport-orders/${p2cId}/express-orders`);

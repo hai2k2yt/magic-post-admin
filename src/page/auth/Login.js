@@ -7,6 +7,8 @@ import { jwtDecode } from "jwt-decode";
 import roles from './Role';
 
 const Login = () => {
+    const navigate = useNavigate();
+
     const theme = createTheme({
         typography: {
             "fontFamily": '"Montserrat", "sans-serif"',

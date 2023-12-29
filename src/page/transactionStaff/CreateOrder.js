@@ -25,6 +25,7 @@ import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
+import {useParams} from "react-router-dom";
 
 const theme = createTheme({
     typography: {
@@ -39,10 +40,10 @@ const theme = createTheme({
         },
         third: '#B6BBC4'
     }
-
 })
 
 const formatDatetime = new Intl.DateTimeFormat('vi-VN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
 const defaultValues = {
     sender: {
         name: '',
@@ -151,6 +152,7 @@ const validationSchema = yup.object().shape({
 
 
 const CreateOrder = () => {
+    const { id } = useParams();
     const methods = useForm({
         resolver: yupResolver(validationSchema),
         defaultValues
@@ -175,8 +177,8 @@ const CreateOrder = () => {
     const onSubmit = async (data) => {
         try {
             console.log(data);
-            await createOrder('2', data)
-        } catch (e) {
+            await createOrder(id, data)
+        }catch (e) {
             console.log(e);
         }
     };

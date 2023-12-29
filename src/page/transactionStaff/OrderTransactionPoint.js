@@ -32,40 +32,6 @@ const theme = createTheme({
 
 })
 const AddNewOrder = () => {
-    //     const [gatheringPoints, setGatheringPoints] = useState([{ id: '', orderIds: [''] }]);
-
-    //     const handleAddGatheringPoint = () => {
-    //         setGatheringPoints([...gatheringPoints, { id: '', orderIds: [''] }]);
-    //     };
-
-    //     const handleRemoveGatheringPoint = (index) => {
-    //         const newGatheringPoints = [...gatheringPoints];
-    //         newGatheringPoints.splice(index, 1);
-    //         setGatheringPoints(newGatheringPoints);
-    //     };
-
-    //     const handleAddOrderId = (gatheringPointIndex) => {
-    //         const newGatheringPoints = [...gatheringPoints];
-    //         newGatheringPoints[gatheringPointIndex].orderIds.push('');
-    //         setGatheringPoints(newGatheringPoints);
-    //     };
-
-    //     const handleRemoveOrderId = (gatheringPointIndex, orderIdIndex) => {
-    //         const newGatheringPoints = [...gatheringPoints];
-    //         newGatheringPoints[gatheringPointIndex].orderIds.splice(orderIdIndex, 1);
-    //         setGatheringPoints(newGatheringPoints);
-    //     };
-
-    //     const handleInputChange = (e, gatheringPointIndex, orderIdIndex) => {
-    //         const newGatheringPoints = [...gatheringPoints];
-    //         if (orderIdIndex !== undefined) {
-    //             newGatheringPoints[gatheringPointIndex].orderIds[orderIdIndex] = e.target.value;
-    //         } else {
-    //             newGatheringPoints[gatheringPointIndex].id = e.target.value;
-    //         }
-    //         setGatheringPoints(newGatheringPoints);
-    //     };
-
     const columns = [
         { field: 'id', headerName: 'ID', width: 70 },
         { field: 'actualWeight', headerName: 'Cân nặng hàng hóa', width: 130 },
@@ -104,14 +70,6 @@ const AddNewOrder = () => {
         { id: 9, actualWeight: '9.4', currentPoint: 'Cầu Giấy', destinationPoint: 'Hà Nội', status: 'Đang vận chuyển' },
     ];
 
-    // function RenderCellWithViewButton(params) {
-    //     const navigate = useNavigate();
-    //     return <PageviewIcon onClick={() => handleView(navigate, params.row.id)} />;
-    // }
-
-    // const handleView = (navigate, id) => {
-    //     navigate(`/leader/manage/${id}`);
-    // };
     return (
         <ThemeProvider theme={theme}>
             <div>

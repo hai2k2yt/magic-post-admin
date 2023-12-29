@@ -25,7 +25,7 @@ const theme = createTheme({
     }
 
 })
-const AddNewOrder = () => {
+const ConfirmGatheringOrderArrival = () => {
     let { id } = useParams();
     const navigate = useNavigate()
     const [orders, setOrders] = useState([])
@@ -131,4 +131,4 @@ const AddNewOrder = () => {
     );
 };
 
-export default AddNewOrder;
+export default ConfirmGatheringOrderArrival;

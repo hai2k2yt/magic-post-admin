@@ -1,5 +1,7 @@
 
 import React, { useState } from "react";
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import { Badge, Notifications, Typography } from "@mui/material";
 import ROLES from "../../page/auth/Role";
 import { Navigate } from "react-router-dom";
 import MenuIcon from '@mui/icons-material/Menu';
@@ -21,10 +23,18 @@ const handleLogOut = () => {
     localStorage.removeItem("phone");
    
 }
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import listUsers from "../../api/user";
+
+
 const Navbar = () => {
     const [open, setOpen] = React.useState(false);
 
-    console.log(name, role);
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -32,6 +42,7 @@ const Navbar = () => {
     const handleClose = () => {
         setOpen(false);
     };
+
     return (
         <div class="navbar bg-primary text-neutral">
             <div class="flex-1">

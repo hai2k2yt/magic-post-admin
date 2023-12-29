@@ -15,7 +15,7 @@ axiosApi.interceptors.response.use(
 
 axiosApi.interceptors.request.use(async (config) => {
     const customHeaders = {};
-    const accessToken = window.localStorage.getItem('accessToken');
+    const accessToken = window.localStorage.getItem('token');
     if (accessToken) {
         customHeaders.Authorization = `Bearer ${accessToken}`;
     }
@@ -31,9 +31,9 @@ axiosApi.interceptors.request.use(async (config) => {
 
 export default axiosApi;
 
-export async function get(url, config = {}) {
+export async function get(url, params = {}, config = {}) {
     // eslint-disable-next-line no-return-await
-    return await axiosApi.get(url, {...config}).then(response => response.data)
+    return await axiosApi.get(url, {params, ...config}).then(response => response.data)
 }
 
 // export async function getBlob(url, config = {}) {
@@ -66,13 +66,13 @@ export async function postMultipart(
 
 export async function put(url, data, config = {}) {
     return axiosApi
-        .put(url, {...data}, {...config})
+        .put(url, data, {...config})
         .then(response => response.data)
 }
 
 export async function patch(url, data, config = {}) {
     return axiosApi
-        .patch(url, {...data}, {...config})
+        .patch(url, ...data, {...config})
         .then(response => response.data)
 }
 

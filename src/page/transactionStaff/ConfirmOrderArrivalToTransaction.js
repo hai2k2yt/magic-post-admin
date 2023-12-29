@@ -15,16 +15,17 @@ import { useNavigate, useParams } from 'react-router-dom';
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import CheckIcon from '@mui/icons-material/Check';
 import { createTheme, ThemeProvider } from '@mui/material';
-import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import AddIcon from '@mui/icons-material/Add';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard'
 import Navbar from '../../component/layout/Navbar';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { createP2PGatheringOrder, listP2PGatheringOrders } from "../../api/transport";
+import {
+    confirmMultiP2PTransactionArrival,
+    listP2PTransactionOrders
+} from "../../api/transport";
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
 
-const ConfirmOrderArrival = () => {
+const ConfirmOrderArrivalToTransaction = () => {
     const navigate = useNavigate();
     let { id } = useParams();
     const [orders, setOrders] = useState([]);
@@ -40,7 +41,7 @@ const ConfirmOrderArrival = () => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await listP2PGatheringOrders(id);
+                const response = await listP2PTransactionOrders(id);
                 const data = response?.map(item => (
                     {
                         id: item.id,
@@ -48,7 +49,6 @@ const ConfirmOrderArrival = () => {
                         sendTo: item.to.name,
                         departureTime: item.departureTime,
                         arrivalTime: item.arrivalTime,
-                        expressOrders: item.expressOrders,
                         status: item.status
                     }
                 ))
@@ -65,13 +65,12 @@ const ConfirmOrderArrival = () => {
         navigate(`/order-detail/${orderId}`);
     };
 
-    const sendOrdersToTransaction = async () => {
-        await createP2PGatheringOrder(2, {
-            expressOrderIdList: orderSelection,
-            destinationPointId: 1
-        })
+    const confirmTransactionArrival = async () => {
+        await confirmMultiP2PTransactionArrival(id, orderSelection)
         navigate('/order/manage');
     }
+
+
 
 
     const columns = [
@@ -80,7 +79,6 @@ const ConfirmOrderArrival = () => {
         { field: 'sendTo', headerName: 'Nơi nhận', flex: 2, sortable: false },
         { field: 'departureTime', headerName: 'Thời gian gửi', flex: 2, sortable: false },
         { field: 'arrivalTime', headerName: 'Thời gian nhận', flex: 2, sortable: false },
-        { field: 'expressOrders', headerName: 'Express order', flex: 2, sortable: false },
         { field: 'status', headerName: 'Trạng thái đơn hàng', flex: 1, sortable: true },
         {
             field: 'action',
@@ -89,11 +87,8 @@ const ConfirmOrderArrival = () => {
             sortable: false,
             renderCell: (params) => (
                 <>
-                    <IconButton onClick={() => handleViewDetail(params.row.OrderID)}>
+                    <IconButton onClick={() => handleViewDetail(params.row.id)}>
                         <VisibilityIcon />
-                    </IconButton>
-                    <IconButton onClick={() => handleViewDetail(params.row.OrderID)}>
-                        <CheckIcon />
                     </IconButton>
                 </>
 
@@ -189,7 +184,7 @@ const ConfirmOrderArrival = () => {
                             />
                             <div class="flex justify-end mt-5">
                                 <Button variant="contained" sx={{ bgcolor: 'primary.main' }} disabled={!orderSelection.length} onClick={() => setSendOrderDialog(true)}>
-                                    Gửi đơn hàng
+                                    Xác nhận đến
                                 </Button>
                             </div>
                             <Dialog
@@ -200,14 +195,14 @@ const ConfirmOrderArrival = () => {
                                 <DialogTitle>Send Order</DialogTitle>
                                 <DialogContent dividers>
                                     <Typography>
-                                        Are you want to send {orderSelection.length} items?
+                                        Xác nhận {orderSelection.length} đơn hàng đã đến điểm tập kết?
                                     </Typography>
                                 </DialogContent>
                                 <DialogActions>
                                     <Button onClick={() => setSendOrderDialog(false)}>
                                         Cancel
                                     </Button>
-                                    <Button onClick={sendOrdersToTransaction}>Ok</Button>
+                                    <Button onClick={confirmTransactionArrival}>Ok</Button>
                                 </DialogActions>
                             </Dialog>
                         </div>
@@ -230,4 +225,4 @@ const ConfirmOrderArrival = () => {
     );
 };
 
-export default ConfirmOrderArrival;
+export default ConfirmOrderArrivalToTransaction;
