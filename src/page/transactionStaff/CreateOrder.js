@@ -16,6 +16,7 @@ import {Controller, useFieldArray, useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {createOrder} from "../../api/order";
 import { LoadingButton } from '@mui/lab';
+import {useParams} from "react-router-dom";
 
 const defaultValues = {
     sender: {
@@ -125,6 +126,7 @@ const validationSchema = yup.object().shape({
 
 
 const CreateOrder = () => {
+    const {id } = useParams();
     const methods = useForm({
         resolver: yupResolver(validationSchema),
         defaultValues
@@ -149,7 +151,7 @@ const CreateOrder = () => {
     const onSubmit = async (data) => {
         try {
             console.log(data);
-            await createOrder('2', data)
+            await createOrder(id, data)
         }catch (e) {
             console.log(e);
         }

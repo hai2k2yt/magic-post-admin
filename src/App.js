@@ -6,7 +6,7 @@ import ManageGatheringPoint from "./page/admin/ManageGatheringPoints";
 import StatisticOrder from "./component/layout/StatisticOrder";
 import ViewOrder from "./page/ViewOrder";
 import CreateOrder from "./page/transactionStaff/CreateOrder";
-import CreateDeliveryToGatheringPoint from "./page/gatheringStaff/CreateDeliveryToGatheringPoint";
+import CreateDeliveryGatheringToGatheringPoint from "./page/gatheringStaff/CreateDeliveryGatheringToGatheringPoint";
 import CreateLeaderAccount from "./page/admin/CreateLeaderAccount";
 import CreateDeliveryToCustomer from "./page/transactionStaff/CreateDeliveryToCustomer";
 import ManageOrder from "./component/layout/StatisticAllOrder";
@@ -16,12 +16,14 @@ import Profile from './page/Profile';
 import { React } from 'react';
 import Layout from './component/Layout';
 import Dashboard from './page/admin/Dashboard';
-import NewOrder from './page/gatheringStaff/ConfirmNewOrderGatheringPoint';
+import ConfirmOrderArrivalToGathering from './page/gatheringStaff/ConfirmNewOrderGatheringPoint';
 import MangageTransactionPoint from './page/admin/ManageTransactionPoint';
 import ManageLeaderAccount from './page/admin/ManageLeaderAccount';
 import OrderTransactionPoint from './page/transactionStaff/OrderTransactionPoint';
 import ConfirmOrderArrival from "./page/transactionStaff/ConfirmOrderArrival";
 import CreateDeliveryToTransactionPoint from "./page/gatheringStaff/CreateDeliveryToTransactionPoint";
+import CreateDeliveryTransactionToGatheringPoint
+    from "./page/transactionStaff/CreateDeliveryTransactionToGatheringPoint";
 
 const admin = [
     { path: '/manage-gatheringPoint', component: <ManageGatheringPoint /> },
@@ -37,18 +39,17 @@ const leader = [
     { path: '/dashboard', component: <Dashboard /> },
 ]
 const tStaff = [
-    { path: '/order/create', component: <CreateOrder /> },
+    { path: '/order/create/:id', component: <CreateOrder /> },
     { path: '/transaction/order', component: <OrderTransactionPoint />},
     { path: '/order/delivery/customer', component: <CreateDeliveryToCustomer /> },
-    { path: '/order/delivery/gathering', component: <CreateDeliveryToGatheringPoint /> },
+    { path: '/order/transaction/:id/gathering', component: <CreateDeliveryTransactionToGatheringPoint /> },
     { path: '/order/manage', component: <ManageOrder /> },
-    { path: '/order/gathering/:id', component: <ConfirmOrderArrival /> },
+    { path: '/order/transaction/:id', component: <ConfirmOrderArrival /> },
 ]
 const gStaff = [
-    { path: '/gathering/order/:id', component: <NewOrder /> },
-    { path: '/order/create', component: <CreateOrder /> },
-    { path: '/order/delivery/:id/gathering', component: <CreateDeliveryToGatheringPoint /> },
-    { path: '/order/delivery/:id/transaction', component: <CreateDeliveryToTransactionPoint /> },
+    { path: '/gathering/order/:id/arrival', component: <ConfirmOrderArrivalToGathering /> },
+    { path: '/order/gathering/:id/gathering', component: <CreateDeliveryGatheringToGatheringPoint /> },
+    { path: '/order/gathering/:id/transaction', component: <CreateDeliveryToTransactionPoint /> },
     { path: '/order/manage', component: <ManageOrder /> },
 ]
 

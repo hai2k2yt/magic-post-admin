@@ -16,7 +16,7 @@ import AddIcon from '@mui/icons-material/Add';
 import {FormControl, IconButton, InputLabel, MenuItem, Select} from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import {createP2PGatheringOrder, getP2PExpress, listP2PGatheringOrders} from "../../api/transport";
-import {getPointInventory, listGatheringTransactionPoints} from "../../api/point";
+import {getPointInventory, listGatheringPoints} from "../../api/point";
 
 const theme = createTheme({
     typography: {
@@ -33,11 +33,11 @@ const theme = createTheme({
     }
 
 })
-const CreateDeliveryToGatheringPoint = () => {
+const CreateDeliveryGatheringToGatheringPoint = () => {
         let {id} = useParams();
         const navigate = useNavigate()
         const [orders, setOrders] = useState([])
-        const [transactionPoints, setTransactionPoints] = useState([])
+        const [gatheringPoints, setGatheringPoints] = useState([])
         const [selectedPoint, setSelectedPoint] = useState(null)
         const [selectedRows, setSelectedRows] = useState([]);
 
@@ -51,12 +51,11 @@ const CreateDeliveryToGatheringPoint = () => {
 
         const handleCreateDelivery = async () => {
             try {
+
                 const res = await createP2PGatheringOrder(id, {
                     expressOrderIdList: selectedRows,
                     destinationPointId: selectedPoint
                 })
-
-                console.log(res);
             } catch (e) {
                 console.error(e)
             }
@@ -106,14 +105,14 @@ const CreateDeliveryToGatheringPoint = () => {
                     ))
                     setOrders(data);
 
-                    const gatherPlace = await listGatheringTransactionPoints(id);
+                    const gatherPlace = await listGatheringPoints();
                     const dataPlace = gatherPlace?.map(item => (
                         {
                             id: item.id,
                             address: `${item.address.street}, ${item.address.zipcode}/${item.address.commune}-${item.address.district}-${item.address.province}`
                         }
                     ))
-                    setTransactionPoints(dataPlace)
+                    setGatheringPoints(dataPlace)
                 } catch (e) {
                     console.log(e)
                 }
@@ -135,7 +134,7 @@ const CreateDeliveryToGatheringPoint = () => {
                         <div class="mx-10">
                             <div class='mt-10'>
                                 <Typography variant='h4' fontWeight={700} my={5}>
-                                    Chuyển hàng tới điểm giao dịch
+                                    Chuyển hàng tới điểm tập kết
                                 </Typography>
                             </div>
                             <div>
@@ -164,7 +163,7 @@ const CreateDeliveryToGatheringPoint = () => {
                                         label="Select point"
                                         onChange={handleChangeSelectedPoint}
                                     >
-                                        {transactionPoints.map(i => (
+                                        {gatheringPoints.map(i => (
                                             <MenuItem disabled={i.id === id} value={i.id}>{i.address}</MenuItem>
                                         ))}
                                     </Select>
@@ -194,4 +193,4 @@ const CreateDeliveryToGatheringPoint = () => {
     }
 ;
 
-export default CreateDeliveryToGatheringPoint;
+export default CreateDeliveryGatheringToGatheringPoint;
