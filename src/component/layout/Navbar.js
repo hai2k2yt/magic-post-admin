@@ -21,6 +21,7 @@ const Navbar = () => {
     const handleClose = () => {
         setOpen(false);
     };
+
     return (
         <div class="navbar bg-primary text-neutral">
             <div class="flex-1">
@@ -108,6 +109,7 @@ const Navbar = () => {
                         <a onClick={handleClickOpen} class="justify-between">
                             Cá nhân
                         </a>
+                        {/* Profile Dialog */}
                         <Dialog
                             open={open}
                             onClose={handleClose}

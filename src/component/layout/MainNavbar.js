@@ -1,8 +1,29 @@
 
 import React, { useState } from "react";
+import { Badge, Notifications, Typography } from "@mui/material";
+import MenuIcon from '@mui/icons-material/Menu';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
 
+const role = localStorage.getItem('role');
 
 const MainNavbar = () => {
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem('role')
+    }
+
     return (
         <div class="navbar bg-primary text-neutral">
             <div class="flex-1">
@@ -84,10 +105,74 @@ const MainNavbar = () => {
                     <li><a href="/home">Trang chủ</a></li>
                     <li><a href="/intro">Giới thiệu</a></li>
                     <li><a href="#searchOrder">Tra cứu bưu gửi</a></li>
-                    <li>
-                        <div><a class="btn btn-neutral" href="/login">Đăng nhập</a>
-                        </div>
-                    </li>
+                        {/* {role !== null
+                            ? <div class="dropdown dropdown-end">
+
+                                <div tabindex="0" role="button" class="mr-5 m-1 btn btn-ghost btn-circle avatar">
+                                    <div class="w-10 rounded-full">
+                                        <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                    </div>
+                                </div>
+                                <ul tabindex="0" class="mr-3 menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-secondary text-base-100 rounded-lg w-52">
+                                    <li>
+                                        <a onClick={handleClickOpen} class="justify-between">
+                                            Cá nhân
+                                        </a>
+                                        <Dialog
+                                            open={open}
+                                            onClose={handleClose}
+                                            aria-labelledby="alert-dialog-title"
+                                            aria-describedby="alert-dialog-description"
+                                            fullWidth={true}
+                                        >
+                                            <DialogContent>
+                                                <Typography variant='h5' fontWeight={700} align='center'>
+                                                    Thông tin cá nhân
+                                                </Typography>
+                                                <div class="bg-white my-12 pb-6 w-full justify-center items-center overflow-hidden  rounded-lg shadow-sm mx-auto">
+                                                    <div class="relative h-40">
+                                                        <img class="absolute h-full w-full object-cover" src="https://t4.ftcdn.net/jpg/05/31/79/83/360_F_531798391_XFz7gyPmDRTAfiEE5sRjFu5NpKrJt4rC.jpg" />
+                                                    </div>
+                                                    <div class="relative shadow mx-auto h-24 w-24 -my-12 rounded-full overflow-hidden border-2">
+                                                        <img class="object-cover w-full h-full" src="https://img.myloview.com/stickers/default-avatar-profile-icon-vector-social-media-user-photo-700-205577532.jpg" />
+                                                    </div>
+                                                    <div class="mt-16 ">
+                                                        <h3 class=" text-center text-xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
+                                                            Nguyễn Văn A
+                                                        </h3>
+                                                        <div class=" text-center text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                                                            <i class="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
+                                                            Trưởng điểm giao dịch Dịch Vọng Hậu, Cầu Giấy
+                                                        </div>
+                                                    </div>
+                                                    <div class="divider divider-primary w-1/2 mx-auto"></div>
+                                                    <div class="text-center mb-2 text-blueGray-600 ">
+                                                        <i class="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>
+                                                        Số điện thoại: 0123456789
+                                                    </div>
+                                                    <div class="text-center mb-2 text-blueGray-600">
+                                                        <i class="fas fa-university mr-2 text-lg text-blueGray-400"></i>
+                                                        Email: vanaaa@gmail.com
+                                                    </div>
+                                                </div>
+
+                                            </DialogContent>
+                                            <DialogActions>
+                                                <Button onClick={handleClose}>Đóng</Button>
+
+                                            </DialogActions>
+                                        </Dialog>
+                                    </li>
+                                    <li><a href="/home" onClick={handleLogout}>Đăng xuất</a></li>
+
+                                </ul>
+                            </div>
+                            : <div>
+                                <a class="btn btn-neutral" href="/login">Đăng nhập</a>
+                            </div>
+                        } */}
+                        <li><div><a class="btn btn-neutral" href="/login">Đăng nhập</a></div></li>
+                        
                 </ul>
             </div>
             {/*Menu for tablet & phone*/}
