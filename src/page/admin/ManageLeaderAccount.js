@@ -124,7 +124,7 @@ export default function ManageLeaderAccount() {
                                 <li><a href='/dashboard'><SpaceDashboardIcon />Bảng điều khiển</a></li>
                                 <li><a href='/manage-transactionPoint'><AddLocationIcon />Quản lý điểm giao dịch</a></li>
                                 <li><a href='/manage-gatheringPoint'><AddLocationIconAlt /> Quản lý điểm tập kết</a></li>
-                                <li><a href='/leader/create'><PersonAddIcon />Tạo tài khoản trưởng điểm</a></li>
+                                <li><a href='/create-account'><PersonAddIcon />Tạo tài khoản trưởng điểm</a></li>
                                 <li><a class="bg-neutral text-primary" href='/leader/manage'><ManageAccountsIcon />Quản lý tài khoản trưởng điểm</a></li>
                             </ul>
                

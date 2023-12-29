@@ -47,12 +47,12 @@ const Login = () => {
             localStorage.removeItem('name'); 
         }
 
-        if (localStorage.getItem('email') !== null) {
-            localStorage.removeItem('email');
+        if (localStorage.getItem('mail') !== null) {
+            localStorage.removeItem('mail');
         } 
-        // if (localStorage.getItem('phone') !== null) {
-        //     localStorage.removeItem('phone'); 
-        // }
+        if (localStorage.getItem('phone') !== null) {
+            localStorage.removeItem('phone'); 
+        }
         if (emailErr === '' && errorMsg === '') {
             try {
                 
@@ -62,14 +62,25 @@ const Login = () => {
                 // save token into localStorage
                 // localStorage.setItem('token', res.accessToken);
                 // get role
+                const uName = res.username;
                 const token = res.accessToken;
+                window.localStorage.setItem('accessToken', token);
                 const decoded = jwtDecode(token);
-                const role = decoded.role;
-                const userEmail = decoded.email;
-                // const phone = decoded.phone;
-                const name = res.username;
-                localStorage.setItem('email', userEmail);
-                localStorage.setItem('name', name);
+
+                const role = decoded.scope;
+                const mail = decoded.email;
+                const phoneNum = decoded.phone;
+                const pointID = decoded.pointId;
+                // console.log(role, 0);
+                // console.log(mail, 1);
+                // console.log(phoneNum, 2);
+                // console.log(pointID);
+                localStorage.setItem('email', mail);
+                localStorage.setItem('name', uName);
+                localStorage.setItem('phone', phoneNum);
+                localStorage.setItem('pointId', pointID);
+
+
                 // console.log(role);
                 // save role into localStorage 
                 localStorage.setItem('role', role);

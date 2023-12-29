@@ -11,14 +11,15 @@ import { Typography } from "@mui/material";
 
 const role = localStorage.getItem('role');
 const name = localStorage.getItem('name');
-const email = localStorage.getItem('email');
-const phone = localStorage.getItem('phone');
+const email = localStorage.getItem('mail');
+const pointId = localStorage.getItem('pointId');
 const handleLogOut = () => {
-    localStorage.removeItem('role');
-    localStorage.removeItem('name');
-    localStorage.removeItem('email');
-    // localStorage.removeItem('phone');
-    <Navigate to='/home' />
+    console.log(role, name, email, pointId);
+    localStorage.removeItem("role");
+    localStorage.removeItem("name");
+    localStorage.removeItem("mail");
+    localStorage.removeItem("phone");
+   
 }
 const Navbar = () => {
     const [open, setOpen] = React.useState(false);
@@ -188,7 +189,7 @@ const Navbar = () => {
                             </DialogActions>
                         </Dialog>
                     </li>
-                    <li><a onClick={handleLogOut}>Đăng xuất</a></li>
+                    <li><a href="/home" onClick={handleLogOut}>Đăng xuất</a></li>
                 </ul>
             </div>
             {/*Menu for each roles*/}
