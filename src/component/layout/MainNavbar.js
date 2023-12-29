@@ -85,7 +85,7 @@ const MainNavbar = () => {
                     <li><a href="/intro">Giới thiệu</a></li>
                     <li><a href="#searchOrder">Tra cứu bưu gửi</a></li>
                     <li>
-                        <div><a class="btn btn-neutral" href="/login">Đăng nhập</a>
+                        <div ><a class="btn btn-neutral btn-sm" href="/login">Đăng nhập</a>
                         </div>
                     </li>
                 </ul>

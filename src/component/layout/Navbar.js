@@ -4,6 +4,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { Badge, Notifications } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 
+
 const Navbar = () => {
     return (
         <div class="navbar bg-primary text-neutral">

@@ -2,9 +2,27 @@ import React, { useState } from 'react';
 import { TextField, Autocomplete, Button, Container, Typography } from '@mui/material';
 import Navbar from '../../component/layout/Navbar';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AddIcon from '@mui/icons-material/Add';
+import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
+import CheckIcon from '@mui/icons-material/Check';
+const theme = createTheme({
+    typography: {
+        "fontFamily": '"Montserrat", "sans-serif"',
+    },
+    palette: {
+        primary: {
+            main: '#161A30',
+        },
+        secondary: {
+            main: '#31304D',
+        },
+        third: '#B6BBC4'
+    }
+
+})
 const CreateDeliveryToCustomer = () => {
     const [orderId, setOrderId] = useState('');
     const [transactionEndpoint, setTransactionEndpoint] = useState('');
@@ -57,82 +75,88 @@ const CreateDeliveryToCustomer = () => {
     };
 
     return (
-        <div>
-            <Navbar />
-            <div class="drawer lg:drawer-open">
-
-                <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
-                <div class="drawer-content flex flex-col items-left">
-                    <div>
-                        <Container maxWidth="sm">
-                            <Typography variant="h4" gutterBottom>
-                                Create Delivery to Customer
-                            </Typography>
-
-                            <form onSubmit={handleSubmit}>
-                                <Autocomplete
-                                    options={orders}
-                                    getOptionLabel={(option) => option.name}
-                                    onChange={handleOrderChange}
-                                    renderInput={(params) => <TextField {...params} label="Order ID" />}
-                                />
-
-                                <TextField
-                                    label="Transaction Endpoint"
-                                    fullWidth
-                                    value={transactionEndpoint}
-                                    onChange={(e) => setTransactionEndpoint(e.target.value)}
-                                />
-
-                                <TextField
-                                    label="Address"
-                                    fullWidth
-                                    value={address}
-                                    onChange={(e) => setAddress(e.target.value)}
-                                />
-
-                                <Autocomplete
-                                    options={shippers}
-                                    getOptionLabel={(option) => option.name}
-                                    onChange={handleShipperChange}
-                                    renderInput={(params) => <TextField {...params} label="Shipper ID" />}
-                                />
-
-                                <Typography variant="h6" gutterBottom>
-                                    Order Information:
+        <ThemeProvider theme={theme}>
+            <div>
+                <Navbar />
+                <div class="drawer lg:drawer-open">
+                    <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+                    <div class="drawer-content flex flex-col items-left">
+                        <div class='m-10'>
+                            <Container sx={{ width: '75%' }}>
+                                <Typography variant="h4" marginBottom={5} fontWeight={700} gutterBottom>
+                                    Tạo đơn gửi đến người nhận
                                 </Typography>
-                                <Typography>{`Order Name: ${orderName}`}</Typography>
-                                <Typography>{`Customer: ${customerName}`}</Typography>
 
-                                <Typography variant="h6" gutterBottom>
-                                    Shipper Information:
-                                </Typography>
-                                <Typography>{shipperInfo}</Typography>
-
-                                <Button type="submit" variant="contained" color="primary">
-                                    Create Delivery
-                                </Button>
-                            </form>
-                        </Container>
+                                <form onSubmit={handleSubmit}>
+                                    <div class='mb-5'>
+                                        <Autocomplete
+                                            options={orders}
+                                            getOptionLabel={(option) => option.name}
+                                            onChange={handleOrderChange}
+                                            renderInput={(params) => <TextField {...params} label="Mã đơn hàng" />}
+                                        />
+                                    </div>
+                                    <div class='mb-5'>
+                                        <TextField
+                                            label="Điểm tập kết đích"
+                                            fullWidth
+                                            value={transactionEndpoint}
+                                            onChange={(e) => setTransactionEndpoint(e.target.value)}
+                                        />
+                                    </div>
+                                    <div class='mb-5'>
+                                        <TextField
+                                            label="Địa chỉ"
+                                            fullWidth
+                                            value={address}
+                                            onChange={(e) => setAddress(e.target.value)}
+                                        />
+                                    </div>
+                                    <div class='mb-5'>
+                                        <Autocomplete
+                                            options={shippers}
+                                            getOptionLabel={(option) => option.name}
+                                            onChange={handleShipperChange}
+                                            renderInput={(params) => <TextField {...params} label="Mã nhân viên vận chuyển" />}
+                                        />
+                                    </div>
+                                    <div class=''>
+                                        <Typography variant="h6" gutterBottom>
+                                            Thông tin đơn hàng:
+                                        </Typography>
+                                        <Typography sx={{ whiteSpace: "pre-wrap" }}>
+                                            {`Mã đơn hàng: ${orderName}`} {'\n'}
+                                            {`Tên khách hàng: ${customerName}`}</Typography>
+                                        <Typography variant="h6" gutterBottom>
+                                            Thông tin nhân viên vận chuyển:
+                                        </Typography>
+                                        <Typography>{shipperInfo}</Typography>
+                                    </div>
+                                    <div class='mt-5'>
+                                        <Button type="submit" variant="contained" color="primary">
+                                            Tạo đơn hàng
+                                        </Button>
+                                    </div>
+                                </form>
+                            </Container>
+                        </div>
                     </div>
-                    {/* <!-- Page content here --> */}
+                    <div class="drawer-side">
+                        <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
+                        <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
+                            {/* <!-- Sidebar content here --> */}
+                            <li><a href='/dashbroad/transaction'><SpaceDashboardIcon />Bảng điều khiển</a></li>
+                            <li><a href='/order/create'><AddCircleOutlineIcon />Ghi nhận hàng</a></li>
+                            {/* <li><a href='/order/create'><SwapHorizIcon />Đơn mới</a></li> */}
+                            <li><a href='/order/delivery/gathering'><AddIcon />Tạo đơn hàng đến điểm tập kết</a></li>
+                            <li><a class="bg-neutral text-primary" href='/order/delivery/customer' ><DeliveryDiningIcon/>Chuyển hàng đến người nhận</a></li>
+                            <li><a href='/transaction/order'> <CheckIcon/> Xác nhận trạng thái đơn hàng</a></li>
+                        </ul>
 
+                    </div>
                 </div>
-                <div class="drawer-side">
-                    <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
-                    <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
-                        {/* <!-- Sidebar content here --> */}
-                        <li><a href='/dashbroad'><SpaceDashboardIcon />Bảng điều khiển</a></li>
-                        <li><a href='/createAccount'><PersonAddIcon />Cấp tài khoản</a></li>
-                        <li><a href="/profile"><AccountCircleIcon />Cá nhân</a></li>
-                        <li><a class="bg-neutral text-primary" href='#'><AddIcon/>Tạo đơn hàng đến người nhận</a></li>
-                    </ul>
-
-                </div>
-
             </div>
-
-        </div>
+        </ThemeProvider>
     );
 };
 

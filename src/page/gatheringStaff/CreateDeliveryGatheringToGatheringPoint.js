@@ -1,19 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 // import { TextField, Button, IconButton, Grid, Paper } from '@mui/material';
 // import DeleteIcon from '@mui/icons-material/Delete';
-import {DataGrid} from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 import Typography from '@mui/material/Typography';
-import PageviewIcon from '@mui/icons-material/Pageview';
-import {useNavigate, useParams} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Navbar from '../../component/layout/Navbar';
-import {createTheme, ThemeProvider} from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import AddIcon from '@mui/icons-material/Add';
-import {FormControl, IconButton, InputLabel, MenuItem, Select} from "@mui/material";
+import { FormControl, IconButton, InputLabel, MenuItem, Select } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import {createP2PGatheringOrder, getP2PExpress, listP2PGatheringOrders} from "../../api/transport";
 import {getPointInventory, listGatheringPoints} from "../../api/point";
@@ -34,24 +32,23 @@ const theme = createTheme({
 
 })
 const CreateDeliveryGatheringToGatheringPoint = () => {
-        let {id} = useParams();
+        let { id } = useParams();
         const navigate = useNavigate()
         const [orders, setOrders] = useState([])
         const [gatheringPoints, setGatheringPoints] = useState([])
         const [selectedPoint, setSelectedPoint] = useState(null)
         const [selectedRows, setSelectedRows] = useState([]);
 
-        const handleViewDetail = (orderId) => {
-            navigate(`/order-detail/${orderId}`);
-        };
+    const handleViewDetail = (orderId) => {
+        navigate(`/order-detail/${orderId}`);
+    };
 
-        const handleSelectionChange = (selectionModel) => {
-            setSelectedRows(selectionModel);
-        };
+    const handleSelectionChange = (selectionModel) => {
+        setSelectedRows(selectionModel);
+    };
 
         const handleCreateDelivery = async () => {
             try {
-
                 const res = await createP2PGatheringOrder(id, {
                     expressOrderIdList: selectedRows,
                     destinationPointId: selectedPoint
@@ -61,9 +58,9 @@ const CreateDeliveryGatheringToGatheringPoint = () => {
             }
         }
 
-        const handleChangeSelectedPoint = (e) => {
-            setSelectedPoint(e.target.value)
-        }
+    const handleChangeSelectedPoint = (e) => {
+        setSelectedPoint(e.target.value)
+    }
 
 
         const columns = [
@@ -105,21 +102,21 @@ const CreateDeliveryGatheringToGatheringPoint = () => {
                     ))
                     setOrders(data);
 
-                    const gatherPlace = await listGatheringPoints();
-                    const dataPlace = gatherPlace?.map(item => (
-                        {
-                            id: item.id,
-                            address: `${item.address.street}, ${item.address.zipcode}/${item.address.commune}-${item.address.district}-${item.address.province}`
-                        }
-                    ))
-                    setGatheringPoints(dataPlace)
-                } catch (e) {
-                    console.log(e)
-                }
+                const gatherPlace = await listGatheringPoints();
+                const dataPlace = gatherPlace?.map(item => (
+                    {
+                        id: item.id,
+                        address: `${item.address.street}, ${item.address.zipcode}/${item.address.commune}-${item.address.district}-${item.address.province}`
+                    }
+                ))
+                setGatheringPoints(dataPlace)
+            } catch (e) {
+                console.log(e)
             }
+        }
 
-            fetchData();
-        }, [])
+        fetchData();
+    }, [])
 
 
         return (
@@ -181,10 +178,9 @@ const CreateDeliveryGatheringToGatheringPoint = () => {
                     <div class="drawer-side">
                         <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
                         <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
-                            <li><a href='/dashboard'><SpaceDashboardIcon/>Bảng điều khiển</a></li>
-                            <li><a href='/new'><AddIcon/>Đơn mới</a></li>
-                            <li><a class="bg-neutral text-primary"><SwapHorizIcon/>Tạo đơn đến điểm tập kết</a></li>
-                            <li><a href="/profile"><AccountCircleIcon/>Cá nhân</a></li>
+                            <li><a href='/gathering/order/:id'><AddIcon />Đơn mới</a></li>
+                            <li><a class="bg-neutral text-primary" ><SwapHorizIcon />Tạo đơn đến điểm tập kết</a></li>
+                            <li><a href='/order/delivery/transaction/:id'>Tạo đơn đến điểm giao dịch đích</a></li>
                         </ul>
                     </div>
                 </div>

@@ -1,8 +1,12 @@
 import { createTheme } from '@mui/material/styles';
 import { TextField, Button, Paper, Typography, ThemeProvider, Grid } from '@mui/material';
+import { login } from '../../api/auth';
+import { useState } from 'react';
 import MainNavbar from '../../component/layout/MainNavbar';
-import Footer from '../../component/layout/Footer';
-import { useRef, useState, useEffect } from 'react';
+import { jwtDecode } from "jwt-decode";
+import roles from './Role'
+
+
 const Login = () => {
     const theme = createTheme({
         typography: {
@@ -19,31 +23,59 @@ const Login = () => {
         }
 
     })
-    const useRef = useRef();
-    const errRef = useRef();
-    const [errMsg, setErrMsg] = useState('');
-    const [successMsg, setSuccessMsg] = useState('');
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
-    useEffect(() => {
-        useRef.current.focus();
-    }, [])
-    useEffect(() => {
-        setErrMsg('');
-    }, [email, password])
-
-    const handleLogin = () => {
-        // Xử lý đăng nhập ở đây
-
-
+    const [errorMsg, setErrorMsg] = useState('');
+    const handleLogin = async () => {
+        try {
+            const res = await login({ email, password });
+            console.log(res);
+            // save token into localStorage
+            // localStorage.setItem('token', res.accessToken);
+            // get role
+            const token = res.accessToken;
+            const decoded = jwtDecode(token);
+            const role = decoded.role;
+            // console.log(role);
+            // save role into localStorage 
+            localStorage.setItem('role', role);
+            switch (role) {
+                case roles[0]: 
+                    window.location.href = '/dashboard';
+                    break;
+                case roles[1]: 
+                    window.location.href = '/dashboard';
+                    break;
+                case roles[2]:
+                    window.location.href='/dashboard/transaction/leader';
+                    break;
+                case roles[3]: 
+                    window.location.href = '';
+                    break;
+                default: 
+                    window.location.href = '/dashboard/transaction';
+                    break;
+            }
+        } catch (e) {
+            if (e.response && e.response.status === 404) {
+                // handle error: resource not found
+                console.log(e.response, '1');
+                setErrorMsg(e.response.data.message);
+                console.log(errorMsg);
+            } else {
+                // handle other errors
+                console.log(e);
+            }
+        }
     };
 
     return (
         <ThemeProvider theme={theme} >
-            <div class="min-h-screen">
-                <Grid container spacing={2} marginTop={-15} alignItems={'center'} justifyContent={'center'}>
-                    <Grid item sm={8} md={8} lg={8}>
+            <MainNavbar />
+            <div class="max-h-screen">
+                <Grid container spacing={6} alignItems={'center'} justifyContent={'center'}>
+                    <Grid item sm={5} style={{ marginTop: '50px' }} >
                         <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 2000 2000"
                             id="DeliveryLocation">
                             <g data-name="Layer 5" fill="#424c9f" class="color000000 svgShape">
@@ -328,23 +360,33 @@ const Login = () => {
                             </g>
                         </svg>
                     </Grid>
-                    <Grid item xs={12} sm={4} md={4} lg={4}>
-                        <Paper elevation={3} style={{ padding: '20px', maxWidth: '300px', margin: 'auto', marginTop: '50px', position: 'sticky' }}>
-                            <Typography variant="h5">Đăng nhập</Typography>
-                            <p ref={errRef} className={errMsg ? "errMsg" : "offscreen"} aria-live='assertive'>{errMsg}</p>
+                    <Grid item xs={12} sm={4} >
+                        {errorMsg !== '' ? (
+                            <div role="alert" class="alert alert-error mb-5">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                <span>Không tìm thấy người dùng!</span>
+                            </div>
+                        ) : (
+                            <></>
+                        )}
+                        <Paper elevation={3}
+                            fullWidth style={{ padding: '20px', position: 'sticky' }}>
+                            <Typography variant="h5" fontWeight={700} >Đăng nhập</Typography>
                             <TextField
                                 label="Email"
-                                ref={useRef}
                                 id='email'
                                 variant="outlined"
                                 fullWidth
                                 margin="normal"
                                 value={email}
                                 required
-                                onChange={(e) => setEmail(e.target.value)}
+                                onChange={(e) => {
+                                    setErrorMsg('');
+                                    setEmail(e.target.value)
+                                }}
                             />
                             <TextField
-                                required 
+                                required
                                 label="Mật khẩu"
                                 id='password'
                                 variant="outlined"
@@ -352,18 +394,19 @@ const Login = () => {
                                 margin="normal"
                                 type="password"
                                 value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                onChange={(e) => {
+                                    setErrorMsg('');
+                                    setPassword(e.target.value)
+                                }}
                             />
-                            <Button variant="contained" color="secondary" fullWidth onClick={handleLogin}>
+                            <Button variant="contained" sx={{ marginTop: '20px' }} color="secondary" fullWidth onClick={handleLogin}>
                                 Đăng nhập
                             </Button>
-
                         </Paper>
                     </Grid>
 
                 </Grid>
             </div>
-            <Footer />
         </ThemeProvider >
     );
 };

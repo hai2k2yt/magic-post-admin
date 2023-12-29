@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {DataGrid} from '@mui/x-data-grid';
+import React, { useEffect, useState } from 'react';
+import { DataGrid } from '@mui/x-data-grid';
 import {
     Button, Dialog, DialogActions,
     DialogContent,
@@ -11,10 +11,10 @@ import {
     Select,
     TextField, Typography,
 } from '@mui/material';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import {getPointInventory} from "../../api/point";
-import {createP2PTransactionOrder} from "../../api/transport";
+import { getPointInventory } from "../../api/point";
+import { createP2PTransactionOrder } from "../../api/transport";
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 
@@ -24,29 +24,31 @@ const ManageOrder = () => {
     const [orderSelection, setOrderSelection] = useState([])
     const [searchOrder, setSearchOrder] = useState('');
     const [selectedStatus, setSelectedStatus] = useState('');
-    const [selectedProvince, setSelectedProvince] = useState('');
-    const [selectedDistrict, setSelectedDistrict] = useState('');
+    // const [selectedProvince, setSelectedProvince] = useState('');
+    // const [selectedDistrict, setSelectedDistrict] = useState('');
     const [sortModel, setSortModel] = useState([]);
 
-    const [sendOrderDialog, setSendOrderDialog] = useState(false)
-
-    useEffect( () => {
+    useEffect(() => {
         async function fetchData() {
-            const response = await getPointInventory(2);
-            const data = response.length && response?.map(item => (
-                {
-                    id: item.id,
-                    senderName: item.sender.name,
-                    receiverName: item.receiver.name,
-                    sendTo: `${item.receiver.address.street},${item.receiver.address.commune}-${item.receiver.address.district}-${item.receiver.address.province}`,
-                    sendTime: item.sendTime,
-                    status: item.status
-                }
-            ))
-            setOrders(data);
+            try {
+                const response = await getPointInventory(2);
+                const data = response.length && response?.map(item => (
+                    {
+                        id: item.id,
+                        senderName: item.sender.name,
+                        receiverName: item.receiver.name,
+                        sendTo: `${item.receiver.address.street},${item.receiver.address.commune}-${item.receiver.address.district}-${item.receiver.address.province}`,
+                        sendTime: item.sendTime,
+                        status: item.status
+                    }
+                ))
+                setOrders(data);
+            } catch (error) {
+                console.log(error);
+            }
         }
         fetchData();
-    }, [])
+    }, []) 
 
     const handleViewDetail = (orderId) => {
         navigate(`/order-detail/${orderId}`);
@@ -62,12 +64,12 @@ const ManageOrder = () => {
 
 
     const columns = [
-        { field: 'id', headerName: 'Order ID', flex: 2, sortable: false },
-        { field: 'senderName', headerName: 'Sender Name', flex: 2, sortable: false },
-        { field: 'receiverName', headerName: 'Receiver Name', flex: 2, sortable: false },
-        { field: 'sendTo', headerName: 'Send to (Address)', flex: 2, sortable: false },
-        { field: 'sendTime', headerName: 'Created Time', flex: 2, sortable: true },
-        { field: 'status', headerName: 'Status', flex: 1, sortable: true },
+        { field: 'id', headerName: 'ID', flex: 2, sortable: false },
+        { field: 'senderName', headerName: 'Người gửi', flex: 2, sortable: false },
+        { field: 'receiverName', headerName: 'Người nhận', flex: 2, sortable: false },
+        { field: 'sendTo', headerName: 'Nơi nhận', flex: 2, sortable: false },
+        { field: 'sendTime', headerName: 'Thời điểm tạo đơn', flex: 2, sortable: true },
+        { field: 'status', headerName: 'Trạng thái đơn hàng', flex: 1, sortable: true },
         {
             field: 'action',
             headerName: 'Action',
@@ -88,13 +90,13 @@ const ManageOrder = () => {
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
                         <TextField
-                        InputProps={{
-                            startAdornment: (
-                              <InputAdornment position="start">
-                                <SearchIcon />
-                              </InputAdornment>
-                            ),
-                          }}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <SearchIcon />
+                                    </InputAdornment>
+                                ),
+                            }}
                             fullWidth
                             label="Nhập mã vận đơn"
                             value={searchOrder}
@@ -103,7 +105,7 @@ const ManageOrder = () => {
                     </Grid>
                     <Grid item xs={3}>
                         <FormControl fullWidth sx={{ marginRight: 2, marginBottom: 2 }}>
-                            <InputLabel >Status</InputLabel>
+                            <InputLabel >Trạng thái</InputLabel>
                             <Select
                                 value={selectedStatus}
                                 onChange={(e) => setSelectedStatus(e.target.value)}
@@ -114,9 +116,7 @@ const ManageOrder = () => {
                     </Grid>
                 </Grid>
             </div>
-            <Button variant="contained" disabled={!orderSelection.length} onClick={() => setSendOrderDialog(true)}>
-                Send order
-            </Button>
+
             <DataGrid
                 align='center'
                 rows={orders}
@@ -131,24 +131,7 @@ const ManageOrder = () => {
                 }}
                 rowSelectionModel={orderSelection}
             />
-            <Dialog
-                sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 500 } }}
-                maxWidth="xs"
-                open={sendOrderDialog}
-            >
-                <DialogTitle>Send Order</DialogTitle>
-                <DialogContent dividers>
-                    <Typography>
-                        Are you want to send {orderSelection.length} items?
-                    </Typography>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => setSendOrderDialog(false)}>
-                        Cancel
-                    </Button>
-                    <Button onClick={sendOrdersToTransaction}>Ok</Button>
-                </DialogActions>
-            </Dialog>
+
         </div>
     );
 };

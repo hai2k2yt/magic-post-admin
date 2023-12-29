@@ -11,20 +11,20 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
-import {createTheme, ThemeProvider} from '@mui/material';
+import { createTheme, ThemeProvider, Typography } from '@mui/material';
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import AddLocationIconAlt from '@mui/icons-material/AddLocationAlt';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Paper from '@mui/material/Paper';
-import {useEffect, useMemo, useState} from "react";
+import { useEffect, useMemo, useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
-import {redirect, useNavigate} from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 import Navbar from '../../component/layout/Navbar';
-import {listP2PGatheringOrders} from "../../api/transport";
-import {listGatheringPoints} from "../../api/point";
-
+import { listP2PGatheringOrders } from "../../api/transport";
+import { listGatheringPoints } from "../../api/point";
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 const theme = createTheme({
     typography: {
         "fontFamily": '"Montserrat", "sans-serif"',
@@ -91,14 +91,14 @@ const headCells = [
         id: 'leader',
         label: 'Tên trưởng điểm',
     },
-    {
-        id: 'action',
-        label: ''
-    }
+    // {
+    //     id: 'action',
+    //     label: ''
+    // }
 ];
 
 function EnhancedTableHead(props) {
-    const {order, orderBy, onRequestSort} =
+    const { order, orderBy, onRequestSort } =
         props;
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
@@ -153,7 +153,7 @@ export default function ManageGatheringPoint() {
                         id: item.id,
                         name: item.name,
                         code: item.address.zipcode,
-                        address: `${item.address.street}, ${item.address.commune}-${item.address.district}-${item.address.province}`,
+                        address: `${item.address.street}, ${item.address.commune}, ${item.address.district}, ${item.address.province}`,
                         leader: item.gatheringLeaderId
                     }
                 ))
@@ -200,18 +200,21 @@ export default function ManageGatheringPoint() {
     return (
         <ThemeProvider theme={theme}>
             <div>
-                <Navbar/>
+                <Navbar />
             </div>
             <div class="drawer lg:drawer-open">
-                <input id="my-drawer-2" type="checkbox" class="drawer-toggle"/>
+                <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
                 <div class="drawer-content flex flex-col items-left">
                     {/* <!-- Page content here --> */}
                     <div class="m-10">
-                        <Box sx={{width: '100%'}}>
-                            <Paper sx={{width: '100%', mb: 2}}>
+                        <Box sx={{ width: '100%' }}>
+                            <Typography variant='h4' fontWeight={700} marginBottom={3}>
+                                Quản lý điểm tập kết
+                            </Typography>
+                            <Paper sx={{ width: '100%', mb: 2 }}>
                                 <TableContainer>
                                     <Table
-                                        sx={{minWidth: 750}}
+                                        sx={{ minWidth: 750 }}
                                         aria-labelledby="tableTitle"
                                         size='medium'
                                     >
@@ -229,7 +232,7 @@ export default function ManageGatheringPoint() {
                                                         role="checkbox"
                                                         tabIndex={-1}
                                                         key={row.id}
-                                                        sx={{cursor: 'pointer'}}
+                                                        sx={{ cursor: 'pointer' }}
                                                     >
                                                         <TableCell
                                                             component="th"
@@ -244,7 +247,7 @@ export default function ManageGatheringPoint() {
                                                         <TableCell>{row.address}</TableCell>
                                                         <TableCell>{row.leader}</TableCell>
                                                         <TableCell>
-                                                            <EditIcon onClick={() => editPlace(row.id)}/>
+                                                            <EditIcon onClick={() => editPlace(row.id)} />
                                                         </TableCell>
                                                     </TableRow>
                                                 );
@@ -255,7 +258,7 @@ export default function ManageGatheringPoint() {
                                                         height: (53) * emptyRows,
                                                     }}
                                                 >
-                                                    <TableCell colSpan={6}/>
+                                                    <TableCell colSpan={6} />
                                                 </TableRow>
                                             )}
                                         </TableBody>
@@ -277,12 +280,11 @@ export default function ManageGatheringPoint() {
                 <div class="drawer-side">
                     <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
                     <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
-                        <li><a href='/dashboard'><SpaceDashboardIcon/>Bảng điều khiển</a></li>
-                        <li><a href='/manage-transactionPoint'><AddLocationIcon/>Quản lý điểm giao dịch</a></li>
-                        <li><a class="bg-neutral text-primary" href='/manage-gatheringPoint'><AddLocationIconAlt/> Quản
-                            lý điểm tập kết</a></li>
-                        <li><a href='/leader/manage'><PersonAddIcon/>Quản lý tài khoản trưởng điểm</a></li>
-                        <li><a href="/profile"><AccountCircleIcon/>Cá nhân</a></li>
+                        <li><a href='/dashboard'><SpaceDashboardIcon />Bảng điều khiển</a></li>
+                        <li><a href='/manage-transactionPoint'><AddLocationIcon />Quản lý điểm giao dịch</a></li>
+                        <li><a class="bg-neutral text-primary" href='/manage-gatheringPoint'><AddLocationIconAlt /> Quản lý điểm tập kết</a></li>
+                        <li><a href='/create-account'><PersonAddIcon />Tạo tài khoản trưởng điểm</a></li>
+                        <li><a href='/leader/manage'><ManageAccountsIcon />Quản lý tài khoản trưởng điểm</a></li>
                     </ul>
                 </div>
             </div>
