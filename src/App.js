@@ -65,7 +65,7 @@ function App() {
     return (
         <Routes>
             <Route path="/" element={<Layout />}>
-                <Route key='/not-found' path='/*' element={<NotFound/>}/>
+                <Route key='/not-found' path='/*' element={<NotFound />} />
 
                 {/* public routes */}
                 {unauthorizedUser.map((route) => (
@@ -73,29 +73,38 @@ function App() {
                 ))}
 
                 {/*transaction staff routes */}
-                {role === ROLES[4] && (
+                {role === ROLES[4] ? (
                     tStaff.map((route) => (
                         <Route key={route.path} path={route.path} element={route.component} />
                     ))
-                )}
+                ) :
+                    <Route key='/not-found' path='/*' element={<NotFound />} />
+
+                }
 
                 {/* gathering staff routes */}
-                {role === ROLES[3] && (
+                {role === ROLES[3] ? (
                     gStaff.map((route) => (
                         <Route key={route.path} path={route.path} element={route.component} />
-                    )))}
+                    ))) :
+                    <Route key='/not-found' path='/*' element={<NotFound />} />
+                }
 
                 {/* leader routes */}
-                {(role === ROLES[2] || role === ROLES[1]) && (
+                {(role === ROLES[2] || role === ROLES[1]) ? (
                     leader.map((route) => (
                         <Route key={route.path} path={route.path} element={route.component} />
-                    )))}
+                    )))
+                    :
+                    <Route key='/not-found' path='/*' element={<NotFound />} />}
 
                 {/* admin routes */}
-                {(role === ROLES[0] &&
-                    admin.map((route) => (
+                {role === ROLES[0] ?
+                    (admin.map((route) => (
                         <Route key={route.path} path={route.path} element={route.component} />
-                    )))}
+                    ))) :
+                    <Route key='/not-found' path='/*' element={<NotFound />} />
+                }
             </Route>
         </Routes>
     );

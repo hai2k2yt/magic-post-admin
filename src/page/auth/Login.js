@@ -4,8 +4,7 @@ import { login } from '../../api/auth';
 import { useState } from 'react';
 import MainNavbar from '../../component/layout/MainNavbar';
 import { jwtDecode } from "jwt-decode";
-import roles from './Role'
-
+import roles from './Role';
 
 const Login = () => {
     const theme = createTheme({
@@ -27,47 +26,67 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
-    const handleLogin = async () => {
-        try {
-            const res = await login({ email, password });
-            console.log(res);
-            // save token into localStorage
-            // localStorage.setItem('token', res.accessToken);
-            // get role
-            const token = res.accessToken;
-            const decoded = jwtDecode(token);
-            const role = decoded.role;
-            // console.log(role);
-            // save role into localStorage 
-            localStorage.setItem('role', role);
-            switch (role) {
-                case roles[0]: 
-                    window.location.href = '/dashboard';
-                    break;
-                case roles[1]: 
-                    window.location.href = '/dashboard';
-                    break;
-                case roles[2]:
-                    window.location.href='/dashboard/transaction/leader';
-                    break;
-                case roles[3]: 
-                    window.location.href = '';
-                    break;
-                default: 
-                    window.location.href = '/dashboard/transaction';
-                    break;
-            }
-        } catch (e) {
-            if (e.response && e.response.status === 404) {
-                // handle error: resource not found
-                console.log(e.response, '1');
-                setErrorMsg(e.response.data.message);
-                console.log(errorMsg);
-            } else {
-                // handle other errors
-                console.log(e);
+    const [emailErr, setEmailErr] = useState('');
+    const [hasError, setHasError] = useState(false);
+    const validateEmail = (value) => {
+        var regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+        if (regex.test(value) || value === '') {
+            setEmail(value);
+            setEmailErr('');
+            setHasError(false);
+        } else {
+            setEmailErr('Vui lòng nhập đúng định dạng');
+            setHasError(true);
+        }
+
+    }
+    const handleLogin = async (e) => {
+        if (!hasError) {
+            try {
+                e.preventDefault();
+
+
+                const res = await login({ email, password });
+                console.log(res);
+                // save token into localStorage
+                // localStorage.setItem('token', res.accessToken);
+                // get role
+                const token = res.accessToken;
+                const decoded = jwtDecode(token);
+                const role = decoded.role;
+                // console.log(role);
+                // save role into localStorage 
+                localStorage.setItem('role', role);
+                switch (role) {
+                    case roles[0]:
+                        window.location.href = '/dashboard';
+                        break;
+                    case roles[1]:
+                        window.location.href = '/dashboard';
+                        break;
+                    case roles[2]:
+                        window.location.href = '/dashboard/transaction/leader';
+                        break;
+                    case roles[3]:
+                        window.location.href = '/create-account';
+                        break;
+                    default:
+                        window.location.href = '/dashboard/transaction';
+                        break;
+                }
+            } catch (err) {
+                if (err.response && err.response.status === 404) {
+                    // handle error: resource not found
+                    console.log(err.response, '1');
+                    setErrorMsg(err.response.data.message);
+                    console.log(errorMsg);
+                } else {
+                    // handle other errors
+                    console.log(err);
+                }
             }
         }
+
     };
 
     return (
@@ -378,13 +397,15 @@ const Login = () => {
                                 variant="outlined"
                                 fullWidth
                                 margin="normal"
-                                value={email}
                                 required
                                 onChange={(e) => {
                                     setErrorMsg('');
-                                    setEmail(e.target.value)
+                                    validateEmail(e.target.value)
                                 }}
                             />
+                            {
+                                emailErr && <p className="mt-2 text-warning text-xs italic">{emailErr}</p>
+                            }
                             <TextField
                                 required
                                 label="Mật khẩu"
@@ -399,7 +420,7 @@ const Login = () => {
                                     setPassword(e.target.value)
                                 }}
                             />
-                            <Button variant="contained" sx={{ marginTop: '20px' }} color="secondary" fullWidth onClick={handleLogin}>
+                            <Button variant="contained" sx={{ marginTop: '20px' }} color="secondary" fullWidth onClick={e => handleLogin(e)}>
                                 Đăng nhập
                             </Button>
                         </Paper>

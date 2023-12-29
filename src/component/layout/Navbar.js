@@ -1,11 +1,9 @@
 
 import React, { useState } from "react";
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import { Badge, Notifications } from "@mui/material";
+import ROLES from "../../page/auth/Role";
 import MenuIcon from '@mui/icons-material/Menu';
-
-
 const Navbar = () => {
+    const role = localStorage.getItem('role');
     return (
         <div class="navbar bg-primary text-neutral">
             <div class="flex-1">
@@ -91,16 +89,58 @@ const Navbar = () => {
                 <ul tabindex="0" class="mr-3 menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-secondary text-base-100 rounded-lg w-52">
                     <li>
                         <a href="/profile" class="justify-between">
-                            Trang cá nhân
+                            Cá nhân
                         </a>
                     </li>
                     <li><a href="/home">Đăng xuất</a></li>
                 </ul>
             </div>
             {/*Menu for each roles*/}
-            <button class="lg:hidden mr-5">
-                <MenuIcon />
-            </button>
+            <div class="dropdown dropdown-end lg:hidden">
+                <div tabindex="0" role="button" class="btn btn-ghost rounded-btn mr-5"><MenuIcon /></div>
+                <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-secondary rounded-box w-72 mt-4 mr-5">
+                    {
+                        role === ROLES[0] && (
+                            <>
+                                <li><a href='/dashboard'>Bảng điều khiển</a></li>
+                                <li><a href='/manage-transactionPoint'>Quản lý điểm giao dịch</a></li>
+                                <li><a href='/manage-gatheringPoint'> Quản lý điểm tập kết</a></li>
+                                <li><a class="bg-neutral text-primary" href='/create-account'>Tạo tài khoản trưởng điểm</a></li>
+                                <li><a href='/leader/manage'>Quản lý tài khoản trưởng điểm</a></li>
+                            </>
+                        )
+                    }
+                    {
+                        (role === ROLES[1] || role === ROLES[2]) && (
+                            <>
+                                <li><a class="bg-neutral text-primary" href='/dashboard'>Bảng điều khiển</a></li>
+                                <li><a href='/create-account'>Tạo tài khoản nhân viên</a></li>
+                            </>
+                        )
+                    }
+                    {
+                        role === ROLES[3] && (
+                            <>
+                                <li><a class="bg-neutral text-primary" >Đơn mới</a></li>
+                                <li><a href='/order/delivery/gathering'>Tạo đơn chuyển đi</a></li>
+                            </>
+                        )
+                    }
+                    {
+                        role === ROLES[4] && (
+                            <>
+                                <li><a href='/dashbroad/transaction'>Bảng điều khiển</a></li>
+                                <li><a href='/order/create'>Ghi nhận hàng</a></li>
+                                {/* <li><a href='/transaction/order/:id'><SwapHorizIcon />Đơn mới</a></li> */}
+                                <li><a href='/order/delivery/gathering'>Tạo đơn hàng đến điểm tập kết</a></li>
+                                <li><a href='/order/delivery/customer' >Chuyển hàng đến người nhận</a></li>
+                                <li><a href='/transaction/order'>Xác nhận trạng thái đơn hàng</a></li>
+                            </>
+                        )
+                    }
+
+                </ul>
+            </div>
         </div>
 
     );
