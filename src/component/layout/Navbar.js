@@ -11,6 +11,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import listUsers from "../../api/user";
 
+
 const Navbar = () => {
     const [open, setOpen] = React.useState(false);
 

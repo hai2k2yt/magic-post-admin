@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
-// import { TextField, Button, IconButton, Grid, Paper } from '@mui/material';
-// import DeleteIcon from '@mui/icons-material/Delete';
+
 import {DataGrid} from '@mui/x-data-grid';
 import Typography from '@mui/material/Typography';
 import PageviewIcon from '@mui/icons-material/Pageview';
@@ -15,8 +14,8 @@ import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import AddIcon from '@mui/icons-material/Add';
 import {FormControl, IconButton, InputLabel, MenuItem, Select} from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import {createP2PGatheringOrder, listP2PGatheringOrders} from "../../api/transport";
-import {listGatheringPoints} from "../../api/point";
+import {createP2PGatheringOrder, createP2PTransactionOrder, listP2PGatheringOrders} from "../../api/transport";
+import {getPointInventory, listGatheringPoints} from "../../api/point";
 
 const theme = createTheme({
     typography: {
@@ -33,7 +32,7 @@ const theme = createTheme({
     }
 
 })
-const CreateDeliveryToGatheringPoint = () => {
+const CreateDeliveryTransactionToGatheringPoint = () => {
         let {id} = useParams();
         const navigate = useNavigate()
         const [orders, setOrders] = useState([])
@@ -51,7 +50,7 @@ const CreateDeliveryToGatheringPoint = () => {
 
         const handleCreateDelivery = async () => {
             try {
-                const res = await createP2PGatheringOrder(id, {
+                const res = await createP2PTransactionOrder(id, {
                     expressOrderIdList: selectedRows,
                     destinationPointId: selectedPoint
                 })
@@ -67,9 +66,10 @@ const CreateDeliveryToGatheringPoint = () => {
 
         const columns = [
             {field: 'id', headerName: 'Order ID', flex: 2, sortable: false},
-            {field: 'sendFrom', headerName: 'Send from', flex: 2, sortable: false},
-            {field: 'sendTo', headerName: 'Send To', flex: 2, sortable: false},
-            {field: 'arrivalTime', headerName: 'Arrival time', flex: 2, sortable: false},
+            {field: 'sendFromAddress', headerName: 'Send from', flex: 2, sortable: false},
+            {field: 'sendToAddress', headerName: 'Send To', flex: 2, sortable: false},
+            {field: 'type', headerName: 'Type', flex: 2, sortable: false},
+            {field: 'sendTime', headerName: 'Send time', flex: 1, sortable: true},
             {field: 'status', headerName: 'Status', flex: 1, sortable: true},
             {
                 field: 'action',
@@ -90,14 +90,14 @@ const CreateDeliveryToGatheringPoint = () => {
         useEffect(() => {
             async function fetchData() {
                 try {
-                    const response = await listP2PGatheringOrders(id);
+                    const response = await getPointInventory(id);
                     const data = response?.map(item => (
                         {
                             id: item.id,
-                            sendFromId: item.from.id,
-                            sendFrom: item.from.name,
-                            sendTo: item.to.name,
-                            arrivalTime: item.arrivalTime,
+                            sendFromAddress: item?.sender?.address?.street,
+                            sendToAddress: item?.receiver?.address?.street,
+                            type: item.type,
+                            sendTime: item.sendTime,
                             status: item.status
                         }
                     ))
@@ -191,4 +191,4 @@ const CreateDeliveryToGatheringPoint = () => {
     }
 ;
 
-export default CreateDeliveryToGatheringPoint;
+export default CreateDeliveryTransactionToGatheringPoint;

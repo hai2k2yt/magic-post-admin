@@ -14,6 +14,8 @@ import Button from '@mui/material/Button';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import AddIcon from '@mui/icons-material/Add';
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import CheckIcon from '@mui/icons-material/Check';
 const theme = createTheme({
     typography: {
         "fontFamily": '"Montserrat", "sans-serif"',
@@ -30,40 +32,6 @@ const theme = createTheme({
 
 })
 const AddNewOrder = () => {
-    //     const [gatheringPoints, setGatheringPoints] = useState([{ id: '', orderIds: [''] }]);
-
-    //     const handleAddGatheringPoint = () => {
-    //         setGatheringPoints([...gatheringPoints, { id: '', orderIds: [''] }]);
-    //     };
-
-    //     const handleRemoveGatheringPoint = (index) => {
-    //         const newGatheringPoints = [...gatheringPoints];
-    //         newGatheringPoints.splice(index, 1);
-    //         setGatheringPoints(newGatheringPoints);
-    //     };
-
-    //     const handleAddOrderId = (gatheringPointIndex) => {
-    //         const newGatheringPoints = [...gatheringPoints];
-    //         newGatheringPoints[gatheringPointIndex].orderIds.push('');
-    //         setGatheringPoints(newGatheringPoints);
-    //     };
-
-    //     const handleRemoveOrderId = (gatheringPointIndex, orderIdIndex) => {
-    //         const newGatheringPoints = [...gatheringPoints];
-    //         newGatheringPoints[gatheringPointIndex].orderIds.splice(orderIdIndex, 1);
-    //         setGatheringPoints(newGatheringPoints);
-    //     };
-
-    //     const handleInputChange = (e, gatheringPointIndex, orderIdIndex) => {
-    //         const newGatheringPoints = [...gatheringPoints];
-    //         if (orderIdIndex !== undefined) {
-    //             newGatheringPoints[gatheringPointIndex].orderIds[orderIdIndex] = e.target.value;
-    //         } else {
-    //             newGatheringPoints[gatheringPointIndex].id = e.target.value;
-    //         }
-    //         setGatheringPoints(newGatheringPoints);
-    //     };
-
     const columns = [
         { field: 'id', headerName: 'ID', width: 70 },
         { field: 'actualWeight', headerName: 'Cân nặng hàng hóa', width: 130 },
@@ -102,14 +70,6 @@ const AddNewOrder = () => {
         { id: 9, actualWeight: '9.4', currentPoint: 'Cầu Giấy', destinationPoint: 'Hà Nội', status: 'Đang vận chuyển' },
     ];
 
-    // function RenderCellWithViewButton(params) {
-    //     const navigate = useNavigate();
-    //     return <PageviewIcon onClick={() => handleView(navigate, params.row.id)} />;
-    // }
-
-    // const handleView = (navigate, id) => {
-    //     navigate(`/leader/manage/${id}`);
-    // };
     return (
         <ThemeProvider theme={theme}>
             <div>
@@ -158,11 +118,12 @@ const AddNewOrder = () => {
                 <div class="drawer-side">
                     <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
                     <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
-                        <li><a href='/dashboard'><SpaceDashboardIcon />Bảng điều khiển</a></li>
-                        <li><a class="bg-neutral text-primary"><AddIcon />Xác nhận đơn</a></li>
-                        <li><a href='/order/delivery/gathering'><SwapHorizIcon />Tạo đơn đến điểm tập kết</a></li>
-                        <li><a href='' ><DeliveryDiningIcon/>Chuyển hàng đến người nhận</a></li>
-                        <li><a href="/profile"><AccountCircleIcon />Cá nhân</a></li>
+                        <li><a href='/dashbroad/transaction'><SpaceDashboardIcon />Bảng điều khiển</a></li>
+                        <li><a href='/order/create'><AddCircleOutlineIcon />Ghi nhận hàng</a></li>
+                    
+                        <li><a href='/order/delivery/gathering'><AddIcon />Tạo đơn hàng đến điểm tập kết</a></li>
+                        <li><a  href='/order/delivery/customer' ><DeliveryDiningIcon />Chuyển hàng đến người nhận</a></li>
+                        <li><a class="bg-neutral text-primary" href='/transaction/order' > <CheckIcon /> Xác nhận trạng thái đơn hàng</a></li>
                     </ul>
                 </div>
             </div>

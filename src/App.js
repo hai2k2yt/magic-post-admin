@@ -6,50 +6,64 @@ import ManageGatheringPoint from "./page/admin/ManageGatheringPoints";
 import StatisticOrder from "./component/layout/StatisticOrder";
 import ViewOrder from "./page/ViewOrder";
 import CreateOrder from "./page/transactionStaff/CreateOrder";
-import CreateDeliveryToGatheringPoint from "./page/gatheringStaff/CreateDeliveryToGatheringPoint";
-import CreateLeaderAccount from "./page/admin/CreateLeaderAccount";
+import CreateDeliveryGatheringToGatheringPoint from "./page/gatheringStaff/CreateDeliveryGatheringToGatheringPoint";
+import CreateAccount from "./page/admin/CreateAccount";
 import CreateDeliveryToCustomer from "./page/transactionStaff/CreateDeliveryToCustomer";
-import ManageOrder from "./component/layout/StatisticAllOrder";
 import About from './page/About';
-import CreateStaffAccount from './page/leader/CreateStaffAccount';
-import Profile from './page/Profile';
 import { React } from 'react';
 import Layout from './component/Layout';
 import Dashboard from './page/admin/Dashboard';
-import NewOrder from './page/gatheringStaff/ConfirmNewOrderGatheringPoint';
+import ConfirmOrderArrivalToGathering from './page/gatheringStaff/NewOrder';
 import MangageTransactionPoint from './page/admin/ManageTransactionPoint';
 import ManageLeaderAccount from './page/admin/ManageLeaderAccount';
 import OrderTransactionPoint from './page/transactionStaff/OrderTransactionPoint';
-import ConfirmOrderArrival from "./page/transactionStaff/ConfirmOrderArrival";
+import DashboardTransaction from './page/transactionStaff/DashboardTransaction';
+import ROLES from './page/auth/Role';
+import NotFound from './page/NotFound';
+import ConfirmOrderArrivalToTransaction from "./page/transactionStaff/ConfirmOrderArrivalToTransaction";
 import CreateDeliveryToTransactionPoint from "./page/gatheringStaff/CreateDeliveryToTransactionPoint";
+import CreateDeliveryTransactionToGatheringPoint
+    from "./page/transactionStaff/CreateDeliveryTransactionToGatheringPoint";
+import CreateGatheringPoint from "./page/admin/CreateGatheringPoint";
+import CreateTransactionPoint from "./page/admin/CreateTransactionPoint";
+import CreateTransactionAccount from "./page/transactionStaff/CreateTransactionAccount";
+import CreateGatheringAccount from "./page/gatheringStaff/CreateGatheringAccount";
 
 const admin = [
+    { path: '/gathering/account/create', component: <CreateGatheringAccount /> },
+    { path: '/transaction/account/create', component: <CreateTransactionAccount /> },
+    { path: '/gathering/create', component: <CreateGatheringPoint /> },
+    { path: '/transaction/create', component: <CreateTransactionPoint /> },
     { path: '/manage-gatheringPoint', component: <ManageGatheringPoint /> },
     { path: '/manage-transactionPoint', component: <MangageTransactionPoint /> },
-    { path: '/order/statistics', component: <StatisticOrder /> },
     { path: '/leader/manage', component: <ManageLeaderAccount /> },
-    { path: '/leader/create', component: <CreateLeaderAccount /> }
-
-];
-const leader = [
-    { path: '/createStaffAccount', component: <CreateStaffAccount /> },
-    { path: '/profile', component: <Profile /> },
     { path: '/dashboard', component: <Dashboard /> },
+    { path: '/create-account', component: <CreateAccount /> }
+];
+
+const tLeader = [
+    { path: '/create-account', component: <CreateAccount /> },
+    { path: '/dashboard', component: <Dashboard /> },
+    { path: '/transaction/account/create', component: <CreateTransactionAccount /> },
 ]
+
+const gLeader = [
+    { path: '/create-account', component: <CreateAccount /> },
+    { path: '/dashboard', component: <Dashboard /> },
+    { path: '/gathering/account/create', component: <CreateGatheringAccount /> },
+]
+
 const tStaff = [
-    { path: '/order/create', component: <CreateOrder /> },
+    { path: '/order/create/:id', component: <CreateOrder /> },
     { path: '/transaction/order', component: <OrderTransactionPoint />},
-    { path: '/order/delivery/customer', component: <CreateDeliveryToCustomer /> },
-    { path: '/order/delivery/gathering', component: <CreateDeliveryToGatheringPoint /> },
-    { path: '/order/manage', component: <ManageOrder /> },
-    { path: '/order/gathering/:id', component: <ConfirmOrderArrival /> },
+    { path: '/order/transaction/:id/customer', component: <CreateDeliveryToCustomer /> },
+    { path: '/order/transaction/:id/gathering', component: <CreateDeliveryTransactionToGatheringPoint /> },
+    { path: '/order/transaction/:id', component: <ConfirmOrderArrivalToTransaction /> },
 ]
 const gStaff = [
-    { path: '/gathering/order/:id', component: <NewOrder /> },
-    { path: '/order/create', component: <CreateOrder /> },
-    { path: '/order/delivery/gathering/:id', component: <CreateDeliveryToGatheringPoint /> },
-    { path: '/order/delivery/transaction/:id', component: <CreateDeliveryToTransactionPoint /> },
-    { path: '/order/manage', component: <ManageOrder /> },
+    { path: '/gathering/order/:id/arrival', component: <ConfirmOrderArrivalToGathering /> },
+    { path: '/order/gathering/:id/gathering', component: <CreateDeliveryGatheringToGatheringPoint /> },
+    { path: '/order/gathering/:id/transaction', component: <CreateDeliveryToTransactionPoint /> },
 ]
 
 const unauthorizedUser = [
@@ -58,35 +72,51 @@ const unauthorizedUser = [
     { path: '/login', component: <Login /> },
     { path: '/order/view', component: <ViewOrder /> },
 ]
+localStorage.setItem('role', ROLES[1])
+const role = localStorage.getItem('role');
+
 
 function App() {
     return (
         <Routes>
             <Route path="/" element={<Layout />}>
+                <Route key='/not-found' path='/*' element={<NotFound/>}/>
+
                 {/* public routes */}
                 {unauthorizedUser.map((route) => (
                     <Route key={route.path} path={route.path} element={route.component} />
                 ))}
 
                 {/*transaction staff routes */}
-                {tStaff.map((route) => (
-                    <Route key={route.path} path={route.path} element={route.component} />
-                ))}
+                {role === ROLES[4] && (
+                    tStaff.map((route) => (
+                        <Route key={route.path} path={route.path} element={route.component} />
+                    ))
+                )}
 
                 {/* gathering staff routes */}
-                {gStaff.map((route) => (
-                    <Route key={route.path} path={route.path} element={route.component} />
-                ))}
+                {role === ROLES[3] && (
+                    gStaff.map((route) => (
+                        <Route key={route.path} path={route.path} element={route.component} />
+                    )))}
 
-                {/* leader routes */}
-                {leader.map((route) => (
-                    <Route key={route.path} path={route.path} element={route.component} />
-                ))}
+                {/* gathering leader routes */}
+                {(role === ROLES[1]) && (
+                    gLeader.map((route) => (
+                        <Route key={route.path} path={route.path} element={route.component} />
+                    )))}
+
+                {/* transaction leader routes */}
+                {(role === ROLES[2]) && (
+                    tLeader.map((route) => (
+                        <Route key={route.path} path={route.path} element={route.component} />
+                    )))}
 
                 {/* admin routes */}
-                {admin.map((route) => (
-                    <Route key={route.path} path={route.path} element={route.component} />
-                ))}
+                {(role === ROLES[0] &&
+                    admin.map((route) => (
+                        <Route key={route.path} path={route.path} element={route.component} />
+                    )))}
             </Route>
         </Routes>
     );

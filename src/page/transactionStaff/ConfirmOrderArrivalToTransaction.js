@@ -7,7 +7,7 @@ import {
     FormControl,
     Grid,
     IconButton,
-    InputLabel, MenuItem,
+    InputLabel,
     Select,
     TextField, Typography,
 } from '@mui/material';
@@ -20,21 +20,20 @@ import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard'
 import Navbar from '../../component/layout/Navbar';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {
-    confirmMultiP2PTransactionArrival, createP2CTransactionOrder,
+    confirmMultiP2PTransactionArrival,
     listP2PTransactionOrders
 } from "../../api/transport";
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
-import {getPointInventory, listGatheringPoints} from "../../api/point";
-import {listTransactionShippers} from "../../api/actor";
 
-const CreateDeliveryToCustomer = () => {
+const ConfirmOrderArrivalToTransaction = () => {
     const navigate = useNavigate();
     let { id } = useParams();
     const [orders, setOrders] = useState([]);
     const [orderSelection, setOrderSelection] = useState([])
     const [searchOrder, setSearchOrder] = useState('');
-    const [shippers, setShippers] = useState([]);
-    const [selectedShipper, setSelectedShipper] = useState([])
+    const [selectedStatus, setSelectedStatus] = useState('');
+    const [selectedProvince, setSelectedProvince] = useState('');
+    const [selectedDistrict, setSelectedDistrict] = useState('');
     const [sortModel, setSortModel] = useState([]);
 
     const [sendOrderDialog, setSendOrderDialog] = useState(false)
@@ -42,26 +41,18 @@ const CreateDeliveryToCustomer = () => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await getPointInventory(id);
+                const response = await listP2PTransactionOrders(id);
                 const data = response?.map(item => (
                     {
                         id: item.id,
-                        senderName: item.sender.name,
-                        senderAddress: item.sender.address.street,
-                        receiverName: item.receiver.name,
-                        receiverAddress: item.receiver.address.street,
-                        COD: item.totalCOD
+                        sendFrom: item.from.name,
+                        sendTo: item.to.name,
+                        departureTime: item.departureTime,
+                        arrivalTime: item.arrivalTime,
+                        status: item.status
                     }
                 ))
                 setOrders(data);
-                const listShippers = await listTransactionShippers(id);
-                const listShippersData = listShippers?.map(item => (
-                    {
-                        id: item.id,
-                        name: item.name
-                    }
-                ))
-                setShippers(listShippersData)
             } catch (e) {
                 console.log(e)
             }
@@ -74,12 +65,9 @@ const CreateDeliveryToCustomer = () => {
         navigate(`/order-detail/${orderId}`);
     };
 
-    const createTransactionToCustomer = async () => {
-        await createP2CTransactionOrder(id, {
-            expressOrderIdList: orderSelection,
-            shipperId: selectedShipper
-        })
-        navigate(`/order/transaction/${id}/customer`);
+    const confirmTransactionArrival = async () => {
+        await confirmMultiP2PTransactionArrival(id, orderSelection)
+        navigate('/order/manage');
     }
 
 
@@ -87,11 +75,11 @@ const CreateDeliveryToCustomer = () => {
 
     const columns = [
         { field: 'id', headerName: 'ID', flex: 1, sortable: false },
-        { field: 'senderName', headerName: 'Người gửi', flex: 2, sortable: false },
-        { field: 'senderAddress', headerName: 'Địa chỉ gửi', flex: 2, sortable: false },
-        { field: 'receiverName', headerName: 'Người nhận', flex: 2, sortable: false },
-        { field: 'receiverAddress', headerName: 'Địa chỉ nhận', flex: 2, sortable: false },
-        { field: 'COD', headerName: 'COD', flex: 1, sortable: true },
+        { field: 'sendFrom', headerName: 'Nơi gửi', flex: 2, sortable: false },
+        { field: 'sendTo', headerName: 'Nơi nhận', flex: 2, sortable: false },
+        { field: 'departureTime', headerName: 'Thời gian gửi', flex: 2, sortable: false },
+        { field: 'arrivalTime', headerName: 'Thời gian nhận', flex: 2, sortable: false },
+        { field: 'status', headerName: 'Trạng thái đơn hàng', flex: 1, sortable: true },
         {
             field: 'action',
             headerName: 'Action',
@@ -145,7 +133,39 @@ const CreateDeliveryToCustomer = () => {
                                             onChange={(e) => setSearchOrder(e.target.value)}
                                         />
                                     </Grid>
-
+                                    <Grid item xs={6} sm={3}>
+                                        <FormControl fullWidth>
+                                            <InputLabel>Tỉnh thành</InputLabel>
+                                            <Select
+                                                value={selectedProvince}
+                                                onChange={(e) => setSelectedProvince(e.target.value)}
+                                            >
+                                                {/* Address options */}
+                                            </Select>
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={6} sm={3}>
+                                        <FormControl fullWidth>
+                                            <InputLabel>Quận/Huyện</InputLabel>
+                                            <Select
+                                                value={selectedDistrict}
+                                                onChange={(e) => setSelectedDistrict(e.target.value)}
+                                            >
+                                                {/* Address options */}
+                                            </Select>
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={6} sm={3}>
+                                        <FormControl fullWidth sx={{ marginRight: 2, marginBottom: 2 }}>
+                                            <InputLabel>Trạng thái</InputLabel>
+                                            <Select
+                                                value={selectedStatus}
+                                                onChange={(e) => setSelectedStatus(e.target.value)}
+                                            >
+                                                {/* Status options */}
+                                            </Select>
+                                        </FormControl>
+                                    </Grid>
                                 </Grid>
                             </div>
 
@@ -162,28 +182,9 @@ const CreateDeliveryToCustomer = () => {
                                 }}
                                 rowSelectionModel={orderSelection}
                             />
-                            <div className='flex justify-end mt-5'>
-                                <FormControl fullWidth>
-                                    <InputLabel id="gathering-point-select-label">Chọn shipper</InputLabel>
-                                    <Select
-                                        className="w-full max-w-xs"
-                                        labelId="gathering-point-select-label"
-                                        id="gathering-point-select"
-                                        value={selectedShipper}
-                                        label="Select shipper"
-                                        onChange={(e) => {
-                                            setSelectedShipper(e.target.value)
-                                        }}
-                                    >
-                                        {shippers.map(i => (
-                                            <MenuItem disabled={i.id === id} value={i.id}>{i.name}</MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                            </div>
                             <div class="flex justify-end mt-5">
                                 <Button variant="contained" sx={{ bgcolor: 'primary.main' }} disabled={!orderSelection.length} onClick={() => setSendOrderDialog(true)}>
-                                    Tạo đơn gửi
+                                    Xác nhận đến
                                 </Button>
                             </div>
                             <Dialog
@@ -194,14 +195,14 @@ const CreateDeliveryToCustomer = () => {
                                 <DialogTitle>Send Order</DialogTitle>
                                 <DialogContent dividers>
                                     <Typography>
-                                        Tạo {orderSelection.length} đơn gửi cho shipper ?
+                                        Xác nhận {orderSelection.length} đơn hàng đã đến điểm tập kết?
                                     </Typography>
                                 </DialogContent>
                                 <DialogActions>
                                     <Button onClick={() => setSendOrderDialog(false)}>
                                         Cancel
                                     </Button>
-                                    <Button onClick={createTransactionToCustomer}>Ok</Button>
+                                    <Button onClick={confirmTransactionArrival}>Ok</Button>
                                 </DialogActions>
                             </Dialog>
                         </div>
@@ -224,4 +225,4 @@ const CreateDeliveryToCustomer = () => {
     );
 };
 
-export default CreateDeliveryToCustomer;
+export default ConfirmOrderArrivalToTransaction;
