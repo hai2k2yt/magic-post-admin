@@ -41,16 +41,22 @@ const admin = [
     { path: '/create-account', component: <CreateAccount /> }
 ];
 
+const gLeader = [
+    { path: '/create-account', component: <CreateAccount /> },
+    { path: '/dashboard', component: <Dashboard /> },
+    { path: '/gathering/account/create', component: <CreateGatheringAccount /> },
+]
+
 const tLeader = [
     { path: '/create-account', component: <CreateAccount /> },
     { path: '/dashboard', component: <Dashboard /> },
     { path: '/transaction/account/create', component: <CreateTransactionAccount /> },
 ]
 
-const gLeader = [
-    { path: '/create-account', component: <CreateAccount /> },
-    { path: '/dashboard', component: <Dashboard /> },
-    { path: '/gathering/account/create', component: <CreateGatheringAccount /> },
+const gStaff = [
+    { path: '/gathering/order/:id/arrival', component: <ConfirmOrderArrivalToGathering /> },
+    { path: '/order/gathering/:id/gathering', component: <CreateDeliveryGatheringToGatheringPoint /> },
+    { path: '/order/gathering/:id/transaction', component: <CreateDeliveryToTransactionPoint /> },
 ]
 
 const tStaff = [
@@ -58,12 +64,7 @@ const tStaff = [
     { path: '/transaction/order', component: <OrderTransactionPoint />},
     { path: '/order/transaction/:id/customer', component: <CreateDeliveryToCustomer /> },
     { path: '/order/transaction/:id/gathering', component: <CreateDeliveryTransactionToGatheringPoint /> },
-    { path: '/order/transaction/:id', component: <ConfirmOrderArrivalToTransaction /> },
-]
-const gStaff = [
-    { path: '/gathering/order/:id/arrival', component: <ConfirmOrderArrivalToGathering /> },
-    { path: '/order/gathering/:id/gathering', component: <CreateDeliveryGatheringToGatheringPoint /> },
-    { path: '/order/gathering/:id/transaction', component: <CreateDeliveryToTransactionPoint /> },
+    { path: '/order/transaction/:id/arrival', component: <ConfirmOrderArrivalToTransaction /> },
 ]
 
 const unauthorizedUser = [
@@ -72,9 +73,7 @@ const unauthorizedUser = [
     { path: '/login', component: <Login /> },
     { path: '/order/view', component: <ViewOrder /> },
 ]
-localStorage.setItem('role', ROLES[1])
 const role = localStorage.getItem('role');
-
 
 function App() {
     return (

@@ -5,9 +5,12 @@ import { useState } from 'react';
 import MainNavbar from '../../component/layout/MainNavbar';
 import { jwtDecode } from "jwt-decode";
 import roles from './Role'
+import {useNavigate} from "react-router-dom";
 
 
 const Login = () => {
+    const navigate = useNavigate();
+
     const theme = createTheme({
         typography: {
             "fontFamily": '"Montserrat", "sans-serif"',
@@ -31,30 +34,33 @@ const Login = () => {
         try {
             const res = await login({ email, password });
             console.log(res);
+
             // save token into localStorage
-            // localStorage.setItem('token', res.accessToken);
+            localStorage.setItem('token', res.accessToken);
             // get role
             const token = res.accessToken;
             const decoded = jwtDecode(token);
-            const role = decoded.role;
-            // console.log(role);
-            // save role into localStorage 
+            console.log(decoded)
+            const pointId = decoded.pointId
+            if(pointId) localStorage.setItem('pointId', pointId)
+            const role = decoded.scope;
+            // save role into localStorage
             localStorage.setItem('role', role);
             switch (role) {
-                case roles[0]: 
-                    window.location.href = '/dashboard';
+                case roles[0]:
+                    navigate('/dashboard');
                     break;
-                case roles[1]: 
-                    window.location.href = '/dashboard';
+                case roles[1]:
+                    navigate('/dashboard');
                     break;
                 case roles[2]:
-                    window.location.href='/dashboard/transaction/leader';
+                    navigate('/dashboard');
                     break;
-                case roles[3]: 
-                    window.location.href = '';
+                case roles[3]:
+                    navigate(`/gathering/order/${pointId}/arrival`);
                     break;
-                default: 
-                    window.location.href = '/dashboard/transaction';
+                default:
+                    navigate(`/order/transaction/${pointId}/arrival`);
                     break;
             }
         } catch (e) {
