@@ -15,7 +15,7 @@ axiosApi.interceptors.response.use(
 
 axiosApi.interceptors.request.use(async (config) => {
     const customHeaders = {};
-    const accessToken = window.localStorage.getItem('accessToken');
+    const accessToken = window.localStorage.getItem('token');
     if (accessToken) {
         customHeaders.Authorization = `Bearer ${accessToken}`;
     }
