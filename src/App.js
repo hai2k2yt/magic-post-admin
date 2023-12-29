@@ -26,8 +26,12 @@ import CreateDeliveryTransactionToGatheringPoint
     from "./page/transactionStaff/CreateDeliveryTransactionToGatheringPoint";
 import CreateGatheringPoint from "./page/admin/CreateGatheringPoint";
 import CreateTransactionPoint from "./page/admin/CreateTransactionPoint";
+import CreateTransactionAccount from "./page/transactionStaff/CreateTransactionAccount";
+import CreateGatheringAccount from "./page/gatheringStaff/CreateGatheringAccount";
 
 const admin = [
+    { path: '/gathering/account/create', component: <CreateGatheringAccount /> },
+    { path: '/transaction/account/create', component: <CreateTransactionAccount /> },
     { path: '/gathering/create', component: <CreateGatheringPoint /> },
     { path: '/transaction/create', component: <CreateTransactionPoint /> },
     { path: '/manage-gatheringPoint', component: <ManageGatheringPoint /> },
@@ -35,13 +39,20 @@ const admin = [
     { path: '/leader/manage', component: <ManageLeaderAccount /> },
     { path: '/dashboard', component: <Dashboard /> },
     { path: '/create-account', component: <CreateAccount /> }
-
 ];
-const leader = [
+
+const tLeader = [
     { path: '/create-account', component: <CreateAccount /> },
     { path: '/dashboard', component: <Dashboard /> },
-    // { path: '/dashboard/leader', component: <Dashboard /> },
+    { path: '/transaction/account/create', component: <CreateTransactionAccount /> },
 ]
+
+const gLeader = [
+    { path: '/create-account', component: <CreateAccount /> },
+    { path: '/dashboard', component: <Dashboard /> },
+    { path: '/gathering/account/create', component: <CreateGatheringAccount /> },
+]
+
 const tStaff = [
     { path: '/order/create/:id', component: <CreateOrder /> },
     { path: '/transaction/order', component: <OrderTransactionPoint />},
@@ -61,7 +72,7 @@ const unauthorizedUser = [
     { path: '/login', component: <Login /> },
     { path: '/order/view', component: <ViewOrder /> },
 ]
-localStorage.setItem('role', ROLES[0])
+localStorage.setItem('role', ROLES[1])
 const role = localStorage.getItem('role');
 
 
@@ -89,9 +100,15 @@ function App() {
                         <Route key={route.path} path={route.path} element={route.component} />
                     )))}
 
-                {/* leader routes */}
-                {(role === ROLES[2] || role === ROLES[1]) && (
-                    leader.map((route) => (
+                {/* gathering leader routes */}
+                {(role === ROLES[1]) && (
+                    gLeader.map((route) => (
+                        <Route key={route.path} path={route.path} element={route.component} />
+                    )))}
+
+                {/* transaction leader routes */}
+                {(role === ROLES[2]) && (
+                    tLeader.map((route) => (
                         <Route key={route.path} path={route.path} element={route.component} />
                     )))}
 
