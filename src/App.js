@@ -24,8 +24,12 @@ import ConfirmOrderArrivalToTransaction from "./page/transactionStaff/ConfirmOrd
 import CreateDeliveryToTransactionPoint from "./page/gatheringStaff/CreateDeliveryToTransactionPoint";
 import CreateDeliveryTransactionToGatheringPoint
     from "./page/transactionStaff/CreateDeliveryTransactionToGatheringPoint";
+import CreateGatheringPoint from "./page/admin/CreateGatheringPoint";
+import CreateTransactionPoint from "./page/admin/CreateTransactionPoint";
 
 const admin = [
+    { path: '/gathering/create', component: <CreateGatheringPoint /> },
+    { path: '/transaction/create', component: <CreateTransactionPoint /> },
     { path: '/manage-gatheringPoint', component: <ManageGatheringPoint /> },
     { path: '/manage-transactionPoint', component: <MangageTransactionPoint /> },
     { path: '/leader/manage', component: <ManageLeaderAccount /> },
@@ -57,7 +61,7 @@ const unauthorizedUser = [
     { path: '/login', component: <Login /> },
     { path: '/order/view', component: <ViewOrder /> },
 ]
-localStorage.setItem('role', ROLES[4])
+localStorage.setItem('role', ROLES[0])
 const role = localStorage.getItem('role');
 
 
