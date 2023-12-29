@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createUser } from "../../api/user";
+import { createGatheringStaff, createUser } from "../../api/user";
 import ROLES from './Role';
 import { useEffect } from 'react';
 
@@ -52,6 +52,18 @@ const Register = () => {
 
         } else {
             try {
+                if (role === ROLES[1]) {
+                    // Xử lý tạo tài khoản nhân viên điểm tập kết
+                    setType('GATHERING_STAFF');
+                    // const res = await createGatheringStaff({username, email, password, phone}, type);
+                } else if (role === ROLES[2]) {
+                    // Xử lý tạo tài khoản nhân viên điểm giao dịch
+                    setType('TRANSACTION_STAFF');
+                } else if (role === ROLES[0]) {
+                    // Xử lý tạo tài khoản trưởng điểm
+                    
+                }
+
                 const res = await createUser({ username, email, password, phone }, type);
                 console.log(res)
             } catch (e) {
@@ -63,13 +75,7 @@ const Register = () => {
     const handleTypeChange = (event) => {
         setType(event.target.value);
     };
-    useEffect(() => {
-        if (role === ROLES[1]) {
-            setType('GATHERING_STAFF');
-        } else if (role === ROLES[2]) {
-            setType('TRANSACTION_STAFF');
-        }
-    }, [role]);
+
 
     return (
         <form className="m-5 max-h-screen" onSubmit={handleRegister}>
