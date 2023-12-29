@@ -17,8 +17,8 @@ const ManageOrder = () => {
     const navigate = useNavigate();
     const [searchOrder, setSearchOrder] = useState('');
     const [selectedStatus, setSelectedStatus] = useState('');
-    const [selectedProvince, setSelectedProvince] = useState('');
-    const [selectedDistrict, setSelectedDistrict] = useState('');
+    // const [selectedProvince, setSelectedProvince] = useState('');
+    // const [selectedDistrict, setSelectedDistrict] = useState('');
     const [sortModel, setSortModel] = useState([]);
 
     const orders = [

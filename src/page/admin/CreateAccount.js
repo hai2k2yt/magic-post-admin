@@ -66,8 +66,8 @@ const CreateLeaderAccount = () => {
                         role === ROLES[0] && (
                             <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
                                 <li><a href='/dashboard'><SpaceDashboardIcon />Bảng điều khiển</a></li>
-                                <li><a href='/manage-transactionPoint'><AddLocationIcon />Quản lý điểm giao dịch</a></li>
-                                <li><a href='/manage-gatheringPoint'><AddLocationIconAlt /> Quản lý điểm tập kết</a></li>
+                                <li><a href='/manage-transactionPoint'><AddLocationIcon />Tạo điểm giao dịch</a></li>
+                                <li><a href='/manage-gatheringPoint'><AddLocationIconAlt />Tạo điểm tập kết</a></li>
                                 <li><a class="bg-neutral text-primary" href='/create-account'><PersonAddIcon />Tạo tài khoản trưởng điểm</a></li>
                                 <li><a href='/leader/manage'><ManageAccountsIcon />Quản lý tài khoản trưởng điểm</a></li>
                             </ul>

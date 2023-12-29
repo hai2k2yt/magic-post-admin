@@ -10,17 +10,18 @@ import {
     IconButton,
     Badge,
 } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import CheckIcon from '@mui/icons-material/Check';
 import { FormProvider, RHFTextField } from "../../component/hook-form";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from '@mui/lab';
 import Navbar from '../../component/layout/Navbar';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import AddLocationIcon from '@mui/icons-material/AddLocation';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import AddLocationIconAlt from '@mui/icons-material/AddLocationAlt'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 import {createGatheringPoints} from "../../api/point";
 
 const theme = createTheme({
@@ -147,14 +148,14 @@ const CreateGatheringPoint = () => {
                     <div class="drawer-side">
                         <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
                         <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
-                            {/* <!-- Sidebar content here --> */}
-                            <li><a href='/dashbroad/transaction'><SpaceDashboardIcon />Bảng điều khiển</a></li>
-                            <li><a class="bg-neutral text-primary" href='/order/create'><AddCircleOutlineIcon />Ghi nhận hàng</a></li>
-                            {/* <li><a href='/order/create'><SwapHorizIcon />Đơn mới</a></li> */}
-                            <li><a href='/order/delivery/gathering'><AddIcon />Tạo đơn hàng đến điểm tập kết</a></li>
-                            <li><a href='/order/delivery/customer' ><DeliveryDiningIcon/>Chuyển hàng đến người nhận</a></li>
-                            <li><a href='/transaction/order'> <CheckIcon/> Xác nhận trạng thái đơn hàng</a></li>
-                        </ul>
+                                <li><a href='/dashboard'><SpaceDashboardIcon />Bảng điều khiển</a></li>
+                                <li><a href='/manage-transactionPoint'><AddLocationIcon />Tạo điểm giao dịch</a></li>
+                                <li><a class="bg-neutral text-primary" href='/manage-gatheringPoint'><AddLocationIconAlt />Tạo điểm tập kết</a></li>
+                                <li><a href='/transaction/create'><LocationOnIcon/>Quản lý diểm giao dịch</a></li>
+                                <li><a href='/gathering/create'><LocationOnIcon/>Quản lý điểm tập kết</a></li>
+                                <li><a href='/create-account'><PersonAddIcon />Tạo tài khoản trưởng điểm</a></li>
+                                <li><a href='/leader/manage'><ManageAccountsIcon />Quản lý tài khoản trưởng điểm</a></li>
+                            </ul>
 
                     </div>
                 </div>

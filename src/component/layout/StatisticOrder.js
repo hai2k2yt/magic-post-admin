@@ -91,7 +91,7 @@ export default function StatisticOrder() {
                         <Typography gutterBottom variant="h3" fontWeight={700} component="div">
                             Toàn quốc
                         </Typography>
-                        <div class="stats shadow mb-10">
+                        {/* <div class="stats shadow mb-10">
                             <div class="stat">
                                 <div class="stat-figure text-primary">
                                     <InventoryIcon />
@@ -110,7 +110,7 @@ export default function StatisticOrder() {
                         </div>
                         <div class='mb-10'>
                             <StatisticAllOrder />
-                        </div>
+                        </div> */}
 
                         <Typography gutterBottom variant="h3" fontWeight={700} component="div">
                             Điểm giao dịch
