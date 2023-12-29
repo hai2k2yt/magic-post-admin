@@ -1,6 +1,7 @@
 
 import React from "react";
 import ROLES from "../../page/auth/Role";
+import { Navigate } from "react-router-dom";
 import MenuIcon from '@mui/icons-material/Menu';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -30,7 +31,6 @@ const Navbar = () => {
     const handleClose = () => {
         setOpen(false);
     };
-
     return (
         <div class="navbar bg-primary text-neutral">
             <div class="flex-1">

@@ -33,7 +33,7 @@ const theme = createTheme({
 
 })
 const CreateDeliveryTransactionToGatheringPoint = () => {
-        let {id} = useParams();
+        const id = localStorage.getItem('pointId')
         const navigate = useNavigate()
         const [orders, setOrders] = useState([])
         const [gatheringPoints, setGatheringPoints] = useState([])

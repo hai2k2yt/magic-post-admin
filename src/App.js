@@ -54,17 +54,17 @@ const tLeader = [
 ]
 
 const gStaff = [
-    { path: '/gathering/order/:id/arrival', component: <ConfirmOrderArrivalToGathering /> },
-    { path: '/order/gathering/:id/gathering', component: <CreateDeliveryGatheringToGatheringPoint /> },
-    { path: '/order/gathering/:id/transaction', component: <CreateDeliveryToTransactionPoint /> },
+    { path: '/gathering/order/arrival', component: <ConfirmOrderArrivalToGathering /> },
+    { path: '/order/gathering/gathering', component: <CreateDeliveryGatheringToGatheringPoint /> },
+    { path: '/order/gathering/transaction', component: <CreateDeliveryToTransactionPoint /> },
 ]
 
 const tStaff = [
-    { path: '/order/create/:id', component: <CreateOrder /> },
-    { path: '/transaction/order', component: <OrderTransactionPoint /> },
-    { path: '/order/transaction/:id/customer', component: <CreateDeliveryToCustomer /> },
-    { path: '/order/transaction/:id/gathering', component: <CreateDeliveryTransactionToGatheringPoint /> },
-    { path: '/order/transaction/:id/arrival', component: <ConfirmOrderArrivalToTransaction /> },
+    { path: '/order/create', component: <CreateOrder /> },
+    { path: '/transaction/order', component: <OrderTransactionPoint />},
+    { path: '/order/transaction/customer', component: <CreateDeliveryToCustomer /> },
+    { path: '/order/transaction/gathering', component: <CreateDeliveryTransactionToGatheringPoint /> },
+    { path: '/order/transaction/arrival', component: <ConfirmOrderArrivalToTransaction /> },
 ]
 
 const unauthorizedUser = [
@@ -73,7 +73,9 @@ const unauthorizedUser = [
     { path: '/login', component: <Login /> },
     { path: '/order/view', component: <ViewOrder /> },
 ]
+
 const role = localStorage.getItem('role');
+
 
 function App() {
     return (

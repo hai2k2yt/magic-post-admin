@@ -4,7 +4,9 @@ import { login } from '../../api/auth';
 import { useState } from 'react';
 import MainNavbar from '../../component/layout/MainNavbar';
 import { jwtDecode } from "jwt-decode";
-import roles from './Role';
+import roles from './Role'
+import {useNavigate} from "react-router-dom";
+
 
 const Login = () => {
 
@@ -87,19 +89,19 @@ const Login = () => {
                 localStorage.setItem('role', role);
                 switch (role) {
                     case roles[0]:
-                        window.location.href = '/dashboard';
+                        navigate('/dashboard');
                         break;
                     case roles[1]:
-                        window.location.href = '/dashboard';
+                        navigate('/dashboard');
                         break;
                     case roles[2]:
-                        window.location.href = '/dashboard';
+                        navigate('/dashboard');
                         break;
                     case roles[3]:
-                        window.location.href = '/gathering/order/:id';
+                        navigate(`/gathering/order/arrival`);
                         break;
                     default:
-                        window.location.href = '/dashboard/transaction';
+                        navigate(`/order/transaction/arrival`);
                         break;
                 }
             } catch (err) {

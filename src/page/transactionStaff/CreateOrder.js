@@ -152,7 +152,7 @@ const validationSchema = yup.object().shape({
 
 
 const CreateOrder = () => {
-    const { id } = useParams();
+    const id = localStorage.getItem('pointId')
     const methods = useForm({
         resolver: yupResolver(validationSchema),
         defaultValues
