@@ -4,10 +4,11 @@ import { login } from '../../api/auth';
 import { useState } from 'react';
 import MainNavbar from '../../component/layout/MainNavbar';
 import { jwtDecode } from "jwt-decode";
-import roles from './Role'
-
+import ROLES from './Role';
+import { useNavigate } from 'react-router';
 
 const Login = () => {
+    const navigate = useNavigate();
     const theme = createTheme({
         typography: {
             "fontFamily": '"Montserrat", "sans-serif"',
@@ -40,23 +41,23 @@ const Login = () => {
             // console.log(role);
             // save role into localStorage 
             localStorage.setItem('role', role);
-            switch (role) {
-                case roles[0]: 
-                    window.location.href = '/dashboard';
-                    break;
-                case roles[1]: 
-                    window.location.href = '/dashboard';
-                    break;
-                case roles[2]:
-                    window.location.href='/dashboard/transaction/leader';
-                    break;
-                case roles[3]: 
-                    window.location.href = '';
-                    break;
-                default: 
-                    window.location.href = '/dashboard/transaction';
-                    break;
-            }
+                switch (role) {
+                    case ROLES[0]:
+                        navigate('/dashboard');
+                        break;
+                    case ROLES[1]:
+                        navigate('/dashboard');
+                        break;
+                    case ROLES[2]:
+                        navigate('/dashboard');
+                        break;
+                    case ROLES[3]:
+                        navigate(`/gathering/order/arrival`);
+                        break;
+                    default:
+                        navigate(`/order/transaction/arrival`);
+                        break;
+                }
         } catch (e) {
             if (e.response && e.response.status === 404) {
                 // handle error: resource not found
