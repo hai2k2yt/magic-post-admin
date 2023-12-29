@@ -14,7 +14,6 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import { createTheme, ThemeProvider, Typography } from '@mui/material';
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import AddLocationIconAlt from '@mui/icons-material/AddLocationAlt';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Paper from '@mui/material/Paper';
@@ -22,6 +21,7 @@ import { useEffect, useMemo, useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import { redirect, useNavigate } from "react-router-dom";
 import Navbar from '../../component/layout/Navbar';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { listP2PGatheringOrders } from "../../api/transport";
 import { listGatheringPoints } from "../../api/point";
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
@@ -280,11 +280,13 @@ export default function ManageGatheringPoint() {
                 <div class="drawer-side">
                     <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
                     <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
-                        <li><a href='/dashboard'><SpaceDashboardIcon />Bảng điều khiển</a></li>
-                        <li><a href='/manage-transactionPoint'><AddLocationIcon />Quản lý điểm giao dịch</a></li>
-                        <li><a class="bg-neutral text-primary" href='/manage-gatheringPoint'><AddLocationIconAlt /> Quản lý điểm tập kết</a></li>
-                        <li><a href='/create-account'><PersonAddIcon />Tạo tài khoản trưởng điểm</a></li>
-                        <li><a href='/leader/manage'><ManageAccountsIcon />Quản lý tài khoản trưởng điểm</a></li>
+                    <li><a href='/dashboard'><SpaceDashboardIcon />Bảng điều khiển</a></li>
+                                <li><a href='/transaction/create'><AddLocationIcon />Tạo điểm giao dịch</a></li>
+                                <li><a href='/gathering/create'><AddLocationIconAlt />Tạo điểm tập kết</a></li>
+                                <li><a  class="bg-neutral text-primary"  href='/manage-gatheringPoint'><LocationOnIcon />Quản lý điểm tập kết</a></li>
+                                <li><a href='/manage-transactionPoint'><LocationOnIcon />Quản lý điểm giao dịch</a></li>
+                                <li><a href='/create-account'><PersonAddIcon />Tạo tài khoản trưởng điểm</a></li>
+                                <li><a href='/leader/manage'><ManageAccountsIcon />Quản lý tài khoản trưởng điểm</a></li>
                     </ul>
                 </div>
             </div>

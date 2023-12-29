@@ -199,9 +199,11 @@ const Navbar = () => {
                         role === ROLES[0] && (
                             <>
                                 <li><a href='/dashboard'>Bảng điều khiển</a></li>
+                                <li><a href='/transaction/create'>Tạo điểm giao dịch</a></li>
+                                <li><a href='/gathering/create'>Tạo điểm tập kết</a></li>
+                                <li><a href='/manage-gatheringPoint'>Quản lý điểm tập kết</a></li>
                                 <li><a href='/manage-transactionPoint'>Quản lý điểm giao dịch</a></li>
-                                <li><a href='/manage-gatheringPoint'> Quản lý điểm tập kết</a></li>
-                                <li><a class="bg-neutral text-primary" href='/create-account'>Tạo tài khoản trưởng điểm</a></li>
+                                <li><a href='/create-account'>Tạo tài khoản trưởng điểm</a></li>
                                 <li><a href='/leader/manage'>Quản lý tài khoản trưởng điểm</a></li>
                             </>
                         )
@@ -209,7 +211,7 @@ const Navbar = () => {
                     {
                         (role === ROLES[1] || role === ROLES[2]) && (
                             <>
-                                <li><a class="bg-neutral text-primary" href='/dashboard'>Bảng điều khiển</a></li>
+                                <li><a href='/dashboard'>Bảng điều khiển</a></li>
                                 <li><a href='/create-account'>Tạo tài khoản nhân viên</a></li>
                             </>
                         )
@@ -217,20 +219,20 @@ const Navbar = () => {
                     {
                         role === ROLES[3] && (
                             <>
-                                <li><a class="bg-neutral text-primary" >Đơn mới</a></li>
-                                <li><a href='/order/delivery/gathering'>Tạo đơn chuyển đi</a></li>
+                                <li><a href='/gathering/order/arrival'>Đơn mới</a></li>
+                                <li><a href='/order/gathering/gathering'>Tạo đơn đến điểm tập kết</a></li>
+                                <li><a href='/order/gathering/transaction'>Tạo đơn đến điểm giao dịch đích</a></li>
                             </>
                         )
                     }
                     {
                         role === ROLES[4] && (
                             <>
-                                <li><a href='/dashbroad/transaction'>Bảng điều khiển</a></li>
-                                <li><a href='/order/create'>Ghi nhận hàng</a></li>
-                                {/* <li><a href='/transaction/order/:id'><SwapHorizIcon />Đơn mới</a></li> */}
-                                <li><a href='/order/delivery/gathering'>Tạo đơn hàng đến điểm tập kết</a></li>
-                                <li><a href='/order/delivery/customer' >Chuyển hàng đến người nhận</a></li>
-                                <li><a href='/transaction/order'>Xác nhận trạng thái đơn hàng</a></li>
+                                <li><a href='/order/create'>Ghi nhận hàng gửi</a></li>
+                                <li><a href='/transaction/order'>Đơn mới đến điểm giao dịch</a></li>
+                                <li><a href='/order/transaction/gathering'>Tạo đơn hàng đến điểm tập kết</a></li>
+                                <li><a href='/order/transaction/customer' >Chuyển hàng đến người nhận</a></li>
+                                <li><a href='/order/transaction/arrival'> Xác nhận trạng thái đơn hàng</a></li>
                             </>
                         )
                     }

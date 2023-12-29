@@ -1,14 +1,17 @@
 import React from 'react'
-import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Navbar from '../../component/layout/Navbar';
-import AddLocationIcon from '@mui/icons-material/AddLocation';
 import Register from '../auth/Register';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import { Typography } from '@mui/material';
-import AddLocationIconAlt from '@mui/icons-material/AddLocationAlt';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ROLES from '../auth/Role';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import AddLocationIcon from '@mui/icons-material/AddLocation';
+import AddLocationIconAlt from '@mui/icons-material/AddLocationAlt'
+
+
 
 const role = localStorage.getItem('role');
 
@@ -66,8 +69,10 @@ const CreateLeaderAccount = () => {
                         role === ROLES[0] && (
                             <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
                                 <li><a href='/dashboard'><SpaceDashboardIcon />Bảng điều khiển</a></li>
-                                <li><a href='/manage-transactionPoint'><AddLocationIcon />Tạo điểm giao dịch</a></li>
-                                <li><a href='/manage-gatheringPoint'><AddLocationIconAlt />Tạo điểm tập kết</a></li>
+                                <li><a href='/transaction/create'><AddLocationIcon />Tạo điểm giao dịch</a></li>
+                                <li><a href='/gathering/create'><AddLocationIconAlt />Tạo điểm tập kết</a></li>
+                                <li><a href='/manage-gatheringPoint'><LocationOnIcon/>Quản lý điểm tập kết</a></li>
+                                <li><a href='/manage-transactionPoint'><LocationOnIcon/>Quản lý điểm giao dịch</a></li>
                                 <li><a class="bg-neutral text-primary" href='/create-account'><PersonAddIcon />Tạo tài khoản trưởng điểm</a></li>
                                 <li><a href='/leader/manage'><ManageAccountsIcon />Quản lý tài khoản trưởng điểm</a></li>
                             </ul>

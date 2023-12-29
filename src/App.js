@@ -30,6 +30,7 @@ import CreateTransactionAccount from "./page/transactionStaff/CreateTransactionA
 import CreateGatheringAccount from "./page/gatheringStaff/CreateGatheringAccount";
 
 const admin = [
+    
     { path: '/gathering/account/create', component: <CreateGatheringAccount /> },
     { path: '/transaction/account/create', component: <CreateTransactionAccount /> },
     { path: '/gathering/create', component: <CreateGatheringPoint /> },

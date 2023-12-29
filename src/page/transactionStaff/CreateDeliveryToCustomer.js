@@ -16,7 +16,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import CheckIcon from '@mui/icons-material/Check';
 import { createTheme, ThemeProvider } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard'
+import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import Navbar from '../../component/layout/Navbar';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {
@@ -211,12 +211,11 @@ const CreateDeliveryToCustomer = () => {
                 <div class="drawer-side">
                     <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
                     <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
-                        <li><a href='/dashbroad/transaction'><SpaceDashboardIcon />Bảng điều khiển</a></li>
-                        <li><a href='/order/create'><AddCircleOutlineIcon />Ghi nhận hàng</a></li>
-                        {/* <li><a href='/transaction/order/:id'><SwapHorizIcon />Đơn mới</a></li> */}
-                        <li><a href='/order/delivery/gathering'><AddIcon />Tạo đơn hàng đến điểm tập kết</a></li>
-                        <li><a href='/order/delivery/customer' ><DeliveryDiningIcon />Chuyển hàng đến người nhận</a></li>
-                        <li><a href='/transaction/order'> <CheckIcon /> Xác nhận trạng thái đơn hàng</a></li>
+                    <li><a href='/order/create'><AddCircleOutlineIcon />Ghi nhận hàng gửi</a></li>
+                        <li><a href='/transaction/order'><SwapHorizIcon />Đơn mới đến điểm giao dịch</a></li>
+                        <li><a  href='/order/transaction/gathering'><AddIcon />Tạo đơn hàng đến điểm tập kết</a></li>
+                        <li><a class="bg-neutral text-primary" href='/order/transaction/customer' ><DeliveryDiningIcon />Chuyển hàng đến người nhận</a></li>
+                        <li><a href='/order/transaction/arrival'> <CheckIcon /> Xác nhận trạng thái đơn hàng</a></li>
                     </ul>
                 </div>
             </div>

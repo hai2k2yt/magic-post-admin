@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import {
     Box,
@@ -7,19 +7,20 @@ import {
     Grid, FormControl, InputLabel, Select, MenuItem,
 
 } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import CheckIcon from '@mui/icons-material/Check';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import AddLocationIcon from '@mui/icons-material/AddLocation';
+import AddLocationIconAlt from '@mui/icons-material/AddLocationAlt'
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+
 import { FormProvider, RHFSelect, RHFTextField } from "../../component/hook-form";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from '@mui/lab';
 import Navbar from '../../component/layout/Navbar';
-import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
-import {createGatheringPoints, createTransactionPoint, listGatheringPoints} from "../../api/point";
-import {listP2PTransactionOrders} from "../../api/transport";
+import { createTransactionPoint, listGatheringPoints } from "../../api/point";
 
 const theme = createTheme({
     typography: {
@@ -102,7 +103,7 @@ const CreateGatheringPoint = () => {
         try {
             console.log(data);
             await createTransactionPoint(selectedPoint, data)
-        }catch (e) {
+        } catch (e) {
             console.log(e);
         }
     };
@@ -183,13 +184,13 @@ const CreateGatheringPoint = () => {
                     <div class="drawer-side">
                         <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
                         <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
-                            {/* <!-- Sidebar content here --> */}
-                            <li><a href='/dashbroad/transaction'><SpaceDashboardIcon />Bảng điều khiển</a></li>
-                            <li><a class="bg-neutral text-primary" href='/order/create'><AddCircleOutlineIcon />Ghi nhận hàng</a></li>
-                            {/* <li><a href='/order/create'><SwapHorizIcon />Đơn mới</a></li> */}
-                            <li><a href='/order/delivery/gathering'><AddIcon />Tạo đơn hàng đến điểm tập kết</a></li>
-                            <li><a href='/order/delivery/customer' ><DeliveryDiningIcon/>Chuyển hàng đến người nhận</a></li>
-                            <li><a href='/transaction/order'> <CheckIcon/> Xác nhận trạng thái đơn hàng</a></li>
+                            <li><a href='/dashboard'><SpaceDashboardIcon />Bảng điều khiển</a></li>
+                            <li><a class="bg-neutral text-primary" href='/transaction/create'><AddLocationIcon />Tạo điểm giao dịch</a></li>
+                            <li><a href='/gathering/create'><AddLocationIconAlt />Tạo điểm tập kết</a></li>
+                            <li><a href='/manage-gatheringPoint'><LocationOnIcon />Quản lý điểm tập kết</a></li>
+                            <li><a href='/manage-transactionPoint'><LocationOnIcon />Quản lý điểm giao dịch</a></li>
+                            <li><a href='/create-account'><PersonAddIcon />Tạo tài khoản trưởng điểm</a></li>
+                            <li><a href='/leader/manage'><ManageAccountsIcon />Quản lý tài khoản trưởng điểm</a></li>
                         </ul>
 
                     </div>

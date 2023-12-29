@@ -1,5 +1,5 @@
 //Manage transaction place, gathering place
-
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
@@ -210,8 +210,8 @@ export default function ManagePlace() {
                     {/* <!-- Page content here --> */}
                     <div class="m-10">
                         <Box sx={{ width: '100%' }}>
-                        <Typography variant='h4' fontWeight={700} marginBottom={3}>
-                                Quản lý điểm giao dịch 
+                            <Typography variant='h4' fontWeight={700} marginBottom={3}>
+                                Quản lý điểm giao dịch
                             </Typography>
                             <Paper sx={{ width: '100%', mb: 2 }}>
                                 <TableContainer>
@@ -285,8 +285,10 @@ export default function ManagePlace() {
                     <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
                     <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
                         <li><a href='/dashboard'><SpaceDashboardIcon />Bảng điều khiển</a></li>
-                        <li><a class="bg-neutral text-primary" href='/manage-transactionPoint'><AddLocationIcon />Quản lý điểm giao dịch</a></li>
-                        <li><a href='/manage-gatheringPoint'><AddLocationIconAlt /> Quản lý điểm tập kết</a></li>
+                        <li><a href='/transaction/create'><AddLocationIcon />Tạo điểm giao dịch</a></li>
+                        <li><a href='/gathering/create'><AddLocationIconAlt />Tạo điểm tập kết</a></li>
+                        <li><a href='/manage-gatheringPoint'><LocationOnIcon />Quản lý điểm tập kết</a></li>
+                        <li><a class="bg-neutral text-primary" href='/manage-transactionPoint'><LocationOnIcon />Quản lý điểm giao dịch</a></li>
                         <li><a href='/create-account'><PersonAddIcon />Tạo tài khoản trưởng điểm</a></li>
                         <li><a href='/leader/manage'><ManageAccountsIcon />Quản lý tài khoản trưởng điểm</a></li>
 
