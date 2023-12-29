@@ -57,10 +57,10 @@ const Login = () => {
                     navigate('/dashboard');
                     break;
                 case roles[3]:
-                    navigate(`/gathering/order/${pointId}/arrival`);
+                    navigate(`/gathering/order/arrival`);
                     break;
                 default:
-                    navigate(`/order/transaction/${pointId}/arrival`);
+                    navigate(`/order/transaction/arrival`);
                     break;
             }
         } catch (e) {

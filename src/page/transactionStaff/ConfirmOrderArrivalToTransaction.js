@@ -27,7 +27,7 @@ import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
 
 const ConfirmOrderArrivalToTransaction = () => {
     const navigate = useNavigate();
-    let { id } = useParams();
+    const id = localStorage.getItem('pointId')
     const [orders, setOrders] = useState([]);
     const [orderSelection, setOrderSelection] = useState([])
     const [searchOrder, setSearchOrder] = useState('');

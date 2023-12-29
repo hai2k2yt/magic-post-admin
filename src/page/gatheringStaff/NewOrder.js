@@ -26,7 +26,7 @@ const theme = createTheme({
 
 })
 const ConfirmGatheringOrderArrival = () => {
-    let { id } = useParams();
+    const id = localStorage.getItem('pointId')
     const navigate = useNavigate()
     const [orders, setOrders] = useState([])
     const handleViewDetail = (orderId) => {
