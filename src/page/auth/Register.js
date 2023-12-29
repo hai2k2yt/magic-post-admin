@@ -52,7 +52,7 @@ const Register = () => {
 
         } else {
             try {
-                const res = await createUser({ username, email, password, phone }, type)
+                const res = await createUser({ username, email, password, phone }, type);
                 console.log(res)
             } catch (e) {
                 console.log(e)

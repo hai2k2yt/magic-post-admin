@@ -1,9 +1,17 @@
 
 import React, { useState } from "react";
 import ROLES from "../../page/auth/Role";
+import { Navigate } from "react-router-dom";
 import MenuIcon from '@mui/icons-material/Menu';
+
+const role = localStorage.getItem('role');
+const name = localStorage.getItem('name');
+const handleLogOut = () => {
+    localStorage.removeItem('role'); 
+    localStorage.removeItem('name'); 
+    <Navigate to='/home' />
+}
 const Navbar = () => {
-    const role = localStorage.getItem('role');
     return (
         <div class="navbar bg-primary text-neutral">
             <div class="flex-1">
@@ -92,7 +100,7 @@ const Navbar = () => {
                             Cá nhân
                         </a>
                     </li>
-                    <li><a href="/home">Đăng xuất</a></li>
+                    <li><a href="/home" onClick={handleLogOut}>Đăng xuất</a></li>
                 </ul>
             </div>
             {/*Menu for each roles*/}

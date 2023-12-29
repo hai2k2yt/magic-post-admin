@@ -27,25 +27,31 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const [emailErr, setEmailErr] = useState('');
-    const [hasError, setHasError] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const validateEmail = (value) => {
         var regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
         if (regex.test(value) || value === '') {
             setEmail(value);
             setEmailErr('');
-            setHasError(false);
+           
         } else {
             setEmailErr('Vui lòng nhập đúng định dạng');
-            setHasError(true);
+           
         }
 
     }
     const handleLogin = async (e) => {
-        if (!hasError) {
+        if (localStorage.getItem('role') !== null) {
+            localStorage.removeItem('role');
+        } 
+        if (localStorage.getItem('name') !== null) {
+            localStorage.removeItem('name'); 
+        }
+
+        if (emailErr === '' && errorMsg === '') {
             try {
+                
                 e.preventDefault();
-
-
                 const res = await login({ email, password });
                 console.log(res);
                 // save token into localStorage
@@ -54,6 +60,8 @@ const Login = () => {
                 const token = res.accessToken;
                 const decoded = jwtDecode(token);
                 const role = decoded.role;
+                const name = decoded.username;
+                localStorage.setItem('name', name);
                 // console.log(role);
                 // save role into localStorage 
                 localStorage.setItem('role', role);
@@ -65,10 +73,10 @@ const Login = () => {
                         window.location.href = '/dashboard';
                         break;
                     case roles[2]:
-                        window.location.href = '/dashboard/transaction/leader';
+                        window.location.href = '/dashboard';
                         break;
                     case roles[3]:
-                        window.location.href = '/create-account';
+                        window.location.href = '/gathering/order/:id';
                         break;
                     default:
                         window.location.href = '/dashboard/transaction';
@@ -77,7 +85,7 @@ const Login = () => {
             } catch (err) {
                 if (err.response && err.response.status === 404) {
                     // handle error: resource not found
-                    console.log(err.response, '1');
+                    console.log(err.response);
                     setErrorMsg(err.response.data.message);
                     console.log(errorMsg);
                 } else {
