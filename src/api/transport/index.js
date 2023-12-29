@@ -2,6 +2,9 @@ import {get, post, put} from '../../helpers/api_helpers'
 
 export const confirmP2PTransactionArrival = (transactionPointId, p2pTransportOrderId) => put(`/transaction-points/${transactionPointId}/p2p-transport-orders/${p2pTransportOrderId}/confirm-arrival`)
 
+export const confirmMultiP2PTransactionArrival = (transactionPointId, body) => put(`/transaction-points/${transactionPointId}/p2p-transport-orders/confirm-arrival`, body)
+
+
 export const confirmP2CTransactionDelivery = (transactionPointId, p2cTransportOrderId, expressOrderId, body) => put(`/transaction-points/${transactionPointId}/p2c-transport-orders/${p2cTransportOrderId}/express-orders/${expressOrderId}/confirm-delivery`, body)
 
 export const cancelP2CTransaction = (transactionPointId, p2cTransportOrderId, expressOrderId, body) => put(`/transaction-points/${transactionPointId}/p2c-transport-orders/${p2cTransportOrderId}/express-orders/${expressOrderId}/cancel`, body)
