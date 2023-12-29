@@ -32,7 +32,7 @@ const theme = createTheme({
 
 })
 const CreateDeliveryGatheringToGatheringPoint = () => {
-        let { id } = useParams();
+        const id = localStorage.getItem('pointId')
         const navigate = useNavigate()
         const [orders, setOrders] = useState([])
         const [gatheringPoints, setGatheringPoints] = useState([])
@@ -114,7 +114,6 @@ const CreateDeliveryGatheringToGatheringPoint = () => {
                 console.log(e)
             }
         }
-
         fetchData();
     }, [])
 

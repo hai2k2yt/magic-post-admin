@@ -41,29 +41,30 @@ const admin = [
     { path: '/create-account', component: <CreateAccount /> }
 ];
 
-const tLeader = [
-    { path: '/create-account', component: <CreateAccount /> },
-    { path: '/dashboard', component: <Dashboard /> },
-    { path: '/transaction/account/create', component: <CreateTransactionAccount /> },
-]
-
 const gLeader = [
     { path: '/create-account', component: <CreateAccount /> },
     { path: '/dashboard', component: <Dashboard /> },
     { path: '/gathering/account/create', component: <CreateGatheringAccount /> },
 ]
 
-const tStaff = [
-    { path: '/order/create/:id', component: <CreateOrder /> },
-    { path: '/transaction/order', component: <OrderTransactionPoint />},
-    { path: '/order/transaction/:id/customer', component: <CreateDeliveryToCustomer /> },
-    { path: '/order/transaction/:id/gathering', component: <CreateDeliveryTransactionToGatheringPoint /> },
-    { path: '/order/transaction/:id', component: <ConfirmOrderArrivalToTransaction /> },
+const tLeader = [
+    { path: '/create-account', component: <CreateAccount /> },
+    { path: '/dashboard', component: <Dashboard /> },
+    { path: '/transaction/account/create', component: <CreateTransactionAccount /> },
 ]
+
 const gStaff = [
-    { path: '/gathering/order/:id/arrival', component: <ConfirmOrderArrivalToGathering /> },
-    { path: '/order/gathering/:id/gathering', component: <CreateDeliveryGatheringToGatheringPoint /> },
-    { path: '/order/gathering/:id/transaction', component: <CreateDeliveryToTransactionPoint /> },
+    { path: '/gathering/order/arrival', component: <ConfirmOrderArrivalToGathering /> },
+    { path: '/order/gathering/gathering', component: <CreateDeliveryGatheringToGatheringPoint /> },
+    { path: '/order/gathering/transaction', component: <CreateDeliveryToTransactionPoint /> },
+]
+
+const tStaff = [
+    { path: '/order/create', component: <CreateOrder /> },
+    { path: '/transaction/order', component: <OrderTransactionPoint />},
+    { path: '/order/transaction/customer', component: <CreateDeliveryToCustomer /> },
+    { path: '/order/transaction/gathering', component: <CreateDeliveryTransactionToGatheringPoint /> },
+    { path: '/order/transaction/arrival', component: <ConfirmOrderArrivalToTransaction /> },
 ]
 
 const unauthorizedUser = [
@@ -72,7 +73,7 @@ const unauthorizedUser = [
     { path: '/login', component: <Login /> },
     { path: '/order/view', component: <ViewOrder /> },
 ]
-localStorage.setItem('role', ROLES[1])
+
 const role = localStorage.getItem('role');
 
 
@@ -80,7 +81,7 @@ function App() {
     return (
         <Routes>
             <Route path="/" element={<Layout />}>
-                <Route key='/not-found' path='/*' element={<NotFound/>}/>
+                <Route key='/not-found' path='/*' element={<NotFound />} />
 
                 {/* public routes */}
                 {unauthorizedUser.map((route) => (
@@ -88,35 +89,45 @@ function App() {
                 ))}
 
                 {/*transaction staff routes */}
-                {role === ROLES[4] && (
+                {role === ROLES[4] ? (
                     tStaff.map((route) => (
                         <Route key={route.path} path={route.path} element={route.component} />
                     ))
-                )}
+                ) :
+                    <Route key='/not-found' path='/*' element={<NotFound />} />
+
+                }
 
                 {/* gathering staff routes */}
-                {role === ROLES[3] && (
+                {role === ROLES[3] ? (
                     gStaff.map((route) => (
                         <Route key={route.path} path={route.path} element={route.component} />
-                    )))}
+                    ))) :
+                    <Route key='/not-found' path='/*' element={<NotFound />} />
+                }
 
                 {/* gathering leader routes */}
-                {(role === ROLES[1]) && (
+                {(role === ROLES[1]) ? (
                     gLeader.map((route) => (
                         <Route key={route.path} path={route.path} element={route.component} />
-                    )))}
+                    ))) :
+                (<Route key='/not-found' path='/*' element={<NotFound />} />)}
 
                 {/* transaction leader routes */}
-                {(role === ROLES[2]) && (
+                {(role === ROLES[2]) ? (
                     tLeader.map((route) => (
                         <Route key={route.path} path={route.path} element={route.component} />
-                    )))}
+                    )))
+                    :
+                    (<Route key='/not-found' path='/*' element={<NotFound />} />)}
 
                 {/* admin routes */}
-                {(role === ROLES[0] &&
-                    admin.map((route) => (
+                {role === ROLES[0] ?
+                    (admin.map((route) => (
                         <Route key={route.path} path={route.path} element={route.component} />
-                    )))}
+                    ))) :
+                    <Route key='/not-found' path='/*' element={<NotFound />} />
+                }
             </Route>
         </Routes>
     );

@@ -29,7 +29,7 @@ import {listTransactionShippers} from "../../api/actor";
 
 const CreateDeliveryToCustomer = () => {
     const navigate = useNavigate();
-    let { id } = useParams();
+    const id = localStorage.getItem('pointId')
     const [orders, setOrders] = useState([]);
     const [orderSelection, setOrderSelection] = useState([])
     const [searchOrder, setSearchOrder] = useState('');

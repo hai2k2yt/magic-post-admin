@@ -34,7 +34,7 @@ const theme = createTheme({
 
 })
 const CreateDeliveryToGatheringPoint = () => {
-        let {id} = useParams();
+        const id = localStorage.getItem('pointId')
         const navigate = useNavigate()
         const [orders, setOrders] = useState([])
         const [transactionPoints, setTransactionPoints] = useState([])
@@ -182,7 +182,7 @@ const CreateDeliveryToGatheringPoint = () => {
                         <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
                             <li><a href='/new'><AddIcon/>Đơn mới</a></li>
                             <li><a class="bg-neutral text-primary"><SwapHorizIcon/>Tạo đơn đến điểm tập kết</a></li>
-                            <li><a ></a></li>
+                            <li><a></a></li>
                         </ul>
                     </div>
                 </div>

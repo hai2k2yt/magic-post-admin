@@ -28,47 +28,94 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
-    const handleLogin = async () => {
-        try {
-            const res = await login({ email, password });
-            console.log(res);
-            // save token into localStorage
-            // localStorage.setItem('token', res.accessToken);
-            // get role
-            const token = res.accessToken;
-            const decoded = jwtDecode(token);
-            const role = decoded.role;
-            // console.log(role);
-            // save role into localStorage 
-            localStorage.setItem('role', role);
+    const [emailErr, setEmailErr] = useState('');
+    const validateEmail = (value) => {
+        var regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+        if (regex.test(value) || value === '') {
+            setEmail(value);
+            setEmailErr('');
+           
+        } else {
+            setEmailErr('Vui lòng nhập đúng định dạng');
+           
+        }
+
+    }
+    const handleLogin = async (e) => {
+        if (localStorage.getItem('role') !== null) {
+            localStorage.removeItem('role');
+        } 
+        if (localStorage.getItem('name') !== null) {
+            localStorage.removeItem('name'); 
+        }
+
+        if (localStorage.getItem('mail') !== null) {
+            localStorage.removeItem('mail');
+        } 
+        if (localStorage.getItem('phone') !== null) {
+            localStorage.removeItem('phone'); 
+        }
+        if (emailErr === '' && errorMsg === '') {
+            try {
+                
+                e.preventDefault();
+                const res = await login({ email, password });
+                console.log(res);
+                // save token into localStorage
+                // localStorage.setItem('token', res.accessToken);
+                // get role
+                const uName = res.username;
+                const token = res.accessToken;
+                window.localStorage.setItem('accessToken', token);
+                const decoded = jwtDecode(token);
+
+                const role = decoded.scope;
+                const mail = decoded.email;
+                const phoneNum = decoded.phone;
+                const pointID = decoded.pointId;
+                // console.log(role, 0);
+                // console.log(mail, 1);
+                // console.log(phoneNum, 2);
+                // console.log(pointID);
+                localStorage.setItem('email', mail);
+                localStorage.setItem('name', uName);
+                localStorage.setItem('phone', phoneNum);
+                localStorage.setItem('pointId', pointID);
+
+
+                // console.log(role);
+                // save role into localStorage 
+                localStorage.setItem('role', role);
                 switch (role) {
-                    case ROLES[0]:
+                    case roles[0]:
                         navigate('/dashboard');
                         break;
-                    case ROLES[1]:
+                    case roles[1]:
                         navigate('/dashboard');
                         break;
-                    case ROLES[2]:
+                    case roles[2]:
                         navigate('/dashboard');
                         break;
-                    case ROLES[3]:
+                    case roles[3]:
                         navigate(`/gathering/order/arrival`);
                         break;
                     default:
                         navigate(`/order/transaction/arrival`);
                         break;
                 }
-        } catch (e) {
-            if (e.response && e.response.status === 404) {
-                // handle error: resource not found
-                console.log(e.response, '1');
-                setErrorMsg(e.response.data.message);
-                console.log(errorMsg);
-            } else {
-                // handle other errors
-                console.log(e);
+            } catch (err) {
+                if (err.response && err.response.status === 404) {
+                    // handle error: resource not found
+                    console.log(err.response);
+                    setErrorMsg(err.response.data.message);
+                    console.log(errorMsg);
+                } else {
+                    // handle other errors
+                    console.log(err);
+                }
             }
         }
+
     };
 
     return (
@@ -379,13 +426,15 @@ const Login = () => {
                                 variant="outlined"
                                 fullWidth
                                 margin="normal"
-                                value={email}
                                 required
                                 onChange={(e) => {
                                     setErrorMsg('');
-                                    setEmail(e.target.value)
+                                    validateEmail(e.target.value)
                                 }}
                             />
+                            {
+                                emailErr && <p className="mt-2 text-warning text-xs italic">{emailErr}</p>
+                            }
                             <TextField
                                 required
                                 label="Mật khẩu"
@@ -400,7 +449,7 @@ const Login = () => {
                                     setPassword(e.target.value)
                                 }}
                             />
-                            <Button variant="contained" sx={{ marginTop: '20px' }} color="secondary" fullWidth onClick={handleLogin}>
+                            <Button variant="contained" sx={{ marginTop: '20px' }} color="secondary" fullWidth onClick={e => handleLogin(e)}>
                                 Đăng nhập
                             </Button>
                         </Paper>

@@ -1,18 +1,27 @@
 
-import React, { useState } from "react";
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import { Badge, Notifications, Typography } from "@mui/material";
+import React from "react";
+import ROLES from "../../page/auth/Role";
+import { Navigate } from "react-router-dom";
 import MenuIcon from '@mui/icons-material/Menu';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import listUsers from "../../api/user";
-
+import { Typography } from "@mui/material";
 
 const Navbar = () => {
+    const role = localStorage.getItem('role');
+    const name = localStorage.getItem('name');
+    const email = localStorage.getItem('mail');
+    const pointId = localStorage.getItem('pointId');
+    const handleLogOut = () => {
+        console.log(role, name, email, pointId);
+        localStorage.removeItem("role");
+        localStorage.removeItem("name");
+        localStorage.removeItem("mail");
+        localStorage.removeItem("phone");
+
+    }
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -22,7 +31,6 @@ const Navbar = () => {
     const handleClose = () => {
         setOpen(false);
     };
-
     return (
         <div class="navbar bg-primary text-neutral">
             <div class="flex-1">
@@ -131,11 +139,35 @@ const Navbar = () => {
                                     </div>
                                     <div class="mt-16 ">
                                         <h3 class=" text-center text-xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
-                                            Nguyễn Văn A
+                                            {name}
                                         </h3>
                                         <div class=" text-center text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
                                             <i class="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
-                                            Trưởng điểm giao dịch Dịch Vọng Hậu, Cầu Giấy
+                                            {
+                                                role === ROLES[0] && (
+                                                    <p>Lãnh đạo công ty</p>
+                                                )
+                                            }
+                                            {
+                                                role === ROLES[1] && (
+                                                    <>Trưởng điểm tập kết</>
+                                                )
+                                            }
+                                            {
+                                                role === ROLES[2] && (
+                                                    <>Trưởng điểm giao dịch</>
+                                                )
+                                            }
+                                            {
+                                                role === ROLES[3] && (
+                                                    <>Nhân viên tập kết</>
+                                                )
+                                            }
+                                            {
+                                                role === ROLES[4] && (
+                                                    <>Nhân viên giao dịch</>
+                                                )
+                                            }
                                         </div>
                                     </div>
                                     <div class="divider divider-primary w-1/2 mx-auto"></div>
@@ -145,7 +177,7 @@ const Navbar = () => {
                                     </div>
                                     <div class="text-center mb-2 text-blueGray-600">
                                         <i class="fas fa-university mr-2 text-lg text-blueGray-400"></i>
-                                        Email: vanaaa@gmail.com
+                                        Email: {email}
                                     </div>
                                 </div>
 
@@ -156,14 +188,55 @@ const Navbar = () => {
                             </DialogActions>
                         </Dialog>
                     </li>
-                    <li><a href="/home">Đăng xuất</a></li>
-
+                    <li><a href="/home" onClick={handleLogOut}>Đăng xuất</a></li>
                 </ul>
             </div>
             {/*Menu for each roles*/}
-            <button class="lg:hidden mr-5">
-                <MenuIcon />
-            </button>
+            <div class="dropdown dropdown-end lg:hidden">
+                <div tabindex="0" role="button" class="btn btn-ghost rounded-btn mr-5"><MenuIcon /></div>
+                <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-secondary rounded-box w-72 mt-4 mr-5">
+                    {
+                        role === ROLES[0] && (
+                            <>
+                                <li><a href='/dashboard'>Bảng điều khiển</a></li>
+                                <li><a href='/manage-transactionPoint'>Quản lý điểm giao dịch</a></li>
+                                <li><a href='/manage-gatheringPoint'> Quản lý điểm tập kết</a></li>
+                                <li><a class="bg-neutral text-primary" href='/create-account'>Tạo tài khoản trưởng điểm</a></li>
+                                <li><a href='/leader/manage'>Quản lý tài khoản trưởng điểm</a></li>
+                            </>
+                        )
+                    }
+                    {
+                        (role === ROLES[1] || role === ROLES[2]) && (
+                            <>
+                                <li><a class="bg-neutral text-primary" href='/dashboard'>Bảng điều khiển</a></li>
+                                <li><a href='/create-account'>Tạo tài khoản nhân viên</a></li>
+                            </>
+                        )
+                    }
+                    {
+                        role === ROLES[3] && (
+                            <>
+                                <li><a class="bg-neutral text-primary" >Đơn mới</a></li>
+                                <li><a href='/order/delivery/gathering'>Tạo đơn chuyển đi</a></li>
+                            </>
+                        )
+                    }
+                    {
+                        role === ROLES[4] && (
+                            <>
+                                <li><a href='/dashbroad/transaction'>Bảng điều khiển</a></li>
+                                <li><a href='/order/create'>Ghi nhận hàng</a></li>
+                                {/* <li><a href='/transaction/order/:id'><SwapHorizIcon />Đơn mới</a></li> */}
+                                <li><a href='/order/delivery/gathering'>Tạo đơn hàng đến điểm tập kết</a></li>
+                                <li><a href='/order/delivery/customer' >Chuyển hàng đến người nhận</a></li>
+                                <li><a href='/transaction/order'>Xác nhận trạng thái đơn hàng</a></li>
+                            </>
+                        )
+                    }
+
+                </ul>
+            </div>
         </div>
 
     );
