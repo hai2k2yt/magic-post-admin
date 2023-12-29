@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React from "react";
 import ROLES from "../../page/auth/Role";
 import { Navigate } from "react-router-dom";
 import MenuIcon from '@mui/icons-material/Menu';
@@ -9,22 +9,21 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import { Typography } from "@mui/material";
 
-const role = localStorage.getItem('role');
-const name = localStorage.getItem('name');
-const email = localStorage.getItem('mail');
-const pointId = localStorage.getItem('pointId');
-const handleLogOut = () => {
-    console.log(role, name, email, pointId);
-    localStorage.removeItem("role");
-    localStorage.removeItem("name");
-    localStorage.removeItem("mail");
-    localStorage.removeItem("phone");
-
-}
 const Navbar = () => {
+    const role = localStorage.getItem('role');
+    const name = localStorage.getItem('name');
+    const email = localStorage.getItem('mail');
+    const pointId = localStorage.getItem('pointId');
+    const handleLogOut = () => {
+        console.log(role, name, email, pointId);
+        localStorage.removeItem("role");
+        localStorage.removeItem("name");
+        localStorage.removeItem("mail");
+        localStorage.removeItem("phone");
+
+    }
     const [open, setOpen] = React.useState(false);
 
-    console.log(name, role);
     const handleClickOpen = () => {
         setOpen(true);
     };

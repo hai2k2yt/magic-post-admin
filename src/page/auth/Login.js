@@ -36,30 +36,30 @@ const Login = () => {
         if (regex.test(value) || value === '') {
             setEmail(value);
             setEmailErr('');
-
+           
         } else {
             setEmailErr('Vui lòng nhập đúng định dạng');
-
+           
         }
 
     }
     const handleLogin = async (e) => {
         if (localStorage.getItem('role') !== null) {
             localStorage.removeItem('role');
-        }
+        } 
         if (localStorage.getItem('name') !== null) {
-            localStorage.removeItem('name');
+            localStorage.removeItem('name'); 
         }
 
         if (localStorage.getItem('mail') !== null) {
             localStorage.removeItem('mail');
-        }
+        } 
         if (localStorage.getItem('phone') !== null) {
-            localStorage.removeItem('phone');
+            localStorage.removeItem('phone'); 
         }
         if (emailErr === '' && errorMsg === '') {
             try {
-
+                
                 e.preventDefault();
                 const res = await login({ email, password });
                 console.log(res);
@@ -86,7 +86,7 @@ const Login = () => {
 
 
                 // console.log(role);
-                // save role into localStorage
+                // save role into localStorage 
                 localStorage.setItem('role', role);
                 switch (role) {
                     case roles[0]:

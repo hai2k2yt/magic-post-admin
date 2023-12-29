@@ -110,10 +110,8 @@ function App() {
                 {(role === ROLES[1]) ? (
                     gLeader.map((route) => (
                         <Route key={route.path} path={route.path} element={route.component} />
-                    )))
-                    :
-                    <Route key='/not-found' path='/*' element={<NotFound />} />
-                }
+                    ))) :
+                (<Route key='/not-found' path='/*' element={<NotFound />} />)}
 
                 {/* transaction leader routes */}
                 {(role === ROLES[2]) ? (
@@ -121,8 +119,7 @@ function App() {
                         <Route key={route.path} path={route.path} element={route.component} />
                     )))
                     :
-                    <Route key='/not-found' path='/*' element={<NotFound />} />
-                }
+                    (<Route key='/not-found' path='/*' element={<NotFound />} />)}
 
                 {/* admin routes */}
                 {role === ROLES[0] ?
