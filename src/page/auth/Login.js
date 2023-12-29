@@ -87,16 +87,16 @@ const Login = () => {
                 // save role into localStorage 
                 localStorage.setItem('role', role);
                 switch (role) {
-                    case roles[0]:
+                    case ROLES[0]:
                         navigate('/dashboard');
                         break;
-                    case roles[1]:
+                    case ROLES[1]:
                         navigate('/dashboard');
                         break;
-                    case roles[2]:
+                    case ROLES[2]:
                         navigate('/dashboard');
                         break;
-                    case roles[3]:
+                    case ROLES[3]:
                         navigate(`/gathering/order/arrival`);
                         break;
                     default:
