@@ -61,7 +61,7 @@ const gStaff = [
 
 const tStaff = [
     { path: '/order/create/:id', component: <CreateOrder /> },
-    { path: '/transaction/order', component: <OrderTransactionPoint />},
+    { path: '/transaction/order', component: <OrderTransactionPoint /> },
     { path: '/order/transaction/:id/customer', component: <CreateDeliveryToCustomer /> },
     { path: '/order/transaction/:id/gathering', component: <CreateDeliveryTransactionToGatheringPoint /> },
     { path: '/order/transaction/:id/arrival', component: <ConfirmOrderArrivalToTransaction /> },
@@ -105,18 +105,19 @@ function App() {
                 }
 
                 {/* gathering leader routes */}
-                {(role === ROLES[1]) && (
+                {(role === ROLES[1]) ? (
                     gLeader.map((route) => (
                         <Route key={route.path} path={route.path} element={route.component} />
-                    )))}
+                    ))) :
+                (<Route key='/not-found' path='/*' element={<NotFound />} />)}
 
                 {/* transaction leader routes */}
-                {(role === ROLES[2]) && (
+                {(role === ROLES[2]) ? (
                     tLeader.map((route) => (
                         <Route key={route.path} path={route.path} element={route.component} />
                     )))
                     :
-                    <Route key='/not-found' path='/*' element={<NotFound />} />}
+                    (<Route key='/not-found' path='/*' element={<NotFound />} />)}
 
                 {/* admin routes */}
                 {role === ROLES[0] ?
