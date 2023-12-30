@@ -127,13 +127,15 @@ const CreateGatheringAccountForm = () => {
                             <Grid item xs={12}>
                                 <Typography>Loại account</Typography>
                                 <RHFSelect name="type">
+                                    <option value="">Chọn</option>
                                     {role === ROLES[0] && <option value="GATHERING_LEADER">Trưởng điểm tập kết</option>}
-                                    <option value="GATHERING_STAFF">Nhân viên tập kết</option>
+                                    {role === ROLES[3] && <option value="GATHERING_STAFF">Nhân viên tập kết</option>}
                                 </RHFSelect>
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography>Điểm tập kết</Typography>
                                 <RHFSelect name="gatheringPoint">
+                                    <option value="">-- Chọn --</option>
                                     {points.map(i => (
                                         <option value={i.id}>{i.name}</option>
                                     ))}

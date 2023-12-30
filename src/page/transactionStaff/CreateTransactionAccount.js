@@ -62,58 +62,6 @@ const validationSchema = yup.object().shape({
 
 
 const CreateTransactionAccount = () => {
-    const [points, setPoints] = useState([])
-
-    useEffect(() => {
-        async function fetchPoints() {
-            try {
-                const response = await listTransactionPoints();
-                const data = response?.map(item => (
-                    {
-                        id: item.id,
-                        name: item.name
-                    }
-                ))
-                setPoints(data);
-            } catch (e) {
-                console.log(e)
-            }
-        }
-
-        fetchPoints();
-    }, []);
-
-
-    const methods = useForm({
-        resolver: yupResolver(validationSchema),
-        defaultValues
-    });
-
-
-    const {
-        handleSubmit,
-        formState: {errors, isSubmitting},
-    } = methods;
-
-
-    const onSubmit = async (data) => {
-        const body = {
-            username: data.username,
-            email: data.email,
-            password: data.password,
-            phone: data.phone
-        }
-        try {
-            if (data.type === 'TRANSACTION_LEADER') {
-                const res = await createTransactionLeader(data.transactionPoint, body)
-            } else if (data.type === "TRANSACTION_STAFF") {
-                const res = await createTransactionStaff(data.transactionPoint, body)
-            }
-        } catch (e) {
-            console.log(e);
-        }
-    };
-
 
     return (
         <ThemeProvider theme={theme}>

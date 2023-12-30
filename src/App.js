@@ -38,17 +38,14 @@ const admin = [
     { path: '/manage-transactionPoint', component: <MangageTransactionPoint /> },
     { path: '/leader/manage', component: <ManageLeaderAccount /> },
     { path: '/dashboard', component: <Dashboard /> },
-    { path: '/create-account', component: <CreateAccount /> }
 ];
 
 const gLeader = [
-    { path: '/create-account', component: <CreateAccount /> },
     { path: '/dashboard', component: <Dashboard /> },
     { path: '/gathering/account/create', component: <CreateGatheringAccount /> },
 ]
 
 const tLeader = [
-    { path: '/create-account', component: <CreateAccount /> },
     { path: '/dashboard', component: <Dashboard /> },
     { path: '/transaction/account/create', component: <CreateTransactionAccount /> },
 ]

@@ -7,9 +7,10 @@ import Typography from "@mui/material/Typography";
 import StatisticOrderByPlace from "./StatisticOrderByPlace";
 import StatisticAllOrder from './StatisticAllOrder';
 import { listGatheringPoints, listTransactionPoints } from "../../api/point";
-import { getGatheringStatistic, getTransactionStatistic } from "../../api/statistics";
+import {getAllStatistic, getGatheringStatistic, getTransactionStatistic} from "../../api/statistics";
 import ROLES from '../../page/auth/Role';
 export default function StatisticOrder() {
+    const [allStatistics, getAllStatistics] = useState(null);
     const [listTransactionPoint, setListTransactionPoint] = useState([]);
     const [listGatheringPoint, setListGatheringPoint] = useState([]);
     const [transactionPoint, setTransactionPoint] = useState('');
@@ -20,6 +21,8 @@ export default function StatisticOrder() {
     useEffect(() => {
         async function fetchData() {
             try {
+                const statisticAll = await getAllStatistic();
+                getAllStatistics(statisticAll);
                 const gatheringPlaces = await listGatheringPoints();
                 const data = gatheringPlaces?.map(item => (
                     {
@@ -96,16 +99,23 @@ export default function StatisticOrder() {
                                 <div class="stat-figure text-primary">
                                     <InventoryIcon />
                                 </div>
-                                <div class="stat-title">Đơn hàng nhận</div>
-                                <div class="stat-value text-primary">25.6K</div>
+                                <div class="stat-title">Tổng số đơn hàng</div>
+                                <div class="stat-value text-primary">{allStatistics?.totalOrders}</div>
                             </div>
 
                             <div class="stat">
                                 <div class="stat-figure text-secondary">
                                     <LocalShippingIcon />
                                 </div>
-                                <div class="stat-title">Đơn hàng gửi</div>
-                                <div class="stat-value text-secondary">2.6M</div>
+                                <div class="stat-title">Gửi thành công</div>
+                                <div class="stat-value text-secondary">{allStatistics?.totalSuccessOrders}</div>
+                            </div>
+                            <div className="stat">
+                                <div className="stat-figure text-secondary">
+                                    <LocalShippingIcon />
+                                </div>
+                                <div className="stat-title">Gửi thất bại</div>
+                                <div className="stat-value text-secondary">{allStatistics?.totalCancelOrders}</div>
                             </div>
                         </div>
                         <div class='mb-10'>
