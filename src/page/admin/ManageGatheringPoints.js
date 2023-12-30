@@ -25,6 +25,7 @@ import Navbar from '../../component/layout/Navbar';
 import { listP2PGatheringOrders } from "../../api/transport";
 import { listGatheringPoints } from "../../api/point";
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import Sidebar from "../../component/layout/Sidebar";
 const theme = createTheme({
     typography: {
         "fontFamily": '"Montserrat", "sans-serif"',
@@ -277,16 +278,7 @@ export default function ManageGatheringPoint() {
                         </Box>
                     </div>
                 </div>
-                <div class="drawer-side">
-                    <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
-                    <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
-                        <li><a href='/dashboard'><SpaceDashboardIcon />Bảng điều khiển</a></li>
-                        <li><a href='/manage-transactionPoint'><AddLocationIcon />Quản lý điểm giao dịch</a></li>
-                        <li><a class="bg-neutral text-primary" href='/manage-gatheringPoint'><AddLocationIconAlt /> Quản lý điểm tập kết</a></li>
-                        <li><a href='/create-account'><PersonAddIcon />Tạo tài khoản trưởng điểm</a></li>
-                        <li><a href='/leader/manage'><ManageAccountsIcon />Quản lý tài khoản trưởng điểm</a></li>
-                    </ul>
-                </div>
+                <Sidebar />
             </div>
         </ThemeProvider>
     );

@@ -26,6 +26,7 @@ import {
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
 import {getPointInventory, listGatheringPoints} from "../../api/point";
 import {listTransactionShippers} from "../../api/actor";
+import Sidebar from "../../component/layout/Sidebar";
 
 const CreateDeliveryToCustomer = () => {
     const navigate = useNavigate();
@@ -208,17 +209,7 @@ const CreateDeliveryToCustomer = () => {
                     </div>
 
                 </div>
-                <div class="drawer-side">
-                    <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
-                    <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
-                        <li><a href='/dashbroad/transaction'><SpaceDashboardIcon />Bảng điều khiển</a></li>
-                        <li><a href='/order/create'><AddCircleOutlineIcon />Ghi nhận hàng</a></li>
-                        {/* <li><a href='/transaction/order/:id'><SwapHorizIcon />Đơn mới</a></li> */}
-                        <li><a href='/order/delivery/gathering'><AddIcon />Tạo đơn hàng đến điểm tập kết</a></li>
-                        <li><a href='/order/delivery/customer' ><DeliveryDiningIcon />Chuyển hàng đến người nhận</a></li>
-                        <li><a href='/transaction/order'> <CheckIcon /> Xác nhận trạng thái đơn hàng</a></li>
-                    </ul>
-                </div>
+                <Sidebar />
             </div>
         </ThemeProvider>
     );

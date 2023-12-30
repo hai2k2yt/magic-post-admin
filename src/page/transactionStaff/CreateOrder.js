@@ -176,7 +176,8 @@ const CreateOrder = () => {
 
     const onSubmit = async (data) => {
         try {
-            console.log(data);
+            const date = Date.parse(data.sendTime)
+            console.log(date)
             await createOrder(id, data)
         }catch (e) {
             console.log(e);
