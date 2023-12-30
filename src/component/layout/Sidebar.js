@@ -24,7 +24,7 @@ const Sidebar = () => {
                         <li><a href='/transaction/create'><AddIcon />Tạo Điểm Giao Dịch</a></li>
                         <li><a href='/manage-gatheringPoint'><ControlPointIcon />Quản Lý Điểm Tập Kết</a></li>
                         <li><a href='/manage-transactionPoint'><ControlPointIcon />Quản Lý Điểm Giao Dịch</a></li>
-                        <li><a href='/leader/manage'><AddCircleOutlineIcon />Quản Lý Tài Khoản Lãnh Đạo</a></li>
+                        <li><a href='/leader/manage'><AddCircleOutlineIcon />Quản Lý Tài Khoản Trưởng điểm</a></li>
 
                     </>
                 )}

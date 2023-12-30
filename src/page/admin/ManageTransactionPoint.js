@@ -156,7 +156,7 @@ export default function ManagePlace() {
                         name: item.name,
                         code: item.address.zipcode,
                         address: `${item.address.street}, ${item.address.commune}-${item.address.district}-${item.address.province}`,
-                        leader: item.transactionLeaderId,
+                        leader: item.transactionLeaderUsername,
                         gatheringPoint: item.gatheringPointId
                     }
                 ))

@@ -155,7 +155,7 @@ export default function ManageGatheringPoint() {
                         name: item.name,
                         code: item.address.zipcode,
                         address: `${item.address.street}, ${item.address.commune}, ${item.address.district}, ${item.address.province}`,
-                        leader: item.gatheringLeaderId
+                        leader: item.gatheringLeaderUsername
                     }
                 ))
                 setRows(data);
