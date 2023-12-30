@@ -5,10 +5,10 @@ import { useState } from 'react';
 import MainNavbar from '../../component/layout/MainNavbar';
 import { jwtDecode } from "jwt-decode";
 import ROLES from './Role';
-import { useNavigate } from 'react-router';
+
 
 const Login = () => {
-    const navigate = useNavigate();
+
     const theme = createTheme({
         typography: {
             "fontFamily": '"Montserrat", "sans-serif"',
@@ -89,19 +89,19 @@ const Login = () => {
                 localStorage.setItem('role', role);
                 switch (role) {
                     case ROLES[0]:
-                        navigate('/dashboard');
+                        window.location.href = '/dashboard';
                         break;
                     case ROLES[1]:
-                        navigate('/dashboard');
+                        window.location.href = '/dashboard';
                         break;
                     case ROLES[2]:
-                        navigate('/dashboard');
+                        window.location.href = '/dashboard';
                         break;
                     case ROLES[3]:
-                        navigate(`/gathering/order/arrival`);
+                        window.location.href = '/gathering/order/arrival';
                         break;
                     default:
-                        navigate(`/order/create`);
+                        window.location.href = '/order/create';
                         break;
                 }
             } catch (err) {
