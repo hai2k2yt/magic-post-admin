@@ -10,8 +10,6 @@ import {
     IconButton,
     Badge,
 } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import CheckIcon from '@mui/icons-material/Check';
 import {FormProvider, RHFSelect, RHFTextField} from "../../../component/hook-form";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
@@ -118,7 +116,7 @@ const CreateGatheringAccountForm = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography>Mật khẩu</Typography>
-                                <RHFTextField name="password" fullWidth/>
+                                <RHFTextField type="password" name="password" fullWidth/>
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography>Số điện thoại</Typography>

@@ -25,6 +25,7 @@ import CreateGatheringPoint from "./page/admin/CreateGatheringPoint";
 import CreateTransactionPoint from "./page/admin/CreateTransactionPoint";
 import CreateTransactionAccount from "./page/transactionStaff/CreateTransactionAccount";
 import CreateGatheringAccount from "./page/gatheringStaff/CreateGatheringAccount";
+import CreateAccount from './page/admin/CreateAccount'
 
 const admin = [
     { path: '/gathering/account/create', component: <CreateGatheringAccount /> },
@@ -35,6 +36,7 @@ const admin = [
     { path: '/manage-transactionPoint', component: <MangageTransactionPoint /> },
     { path: '/leader/manage', component: <ManageLeaderAccount /> },
     { path: '/dashboard', component: <Dashboard /> },
+    { path: '/create-account', component: <CreateAccount /> },
 ];
 
 const gLeader = [
@@ -75,52 +77,46 @@ function App() {
     return (
         <Routes>
             <Route path="/" element={<Layout />}>
-                <Route key='/not-found' path='/*' element={<NotFound />} />
-
                 {/* public routes */}
                 {unauthorizedUser.map((route) => (
                     <Route key={route.path} path={route.path} element={route.component} />
                 ))}
 
                 {/*transaction staff routes */}
-                {role === ROLES[4] ? (
+                {role === ROLES[4] && (
                     tStaff.map((route) => (
                         <Route key={route.path} path={route.path} element={route.component} />
-                    ))
-                ) :
-                    <Route key='/not-found' path='/*' element={<NotFound />} />
+                    )))
+                // ) :
+                //     <Route key='/not-found' path='/*' element={<NotFound />} />
 
                 }
 
                 {/* gathering staff routes */}
-                {role === ROLES[3] ? (
+                {role === ROLES[3] && (
                     gStaff.map((route) => (
                         <Route key={route.path} path={route.path} element={route.component} />
-                    ))) :
-                    <Route key='/not-found' path='/*' element={<NotFound />} />
+                    ))) 
                 }
 
                 {/* gathering leader routes */}
-                {(role === ROLES[1]) ? (
+                {(role === ROLES[1]) && (
                     gLeader.map((route) => (
                         <Route key={route.path} path={route.path} element={route.component} />
-                    ))) :
-                (<Route key='/not-found' path='/*' element={<NotFound />} />)}
+                    ))) }
 
                 {/* transaction leader routes */}
-                {(role === ROLES[2]) ? (
+                {(role === ROLES[2]) && (
                     tLeader.map((route) => (
                         <Route key={route.path} path={route.path} element={route.component} />
                     )))
-                    :
-                    (<Route key='/not-found' path='/*' element={<NotFound />} />)}
+                    }
 
                 {/* admin routes */}
-                {role === ROLES[0] ?
+                {role === ROLES[0] &&
                     (admin.map((route) => (
                         <Route key={route.path} path={route.path} element={route.component} />
-                    ))) :
-                    <Route key='/not-found' path='/*' element={<NotFound />} />
+                    ))) 
                 }
             </Route>
         </Routes>

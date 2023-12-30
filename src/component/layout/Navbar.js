@@ -1,7 +1,12 @@
 
 import React from "react";
 import ROLES from "../../page/auth/Role";
-import { Navigate } from "react-router-dom";
+import AddIcon from "@mui/icons-material/Add";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
+import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
+import CheckIcon from '@mui/icons-material/Check';
+import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import MenuIcon from '@mui/icons-material/Menu';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -198,39 +203,54 @@ const Navbar = () => {
                     {
                         role === ROLES[0] && (
                             <>
-                                <li><a href='/dashboard'>Bảng điều khiển</a></li>
-                                <li><a href='/manage-transactionPoint'>Quản lý điểm giao dịch</a></li>
-                                <li><a href='/manage-gatheringPoint'> Quản lý điểm tập kết</a></li>
-                                <li><a class="bg-neutral text-primary" href='/create-account'>Tạo tài khoản trưởng điểm</a></li>
-                                <li><a href='/leader/manage'>Quản lý tài khoản trưởng điểm</a></li>
+                                <li><a href='/dashboard'><SpaceDashboardIcon />Bảng Điều Khiển</a></li>
+                                <li><a href='/gathering/account/create'><AddIcon />Tạo Tài Khoản Tập Kết</a></li>
+                                <li><a href='/transaction/account/create'><AddIcon />Tạo Tài Khoản Giao Dịch</a></li>
+                                <li><a href='/gathering/create'><AddIcon />Tạo Điểm Tập Kết</a></li>
+                                <li><a href='/transaction/create'><AddIcon />Tạo Điểm Giao Dịch</a></li>
+                                <li><a href='/manage-gatheringPoint'><ControlPointIcon />Quản Lý Điểm Tập Kết</a></li>
+                                <li><a href='/manage-transactionPoint'><ControlPointIcon />Quản Lý Điểm Giao Dịch</a></li>
+                                <li><a href='/leader/manage'><AddCircleOutlineIcon />Quản Lý Tài Khoản Lãnh Đạo</a></li>
+                                <li><a href="/home" onClick={handleLogOut}>Đăng xuất</a></li>
                             </>
                         )
                     }
                     {
-                        (role === ROLES[1] || role === ROLES[2]) && (
+                        (role === ROLES[1]) && (
                             <>
-                                <li><a class="bg-neutral text-primary" href='/dashboard'>Bảng điều khiển</a></li>
-                                <li><a href='/create-account'>Tạo tài khoản nhân viên</a></li>
+                                <li><a href='/dashboard'><SpaceDashboardIcon />Bảng Điều Khiển</a></li>
+                                <li><a href='/gathering/account/create'><AddIcon />Tạo Tài Khoản Nhân viên Tập Kết</a></li>
+                                <li><a href="/home" onClick={handleLogOut}>Đăng xuất</a></li>
+                            </>
+                        )
+                    }
+                    {
+                        role === ROLES[2] && (
+                            <>
+                                <li><a href='/dashboard'><SpaceDashboardIcon />Bảng Điều Khiển</a></li>
+                                <li><a href='/transaction/account/create'><AddIcon />Tạo Tài Khoản Nhân viên Giao Dịch</a></li>
+                                <li><a href="/home" onClick={handleLogOut}>Đăng xuất</a></li>
                             </>
                         )
                     }
                     {
                         role === ROLES[3] && (
                             <>
-                                <li><a class="bg-neutral text-primary" >Đơn mới</a></li>
-                                <li><a href='/order/delivery/gathering'>Tạo đơn chuyển đi</a></li>
+                                <li><a href='/gathering/order/arrival'><CheckIcon />Xác nhận đơn đến điểm tập kết</a></li>
+                                <li><a href='/order/gathering/gathering'><SwapHorizIcon />Chuyển đơn đến điểm tập kết</a></li>
+                                <li><a href='/order/gathering/transaction'><SwapHorizIcon />Chuyển đơn đến điểm giao dịch</a></li>
+                                <li><a href="/home" onClick={handleLogOut}>Đăng xuất</a></li>
                             </>
                         )
                     }
                     {
                         role === ROLES[4] && (
                             <>
-                                <li><a href='/dashbroad/transaction'>Bảng điều khiển</a></li>
-                                <li><a href='/order/create'>Ghi nhận hàng</a></li>
-                                {/* <li><a href='/transaction/order/:id'><SwapHorizIcon />Đơn mới</a></li> */}
-                                <li><a href='/order/delivery/gathering'>Tạo đơn hàng đến điểm tập kết</a></li>
-                                <li><a href='/order/delivery/customer' >Chuyển hàng đến người nhận</a></li>
-                                <li><a href='/transaction/order'>Xác nhận trạng thái đơn hàng</a></li>
+                                <li><a href='/order/create'><AddCircleOutlineIcon />Tạo đơn</a></li>
+                                <li><a href='/order/transaction/customer'><SwapHorizIcon />Chuyển đơn đến khách hàng</a></li>
+                                <li><a href='/order/transaction/gathering'><SwapHorizIcon />Chuyển đơn đến điểm tập kết</a></li>
+                                <li><a href='/order/transaction/arrival'><CheckIcon />Xác nhận đơn đến điểm giao dịch</a></li>
+                                <li><a href="/home" onClick={handleLogOut}>Đăng xuất</a></li>
                             </>
                         )
                     }

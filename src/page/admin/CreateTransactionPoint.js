@@ -117,7 +117,7 @@ const CreateGatheringPoint = () => {
                     <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
                     <div class="drawer-content flex flex-col items-left">
                         <div class='m-10'>
-                            <Typography variant='h4' fontWeight={700}>
+                            <Typography variant='h4' fontWeight={700} marginBottom={5}>
                                 Tạo điểm giao dịch
                             </Typography>
                             <FormControl fullWidth>

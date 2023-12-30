@@ -10,18 +10,8 @@ import {
     IconButton,
     Badge,
 } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import CheckIcon from '@mui/icons-material/Check';
-import { FormProvider, RHFSelect, RHFTextField } from "../../component/hook-form";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { LoadingButton } from '@mui/lab';
 import Navbar from '../../component/layout/Navbar';
-import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
-
 import CreateGatheringAccountForm from "../../component/page/account/CreateGatheringAccountForm";
 import Sidebar from "../../component/layout/Sidebar";
 

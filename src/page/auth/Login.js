@@ -29,35 +29,36 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const [emailErr, setEmailErr] = useState('');
+    const [passwordErr, setPasswordErr] = useState('');
     const validateEmail = (value) => {
         var regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
         if (regex.test(value) || value === '') {
             setEmail(value);
             setEmailErr('');
-           
+
         } else {
             setEmailErr('Vui lòng nhập đúng định dạng');
-           
+
         }
 
     }
     const handleLogin = async (e) => {
         if (localStorage.getItem('role') !== null) {
             localStorage.removeItem('role');
-        } 
+        }
         if (localStorage.getItem('name') !== null) {
-            localStorage.removeItem('name'); 
+            localStorage.removeItem('name');
         }
 
         if (localStorage.getItem('mail') !== null) {
             localStorage.removeItem('mail');
-        } 
+        }
         if (localStorage.getItem('phone') !== null) {
-            localStorage.removeItem('phone'); 
+            localStorage.removeItem('phone');
         }
         if (emailErr === '' && errorMsg === '') {
             try {
-                
+
                 e.preventDefault();
                 const res = await login({ email, password });
                 console.log(res);
@@ -100,7 +101,7 @@ const Login = () => {
                         navigate(`/gathering/order/arrival`);
                         break;
                     default:
-                        navigate(`/order/transaction/arrival`);
+                        navigate(`/order/create`);
                         break;
                 }
             } catch (err) {
@@ -109,7 +110,13 @@ const Login = () => {
                     console.log(err.response);
                     setErrorMsg(err.response.data.message);
                     console.log(errorMsg);
-                } else {
+                } else if (err.response && err.response.status === 401) {
+                    // handle error: unauthorized, wrong username/password
+                    console.log(err.response);
+                    setPasswordErr('Sai mật khẩu!')
+
+                }
+                else {
                     // handle other errors
                     console.log(err);
                 }
@@ -122,8 +129,8 @@ const Login = () => {
         <ThemeProvider theme={theme} >
             <MainNavbar />
             <div class="max-h-screen">
-                <Grid container spacing={6} alignItems={'center'} justifyContent={'center'}>
-                    <Grid item sm={5} style={{ marginTop: '50px' }} >
+                <Grid container style={{ marginTop: '50px' }} spacing={6} alignItems={'center'} justifyContent={'center'}>
+                    <Grid item sm={5}>
                         <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 2000 2000"
                             id="DeliveryLocation">
                             <g data-name="Layer 5" fill="#424c9f" class="color000000 svgShape">
@@ -417,6 +424,16 @@ const Login = () => {
                         ) : (
                             <></>
                         )}
+                        {
+                            passwordErr !== '' ? (
+                                <div role="alert" class="alert alert-error mb-5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                    <span>{passwordErr}</span>
+                                </div>
+                            ) : (
+                                <></>
+                            )
+                        }
                         <Paper elevation={3}
                             fullWidth style={{ padding: '20px', position: 'sticky' }}>
                             <Typography variant="h5" fontWeight={700} >Đăng nhập</Typography>
@@ -429,6 +446,7 @@ const Login = () => {
                                 required
                                 onChange={(e) => {
                                     setErrorMsg('');
+                                    setPasswordErr('');
                                     validateEmail(e.target.value)
                                 }}
                             />
@@ -445,6 +463,7 @@ const Login = () => {
                                 type="password"
                                 value={password}
                                 onChange={(e) => {
+                                    setPasswordErr('');
                                     setErrorMsg('');
                                     setPassword(e.target.value)
                                 }}

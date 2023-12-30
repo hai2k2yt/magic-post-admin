@@ -100,7 +100,7 @@ const CreateTransactionAccountForm = () => {
                     <div class='m-5'>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
-                                <Typography>Username</Typography>
+                                <Typography>Họ tên</Typography>
                                 <RHFTextField name="username" fullWidth/>
                             </Grid>
                             <Grid item xs={12}>
@@ -109,14 +109,14 @@ const CreateTransactionAccountForm = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography>Mật khẩu</Typography>
-                                <RHFTextField name="password" fullWidth/>
+                                <RHFTextField type="password" name="password" fullWidth/>
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography>Số điện thoại</Typography>
                                 <RHFTextField name="phone" fullWidth/>
                             </Grid>
                             <Grid item xs={12}>
-                                <Typography>Loại account</Typography>
+                                <Typography>Loại tài khoản</Typography>
                                 <RHFSelect name="type">
                                     <option value="">Chọn</option>
                                     {role === ROLES[0] && <option value="TRANSACTION_LEADER">Trưởng điểm giao dịch</option>}

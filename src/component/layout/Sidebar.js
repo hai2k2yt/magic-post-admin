@@ -39,8 +39,8 @@ const Sidebar = () => {
 
                 {role === ROLES[2] && (
                     <>
-                        <li><a href='/dashboard'><SpaceDashboardIcon />Bảng Điều Khiển</a></li>
-                        <li><a href='/gathering/account/create'><AddIcon />Tạo Tài Khoản Nhân viên Giao Dịch</a></li>
+                         <li><a href='/dashboard'><SpaceDashboardIcon />Bảng Điều Khiển</a></li>
+                        <li><a href='/transaction/account/create'><AddIcon />Tạo Tài Khoản Nhân viên Giao Dịch</a></li>
                     </>
                 )}
 
