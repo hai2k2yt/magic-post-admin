@@ -12,18 +12,15 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { createTheme, ThemeProvider } from '@mui/material';
-import AddLocationIcon from '@mui/icons-material/AddLocation';
-import AddLocationIconAlt from '@mui/icons-material/AddLocationAlt';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import { deletePoint } from "../../api/point";
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import { useEffect, useMemo, useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import { redirect, useNavigate } from "react-router-dom";
 import Navbar from '../../component/layout/Navbar';
-import { listGatheringPoints, listTransactionPoints } from "../../api/point";
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import { listTransactionPoints } from "../../api/point";
 import Typography from '@mui/material/Typography';
 import Sidebar from "../../component/layout/Sidebar";
 const theme = createTheme({
@@ -145,7 +142,16 @@ export default function ManagePlace() {
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
     const navigate = useNavigate();
+    const deleteTransactionPoint = async (id) => {
+        try {
+            const res = await deletePoint(id);
+            console.log(res);
+            setRows(rows.filter((row) => row.id !== id));
+        } catch (e) {
+            console.log(e);
 
+        }
+    }
     useEffect(() => {
         async function fetchData() {
             try {
@@ -211,8 +217,8 @@ export default function ManagePlace() {
                     {/* <!-- Page content here --> */}
                     <div class="m-10">
                         <Box sx={{ width: '100%' }}>
-                        <Typography variant='h4' fontWeight={700} marginBottom={3}>
-                                Quản lý điểm giao dịch 
+                            <Typography variant='h4' fontWeight={700} marginBottom={3}>
+                                Quản lý điểm giao dịch
                             </Typography>
                             <Paper sx={{ width: '100%', mb: 2 }}>
                                 <TableContainer>
@@ -250,10 +256,23 @@ export default function ManagePlace() {
                                                         <TableCell>{row.address}</TableCell>
                                                         <TableCell>{row.leader}</TableCell>
                                                         <TableCell>{row.gatheringPoint}</TableCell>
-
-                                                        <TableCell>
+                                                        <button className="btn btn-ghost" onClick={() => document.getElementById('my_modal_1').showModal()}><HighlightOffIcon /></button>
+                                                        <dialog id="my_modal_1" className="modal">
+                                                            <div className="modal-box">
+                                                                <h3 className="font-bold text-lg">Chắc chắn muốn xóa điểm giao dịch này?</h3>
+                                                                <p className="py-4">Ấn "Đồng ý" để xóa điểm.</p>
+                                                                <div className="modal-action">
+                                                                    <form method="dialog">
+                                                                        {/* if there is a button in form, it will close the modal  */}
+                                                                        <Button >Hủy</Button>
+                                                                        <button className="btn" onClick={() => deleteTransactionPoint(row.id)}>Đồng ý</button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </dialog>
+                                                        {/* <TableCell>
                                                             <EditIcon onClick={() => editPlace(row.id)} />
-                                                        </TableCell>
+                                                        </TableCell> */}
                                                     </TableRow>
                                                 );
                                             })}
