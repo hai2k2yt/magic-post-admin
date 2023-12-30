@@ -13,3 +13,9 @@ export const createGatheringStaff = (gatheringPointId, body) => post(`/gathering
 export const createGatheringLeader = (gatheringPointId, body) => post(`/gathering-points/${gatheringPointId}/gathering-leader`, body)
 
 export const deleteUser = (userId) => del(`/users/${userId}`)
+//delete transaction staff
+export const deleteTStaff = (pointId, userId) => del(`/transaction-points/${pointId}/transaction-staffs/${userId}`)
+//delete gathering staff
+export const deleteGStaff = (pointId, userId) => del(`/gathering-points/${pointId}/gathering-staffs/${userId}`)
+//delete leader
+export const deleteLeader = (pointId) => del(`points/${pointId}/leader`)

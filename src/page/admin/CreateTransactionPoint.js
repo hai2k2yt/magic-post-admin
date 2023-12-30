@@ -102,9 +102,14 @@ const CreateGatheringPoint = () => {
     const onSubmit = async (data) => {
         try {
             console.log(data);
-            await createTransactionPoint(selectedPoint, data)
+            const res = await createTransactionPoint(selectedPoint, data)
+            if (res.name !== '') {
+                alert('Tạo điểm tập kết thành công');
+                
+            }
         }catch (e) {
             console.log(e);
+            alert('Đã tồn tại điểm giao dịch')
         }
     };
 

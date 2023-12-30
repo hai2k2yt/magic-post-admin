@@ -21,7 +21,7 @@ import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
-import {createGatheringPoints} from "../../api/point";
+import { createGatheringPoints } from "../../api/point";
 import Sidebar from "../../component/layout/Sidebar";
 
 const theme = createTheme({
@@ -83,9 +83,16 @@ const CreateGatheringPoint = () => {
     const onSubmit = async (data) => {
         try {
             console.log(data);
-            await createGatheringPoints(data)
-        }catch (e) {
+            const res = await createGatheringPoints(data)
+            console.log(res);
+            if (res.name !== '') {
+                alert('Tạo điểm tập kết thành công');
+                
+            }
+            
+        } catch (e) {
             console.log(e);
+            alert('Đã tồn tại điểm tập kết');
         }
     };
 

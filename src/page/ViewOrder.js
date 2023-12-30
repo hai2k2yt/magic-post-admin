@@ -413,7 +413,7 @@ const ViewOrder = () => {
                                     <Typography fontWeight={700}>Mã khách hàng:</Typography> <Typography> {order?.sender?.id}</Typography>
                                 </Grid>
                             </Grid>
-
+                            <div class="divider divider-secondary"></div>
                             <Typography fontWeight={700} variant="h5" gutterBottom style={{ marginTop: '20px' }}>
                                 Điểm giao dịch
                             </Typography>
@@ -428,7 +428,7 @@ const ViewOrder = () => {
                                     <Typography fontWeight={700}>Mã bưu chính:</Typography> <Typography> {order?.sender?.address?.zipcode}</Typography>
                                 </Grid>
                             </Grid>
-
+                            <div class="divider divider-secondary"></div>
                             <Typography fontWeight={700} variant="h5" gutterBottom style={{ marginTop: '20px' }}>
                                 Thông tin đơn hàng
                             </Typography>
@@ -471,7 +471,7 @@ const ViewOrder = () => {
                                     </Typography>
                                 </Grid>
                             </Grid>
-
+                            <div class="divider divider-secondary"></div>
                             <Typography fontWeight={700} variant="h5" gutterBottom style={{ marginTop: '20px' }}>
                                 Cam kết
                             </Typography>
@@ -483,7 +483,7 @@ const ViewOrder = () => {
                                     <Typography fontWeight={700}>Ngày giờ gửi:</Typography> <Typography> {order?.sendTime}</Typography>
                                 </Grid>
                             </Grid>
-
+                            <div class="divider divider-secondary"></div>
                             <Typography fontWeight={700} variant="h5" gutterBottom style={{ marginTop: '20px' }}>
                                 Cước
                             </Typography>
@@ -506,7 +506,7 @@ const ViewOrder = () => {
                                 </Grid>
 
                             </Grid>
-
+                            <div class="divider divider-secondary"></div>
                             <Typography fontWeight={700} variant="h5" gutterBottom style={{ marginTop: '20px' }}>
                                 Khối lượng
                             </Typography>
@@ -518,14 +518,14 @@ const ViewOrder = () => {
                                     <Typography fontWeight={700}>Khối lượng quy đổi: </Typography> <Typography>{order?.volumetricWeight}</Typography>
                                 </Grid>
                             </Grid>
-
+                            <div class="divider divider-secondary"></div>
                             <Typography variant="h5" fontWeight={700} gutterBottom style={{ marginTop: '20px' }}>
                                 QR code
                             </Typography>
                             <Grid container spacing={2}>
                                 {/* Add QR code label here */}
                             </Grid>
-
+                            <div class="divider divider-secondary"></div>
                             <Typography variant="h5" fontWeight={700} gutterBottom style={{ marginTop: '20px' }}>
                                 Trạng thái đơn hàng: </Typography> <Typography>
                                 {
