@@ -5,3 +5,5 @@ export const listTransactionShippers = (transactionPointID) => get(`/transaction
 export const createTransactionShipper = (transactionPointID, params) => post(`/transaction-points/${transactionPointID}/shippers`, params)
 
 export const deleteTransactionShippers = (transactionPointID, shipperID) => del(`/transaction-points/${transactionPointID}/shippers/${shipperID}`)
+
+export const listLeaderInfo = () => get('/leaders')

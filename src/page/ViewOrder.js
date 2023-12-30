@@ -79,7 +79,7 @@ const ViewOrder = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <div style={{minHeight: '80vh',}}>
+            <div style={{ minHeight: '80vh', }}>
                 <MainNavbar />
                 {/* <Box sx={{ display: 'flex', justifyContent: 'flex-start', marginTop: '40px', marginBottom: '-20px' }}>
                 <Item> */}
@@ -430,21 +430,49 @@ const ViewOrder = () => {
                             </Grid>
 
                             <Typography fontWeight={700} variant="h5" gutterBottom style={{ marginTop: '20px' }}>
-                                Order
+                                Thông tin đơn hàng
                             </Typography>
                             <Grid container spacing={2}>
                                 <Grid item xs={6}>
-                                    <Typography fontWeight={700}>Loại hàng gửi:</Typography> <Typography> {order?.type}</Typography>
+                                    <Typography fontWeight={700}>Loại hàng gửi:</Typography> <Typography>
+                                        {
+                                            order?.type === 'DOCUMENT' ? ("Tài Liệu") :
+                                                ("Hàng hóa")
+
+                                        }
+                                    </Typography>
                                 </Grid>
                                 <Grid item xs={6}>
-                                    <Typography fontWeight={700}>Dịch vụ cộng thêm:</Typography> <Typography> {order?.specialService}</Typography>
+                                    <Typography fontWeight={700}>Dịch vụ cộng thêm:</Typography> <Typography>
+                                        {order?.specialService === 'INSURANCE' ? ("Bảo hiểm hàng hóa") : ("Không")}
+                                    </Typography>
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <Typography fontWeight={700}>Chỉ dẫn khi không phát được bưu gửi:</Typography> <Typography> {order?.senderInstructor}</Typography>
+                                    <Typography fontWeight={700}>Chỉ dẫn khi không phát được bưu gửi:</Typography> <Typography>
+                                        {
+                                            (() => {
+                                                switch (order?.senderInstructor) {
+                                                    case 'IMMEDIATE_RETURN':
+                                                        return 'Hoàn hàng ngay';
+                                                    case 'CALL_SENDER':
+                                                        return 'Gọi người gửi';
+                                                    case 'CANCEL':
+                                                        return 'Hủy đơn';
+                                                    // case 'RETURN_BEFORE_DATE':
+                                                    //     return 'Hoàn hàng trước ngày';
+                                                    // case 'RETURN_WHEN_STORAGE_EXPIRES':
+                                                    //     return 'Hoàn hàng khi hết hạn lưu kho';
+                                                    default:
+                                                        return 'Không xác định';
+                                                }
+                                            })()
+
+                                        }
+                                    </Typography>
                                 </Grid>
                             </Grid>
 
-                            <Typography variant="h5" gutterBottom style={{ marginTop: '20px' }}>
+                            <Typography fontWeight={700} variant="h5" gutterBottom style={{ marginTop: '20px' }}>
                                 Cam kết
                             </Typography>
                             <Grid container spacing={2}>
@@ -456,7 +484,7 @@ const ViewOrder = () => {
                                 </Grid>
                             </Grid>
 
-                            <Typography variant="h5" gutterBottom style={{ marginTop: '20px' }}>
+                            <Typography fontWeight={700} variant="h5" gutterBottom style={{ marginTop: '20px' }}>
                                 Cước
                             </Typography>
                             <Grid container spacing={2}>
@@ -469,16 +497,17 @@ const ViewOrder = () => {
                                     <Typography fontWeight={700}>Thu khác:</Typography> <Typography> {order?.price?.otherTax}</Typography>
                                     <Typography fontWeight={700}>Tổng thu:</Typography> <Typography> {order?.price?.totalPrice}</Typography>
                                 </Grid>
+
                                 <Grid item xs={4}>
-                                    <Typography style={{ marginBottom: '20px' }}>Người nhận</Typography>
-                                    <Typography>COD: </Typography> <Typography>{order?.cashOnDelivery?.cod}</Typography>
-                                    <Typography>Thu khác: </Typography> <Typography>{order?.cashOnDelivery?.other}</Typography>
-                                    <Typography>Tổng thu: </Typography> <Typography>{order?.cashOnDelivery?.totalCOD}</Typography>
+                                    <Typography fontWeight={700} style={{ marginBottom: '20px' }}>Người nhận</Typography>
+                                    <Typography fontWeight={700} >COD: </Typography> <Typography>{order?.cashOnDelivery?.cod}</Typography>
+                                    <Typography fontWeight={700}>Thu khác: </Typography> <Typography>{order?.cashOnDelivery?.other}</Typography>
+                                    <Typography fontWeight={700}>Tổng thu: </Typography> <Typography>{order?.cashOnDelivery?.totalCOD}</Typography>
                                 </Grid>
 
                             </Grid>
 
-                            <Typography variant="h5" gutterBottom style={{ marginTop: '20px' }}>
+                            <Typography fontWeight={700} variant="h5" gutterBottom style={{ marginTop: '20px' }}>
                                 Khối lượng
                             </Typography>
                             <Grid container spacing={2}>
@@ -498,7 +527,38 @@ const ViewOrder = () => {
                             </Grid>
 
                             <Typography variant="h5" fontWeight={700} gutterBottom style={{ marginTop: '20px' }}>
-                                Trạng thái đơn hàng: </Typography> <Typography> {order.status}
+                                Trạng thái đơn hàng: </Typography> <Typography>
+                                {
+                                    (() => {
+                                        switch (order?.status) {
+                                            case 'POSTED':
+                                                return 'Điểm giao dịch đã nhận hàng';
+                                            case 'TRANSPORTING_FROM_SRC_TRANSACTION':
+                                                return 'Trung chuyển đến điểm tập kết';
+                                            case 'TRANSPORTED_TO_SRC_GATHERING':
+                                                return 'Đến điểm tập kết';
+                                            case ' TRANSPORTING_FROM_SRC_GATHERING':
+                                                return 'Trung chuyển đến điểm tập kết';
+                                            case 'TRANSPORTED_TO_DES_GATHERING':
+                                                return 'Đến điểm tập kết đích';
+                                            case 'TRANSPORTING_FROM_DES_GATHERING':
+                                                return 'Trung chuyển đến giao dịch đích';
+                                            case 'TRANSPORTED_TO_DES_TRANSACTION':
+                                                return 'Đến điểm giao dịch đích';
+                                            case 'SHIPPING':
+                                                return 'Đang giao hàng'
+                                            case 'DELIVERED':
+                                                return 'Giao hàng thành công'
+                                            case 'CANCELING':
+                                                return 'Người nhận không nhận hàng'
+                                            case 'CANCELED':
+                                                return 'Đơn hàng đã hủy'
+                                            default:
+                                                return 'Không xác định';
+                                        }
+                                    })()
+
+                                }
                             </Typography>
 
 
