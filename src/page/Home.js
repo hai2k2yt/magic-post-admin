@@ -2,13 +2,15 @@ import * as React from 'react';
 import MainNavbar from '../component/layout/MainNavbar';
 import Hero from '../component/layout/Hero';
 import Category from '../component/layout/Category';
-import SearchOrder from '../component/layout/SearchOrder';
+
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import '../index.css'
 import Footer from '../component/layout/Footer';
 import { useRef } from 'react';
 
+
 export default function Home() {
+    
     const theme = createTheme({
         typography: {
             "fontFamily": '"Montserrat", "sans-serif"',
@@ -28,11 +30,11 @@ export default function Home() {
     return (
         <>
             <ThemeProvider theme={theme}>
-                <div style={{minHeight: '80vh',}}>
+                <div >
                 <MainNavbar />
                 <Hero />
                 <Category/>
-                <SearchOrder />
+            
                 </div>
                 <Footer />
             </ThemeProvider>

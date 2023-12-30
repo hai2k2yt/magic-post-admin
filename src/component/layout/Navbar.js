@@ -12,13 +12,13 @@ import { Typography } from "@mui/material";
 const Navbar = () => {
     const role = localStorage.getItem('role');
     const name = localStorage.getItem('name');
-    const email = localStorage.getItem('mail');
+    const email = localStorage.getItem('email');
     const pointId = localStorage.getItem('pointId');
     const handleLogOut = () => {
         console.log(role, name, email, pointId);
         localStorage.removeItem("role");
         localStorage.removeItem("name");
-        localStorage.removeItem("mail");
+        localStorage.removeItem("email");
         localStorage.removeItem("phone");
 
     }

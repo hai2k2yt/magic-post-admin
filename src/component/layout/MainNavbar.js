@@ -7,7 +7,6 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 
-const role = localStorage.getItem('role');
 
 const MainNavbar = () => {
     const [open, setOpen] = React.useState(false);
@@ -20,10 +19,10 @@ const MainNavbar = () => {
         setOpen(false);
     };
 
-    const handleLogout = () => {
-        localStorage.removeItem('role')
-    }
-
+    // const handleLogout = () => {
+    //     localStorage.removeItem('role')
+    // }
+    const role = localStorage.getItem('role');
     return (
         <div class="navbar bg-primary text-neutral">
             <div class="flex-1">
@@ -104,7 +103,7 @@ const MainNavbar = () => {
                 <ul class="menu lg:menu-horizontal md:menu-horizontal max-md:hidden px-1 items-center">
                     <li><a href="/home">Trang chủ</a></li>
                     <li><a href="/intro">Giới thiệu</a></li>
-                    <li><a href="#searchOrder">Tra cứu bưu gửi</a></li>
+                    <li><a href="/order/view">Tra cứu bưu gửi</a></li>
                         {/* {role !== null
                             ? <div class="dropdown dropdown-end">
 
@@ -183,8 +182,15 @@ const MainNavbar = () => {
                 <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-primary rounded-box w-52 mt-4">
                     <li><a href="/home">Trang chủ</a></li>
                     <li><a href="/intro">Giới thiệu</a></li>
-                    <li><a href="#searchOrder">Tra cứu bưu gửi</a></li>
-                    <li><a href="/login">Đăng nhập</a></li>
+                    <li><a href="/order/view">Tra cứu bưu gửi</a></li>
+                    {
+                        role === '' ? (
+                            <li><a href="/login">Đăng nhập</a></li>
+                        ) : (
+                            <></>
+                        )
+                    }
+                    
                 </ul>
             </div>
 

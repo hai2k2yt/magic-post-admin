@@ -27,7 +27,7 @@ const callouts = [
         description: 'Tra cứu',
         imageSrc: trackOrder,
         imageAlt: 'Wood table with porcelain mug, leather journal, brass pen, leather key ring, and a houseplant.',
-        href: '#searchOrder',
+        href: '/order/view',
     },
 
 ]
