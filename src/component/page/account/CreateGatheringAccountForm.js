@@ -129,7 +129,7 @@ const CreateGatheringAccountForm = () => {
                                 <RHFSelect name="type">
                                     <option value="">Chọn</option>
                                     {role === ROLES[0] && <option value="GATHERING_LEADER">Trưởng điểm tập kết</option>}
-                                    {role === ROLES[3] && <option value="GATHERING_STAFF">Nhân viên tập kết</option>}
+                                    {role === ROLES[1] && <option value="GATHERING_STAFF">Nhân viên tập kết</option>}
                                 </RHFSelect>
                             </Grid>
                             <Grid item xs={12}>

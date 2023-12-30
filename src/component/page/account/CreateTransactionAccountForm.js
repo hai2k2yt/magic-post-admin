@@ -120,7 +120,7 @@ const CreateTransactionAccountForm = () => {
                                 <RHFSelect name="type">
                                     <option value="">Chọn</option>
                                     {role === ROLES[0] && <option value="TRANSACTION_LEADER">Trưởng điểm giao dịch</option>}
-                                    {role === ROLES[4] && <option value="TRANSACTION_STAFF">Nhân viên giao dịch</option>}
+                                    {role === ROLES[2] && <option value="TRANSACTION_STAFF">Nhân viên giao dịch</option>}
                                 </RHFSelect>
                             </Grid>
                             <Grid item xs={12}>
