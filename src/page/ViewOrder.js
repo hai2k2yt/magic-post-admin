@@ -14,6 +14,7 @@ import {ThemeProvider} from '@emotion/react';
 import PropTypes from 'prop-types';
 import {listP2PGatheringOrders} from "../api/transport";
 import {getOrder} from "../api/order";
+import Sidebar from "../component/layout/Sidebar";
 
 const theme = createTheme({
     typography: {
@@ -228,7 +229,7 @@ const ViewOrder = () => {
                     </Paper>
                 </Box>
             )}
-
+            <Sidebar />
             <Footer/>
         </ThemeProvider>
     );

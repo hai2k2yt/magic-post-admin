@@ -24,6 +24,7 @@ import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
 import {createTransactionLeader, createTransactionStaff} from "../../api/user";
 import {listGatheringPoints, listTransactionPoints} from "../../api/point";
 import CreateTransactionAccountForm from "../../component/page/account/CreateTransactionAccountForm";
+import Sidebar from "../../component/layout/Sidebar";
 
 const theme = createTheme({
     typography: {
@@ -128,21 +129,7 @@ const CreateTransactionAccount = () => {
                             <CreateTransactionAccountForm/>
                         </div>
                     </div>
-                    <div class="drawer-side">
-                        <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
-                        <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
-                            {/* <!-- Sidebar content here --> */}
-                            <li><a href='/dashbroad/transaction'><SpaceDashboardIcon/>Bảng điều khiển</a></li>
-                            <li><a class="bg-neutral text-primary" href='/order/create'><AddCircleOutlineIcon/>Ghi nhận
-                                hàng</a></li>
-                            {/* <li><a href='/order/create'><SwapHorizIcon />Đơn mới</a></li> */}
-                            <li><a href='/order/delivery/gathering'><AddIcon/>Tạo đơn hàng đến điểm tập kết</a></li>
-                            <li><a href='/order/delivery/customer'><DeliveryDiningIcon/>Chuyển hàng đến người nhận</a>
-                            </li>
-                            <li><a href='/transaction/order'> <CheckIcon/> Xác nhận trạng thái đơn hàng</a></li>
-                        </ul>
-
-                    </div>
+                    <Sidebar />
                 </div>
             </div>
         </ThemeProvider>

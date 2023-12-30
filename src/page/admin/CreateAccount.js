@@ -9,6 +9,7 @@ import { Typography } from '@mui/material';
 import AddLocationIconAlt from '@mui/icons-material/AddLocationAlt';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ROLES from '../auth/Role';
+import Sidebar from "../../component/layout/Sidebar";
 
 const role = localStorage.getItem('role');
 
@@ -58,30 +59,8 @@ const CreateLeaderAccount = () => {
                         <Register />
 
                     </div>
-
                 </div>
-                <div class="drawer-side">
-                    <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
-                    {
-                        role === ROLES[0] && (
-                            <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
-                                <li><a href='/dashboard'><SpaceDashboardIcon />Bảng điều khiển</a></li>
-                                <li><a href='/manage-transactionPoint'><AddLocationIcon />Quản lý điểm giao dịch</a></li>
-                                <li><a href='/manage-gatheringPoint'><AddLocationIconAlt /> Quản lý điểm tập kết</a></li>
-                                <li><a class="bg-neutral text-primary" href='/create-account'><PersonAddIcon />Tạo tài khoản trưởng điểm</a></li>
-                                <li><a href='/leader/manage'><ManageAccountsIcon />Quản lý tài khoản trưởng điểm</a></li>
-                            </ul>
-                        )
-                    }
-                    {
-                        (role === ROLES[1] || role === ROLES[2]) && (
-                            <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
-                                <li><a href='/dashboard'><SpaceDashboardIcon />Bảng điều khiển</a></li>
-                                <li><a class="bg-neutral text-primary" ><PersonAddIcon />Tạo tài khoản nhân viên</a></li>
-                            </ul>
-                        )
-                    }
-                </div>
+                <Sidebar />
             </div>
         </ThemeProvider>
 

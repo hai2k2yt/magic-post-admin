@@ -10,6 +10,7 @@ import { confirmP2PGatheringArrival, confirmP2PTransactionArrival, listP2PGather
 import { IconButton } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import CheckIcon from "@mui/icons-material/Check";
+import Sidebar from "../../component/layout/Sidebar";
 const theme = createTheme({
     typography: {
         "fontFamily": '"Montserrat", "sans-serif"',
@@ -118,13 +119,7 @@ const ConfirmGatheringOrderArrival = () => {
                     </div>
 
                 </div>
-                <div class="drawer-side">
-                    <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
-                    <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
-                        <li><a class="bg-neutral text-primary" ><AddIcon />Đơn mới</a></li>
-                        <li><a href='/order/delivery/gathering'><SwapHorizIcon />Tạo đơn chuyển đi</a></li>
-                    </ul>
-                </div>
+                <Sidebar />
             </div>
         </ThemeProvider>
 

@@ -16,6 +16,7 @@ import {FormControl, IconButton, InputLabel, MenuItem, Select} from "@mui/materi
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import {createP2PGatheringOrder, createP2PTransactionOrder, listP2PGatheringOrders} from "../../api/transport";
 import {getPointInventory, listGatheringPoints} from "../../api/point";
+import Sidebar from "../../component/layout/Sidebar";
 
 const theme = createTheme({
     typography: {
@@ -176,15 +177,7 @@ const CreateDeliveryTransactionToGatheringPoint = () => {
                         </div>
 
                     </div>
-                    <div class="drawer-side">
-                        <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
-                        <ul class="menu p-4 w-80 min-h-full bg-secondary text-neutral">
-                            <li><a href='/dashboard'><SpaceDashboardIcon/>Bảng điều khiển</a></li>
-                            <li><a href='/new'><AddIcon/>Đơn mới</a></li>
-                            <li><a class="bg-neutral text-primary"><SwapHorizIcon/>Tạo đơn đến điểm tập kết</a></li>
-                            <li><a href="/profile"><AccountCircleIcon/>Cá nhân</a></li>
-                        </ul>
-                    </div>
+                    <Sidebar />
                 </div>
             </ThemeProvider>
         );
