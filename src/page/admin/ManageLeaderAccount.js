@@ -15,6 +15,7 @@ import { useMemo } from 'react';
 import { TableContainer, Table, TableHead, TableSortLabel, Paper, Box } from '@mui/material';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { deleteUser } from '../../api/user';
+import { deleteLeader } from '../../api/user';
 // const columns = [
 //     { field: 'id', headerName: 'ID', width: 70 },
 //     { field: 'firstName', headerName: 'Full name', width: 130 },
@@ -186,7 +187,8 @@ export default function ManageLeaderAccount() {
                         name: item.username,
                         email: item.email,
                         phone: item.phone,
-                        role: item.role
+                        role: item.role,
+                        pointId: item.pointId
                     }
                 ))
                 setRows(data);
@@ -197,10 +199,12 @@ export default function ManageLeaderAccount() {
 
         fetchData();
     }, [])
-    const deleteLeader = async (id) => {
+    const deleteLeaderAccount = async (id) => {
         try {
-            const res = await deleteUser(id);
-            console.log(res);
+            console.log(id);
+            await deleteLeader(id);
+            // console.log(res);
+            setRows(rows.filter((row) => row.pointId !== id));
         } catch (e) {
             console.log(e);
         }
@@ -279,24 +283,26 @@ export default function ManageLeaderAccount() {
                                                         <TableCell>{row.name}</TableCell>
                                                         <TableCell>{row.email}</TableCell>
                                                         <TableCell>{row.phone}</TableCell>
-                                                        <TableCell>{row.role}</TableCell>
-                                                        {/* <TableCell>
-                                                            <button className="btn btn-ghost" onClick={() => document.getElementById('my_modal_1').showModal()}><HighlightOffIcon/></button>
+                                                        <TableCell>{
+                                                            row.role === 'GatheringLeader' ? ("Trưởng điểm tập kết") : ("Trưởng điểm giao dịch")
+                                                        }</TableCell>
+                                                        <TableCell>
+                                                            <button className="btn btn-ghost" onClick={() => document.getElementById('my_modal_1').showModal()}><HighlightOffIcon /></button>
                                                             <dialog id="my_modal_1" className="modal">
                                                                 <div className="modal-box">
                                                                     <h3 className="font-bold text-lg">Chắc chắn muốn xóa tài khoản này?</h3>
                                                                     <p className="py-4">Ấn "Đồng ý" để xóa tài khoản.</p>
                                                                     <div className="modal-action">
                                                                         <form method="dialog">
-                                                                            {/* if there is a button in form, it will close the modal 
+                                                                            {/* if there is a button in form, it will close the modal  */}
                                                                             <Button >Hủy</Button>
-                                                                            <button className="btn" onClick={() => deleteLeader(row.id)}>Đồng ý</button>
+                                                                            <button className="btn" onClick={() => deleteLeaderAccount(row.pointId)}>Đồng ý</button>
                                                                         </form>
                                                                     </div>
                                                                 </div>
                                                             </dialog>
 
-                                                        </TableCell> */}
+                                                        </TableCell>
                                                         {/* <TableCell>
                                                             <EditIcon onClick={() => editPlace(row.id)} />
                                                         </TableCell> */}
