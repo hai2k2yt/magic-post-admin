@@ -5,11 +5,9 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Navbar from '../../component/layout/Navbar';
 import StatisticOrder from '../../component/layout/StatisticOrder';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import AddLocationIcon from '@mui/icons-material/AddLocation';
-import AddLocationIconAlt from '@mui/icons-material/AddLocationAlt';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import ROLES from '../auth/Role';
 import Sidebar from "../../component/layout/Sidebar";
+import StatisticOrderByPlace from '../../component/layout/StatisticOrderByPlace';
 
 const role = localStorage.getItem('role');
 const theme = createTheme({
@@ -38,7 +36,13 @@ const Dashbroad = () => {
                     <div class="drawer-content flex flex-col items-left">
                         {/* <!-- Page content here --> */}
                         <div class="m-20">
-                            <StatisticOrder />
+                            { role === ROLES[0] ? 
+                                <StatisticOrder /> : 
+                                <StatisticOrderByPlace/>
+                            }
+
+
+                            
                         </div>
 
                     </div>
