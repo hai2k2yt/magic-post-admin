@@ -19,3 +19,7 @@ export const listGatheringTransactionPoints = (id) => get(`/gathering-points/${i
 export const listPoints = () => get(`/points`)
 
 export const getPointInventory = (pointId) => get(`/points/${pointId}/inventory`)
+
+export const getGatherDetail = (id) => get(`/gathering-points/${id}`)
+
+export const getTransactionDetail = (id) => get(`/transaction-points/${id}`)

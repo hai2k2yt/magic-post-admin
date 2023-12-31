@@ -25,7 +25,6 @@ import CreateGatheringPoint from "./page/admin/CreateGatheringPoint";
 import CreateTransactionPoint from "./page/admin/CreateTransactionPoint";
 import CreateTransactionAccount from "./page/transactionStaff/CreateTransactionAccount";
 import CreateGatheringAccount from "./page/gatheringStaff/CreateGatheringAccount";
-import CreateAccount from './page/admin/CreateAccount'
 
 
 const admin = [
@@ -37,7 +36,6 @@ const admin = [
     { path: '/manage-transactionPoint', component: <MangageTransactionPoint /> },
     { path: '/leader/manage', component: <ManageLeaderAccount /> },
     { path: '/dashboard', component: <Dashboard /> },
-    { path: '/create-account', component: <CreateAccount /> },
 ];
 
 const gLeader = [

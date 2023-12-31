@@ -2,21 +2,21 @@ import React, { useEffect, useState } from 'react';
 
 import { DataGrid } from '@mui/x-data-grid';
 import Typography from '@mui/material/Typography';
-import PageviewIcon from '@mui/icons-material/Pageview';
 import { useNavigate, useParams } from "react-router-dom";
-import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Navbar from '../../component/layout/Navbar';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Button from '@mui/material/Button';
-import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
-import AddIcon from '@mui/icons-material/Add';
 import { FormControl, IconButton, InputLabel, MenuItem, Select } from "@mui/material";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import { createP2PGatheringOrder, createP2PTransactionOrder, listP2PGatheringOrders } from "../../api/transport";
 import { getPointInventory, listGatheringPoints } from "../../api/point";
 import Sidebar from "../../component/layout/Sidebar";
+import { getGatherDetail } from '../../api/point';
+import { getTransactionDetail } from '../../api/point';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 const theme = createTheme({
     typography: {
@@ -37,14 +37,18 @@ const CreateDeliveryTransactionToGatheringPoint = () => {
     const id = localStorage.getItem('pointId')
     const navigate = useNavigate()
     const [orders, setOrders] = useState([])
-    const [gatheringPoints, setGatheringPoints] = useState([])
+    const [gatheringPoint, setGatheringPoint] = useState(null)
     const [selectedPoint, setSelectedPoint] = useState(null)
     const [selectedRows, setSelectedRows] = useState([]);
+    const [open, setOpen] = useState(false);
+    const [close, setClose] = useState(false);
+    // const handleViewDetail = (orderId) => {
+    //     navigate(`/order-detail/${orderId}`);
+    // };
 
-    const handleViewDetail = (orderId) => {
-        navigate(`/order-detail/${orderId}`);
+    const handleClose = () => {
+        setOpen(false);
     };
-
     const handleSelectionChange = (selectionModel) => {
         setSelectedRows(selectionModel);
     };
@@ -55,6 +59,10 @@ const CreateDeliveryTransactionToGatheringPoint = () => {
                 expressOrderIdList: selectedRows,
                 destinationPointId: selectedPoint
             })
+            setOrders(orders.filter(item => !selectedRows.includes(item.id)))
+            setSelectedRows([])
+            setOpen(true);
+            console.log(res)
         } catch (e) {
             console.error(e)
         }
@@ -72,26 +80,19 @@ const CreateDeliveryTransactionToGatheringPoint = () => {
         { field: 'type', headerName: 'Loại hàng', flex: 1, sortable: false },
         { field: 'sendTime', headerName: 'Thời gian gửi', flex: 1, sortable: true },
         { field: 'status', headerName: 'Trạng thái đơn hàng', flex: 2, sortable: true },
-        // {
-        //     field: 'action',
-        //     headerName: 'Action',
-        //     flex: 2,
-        //     sortable: false,
-        //     renderCell: (params) => (
-        //         <>
-        //             <IconButton onClick={() => handleViewDetail(params.row.OrderID)}>
-        //                 <VisibilityIcon/>
-        //             </IconButton>
-        //         </>
-
-        //     ),
-        // },
     ];
 
     useEffect(() => {
         async function fetchData() {
             try {
                 const response = await getPointInventory(id);
+                const res = await getTransactionDetail(id);
+                const gatheringId = res?.gatheringPointId;
+                console.log(gatheringId)
+                const gather = await getGatherDetail(gatheringId);
+                console.log(gather)
+                setGatheringPoint(gather)
+
                 const data = response?.map(item => (
                     {
                         id: item.id,
@@ -134,14 +135,15 @@ const CreateDeliveryTransactionToGatheringPoint = () => {
                 ))
                 setOrders(data);
 
-                const gatherPlace = await listGatheringPoints();
-                const dataPlace = gatherPlace?.map(item => (
-                    {
-                        id: item.id,
-                        address: `${item.address.street}, ${item.address.commune}-${item.address.district}-${item.address.province}`
-                    }
-                ))
-                setGatheringPoints(dataPlace)
+                // const gatherPlace = await listGatheringPoints();
+                // const dataPlace = gatherPlace?.map(item => (
+                //     {
+                //         id: item.id,
+                //         name: item.name,
+                //         address: `${item.address.street}, ${item.address.commune}-${item.address.district}-${item.address.province}`
+                //     }
+                // ))
+                // setGatheringPoints(dataPlace)
             } catch (e) {
                 console.log(e)
             }
@@ -192,9 +194,9 @@ const CreateDeliveryTransactionToGatheringPoint = () => {
                                     label="Select point"
                                     onChange={handleChangeSelectedPoint}
                                 >
-                                    {gatheringPoints.map(i => (
-                                        <MenuItem disabled={i.id === id} value={i.id}>{i.address}</MenuItem>
-                                    ))}
+
+                                    <MenuItem required disabled={gatheringPoint?.id === id} value={gatheringPoint?.id}>{[gatheringPoint?.name]}</MenuItem>
+
                                 </Select>
                             </FormControl>
                         </div>
@@ -203,6 +205,26 @@ const CreateDeliveryTransactionToGatheringPoint = () => {
                                 Chuyến giao hàng
                             </Button>
                         </div>
+                        <Dialog
+                            open={open}
+                            onClose={handleClose}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                        >
+                            <DialogTitle id="alert-dialog-title">
+                                {"Gửi hàng thành công!"}
+                            </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                    Ấn "Đóng" để đóng hộp thoại.
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleClose} autoFocus>
+                                    Đóng
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
 
                     </div>
 

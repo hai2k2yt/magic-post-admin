@@ -177,7 +177,10 @@ const CreateOrder = () => {
 
     const onSubmit = async (data) => {
         try {
-            await createOrder(id, data)
+            
+            const res = await createOrder(id, data)
+            console.log(res)
+            alert('Tạo đơn hàng thành công')
         }catch (e) {
             console.log(e);
         }
