@@ -204,25 +204,25 @@ const CreateOrder = () => {
                                             </Typography>
                                             <Grid container spacing={2}>
                                                 <Grid item xs={6}>
-                                                    <RHFTextField name="sender.name" label="Họ tên" fullWidth />
+                                                    <RHFTextField name="sender.name" label="Họ tên" fullWidth required />
                                                 </Grid>
                                                 <Grid item xs={6}>
-                                                    <RHFTextField name="sender.phone" label="Điện thoại" fullWidth />
+                                                    <RHFTextField name="sender.phone" label="Điện thoại" fullWidth required />
                                                 </Grid>
                                                 <Grid item xs={8}>
-                                                    <RHFTextField name="sender.address.street" label="Địa chỉ" fullWidth />
+                                                    <RHFTextField name="sender.address.street" label="Địa chỉ" fullWidth required />
                                                 </Grid>
                                                 <Grid item xs={4}>
                                                     <RHFTextField name="sender.address.zipcode" label="Mã bưu điện" fullWidth />
                                                 </Grid>
                                                 <Grid item xs={4}>
-                                                    <RHFTextField name="sender.address.commune" label="Xã" fullWidth />
+                                                    <RHFTextField name="sender.address.commune" label="Xã" fullWidth required />
                                                 </Grid>
                                                 <Grid item xs={4}>
-                                                    <RHFTextField name="sender.address.district" label="Quận/Huyện" fullWidth />
+                                                    <RHFTextField name="sender.address.district" label="Quận/Huyện" fullWidth required />
                                                 </Grid>
                                                 <Grid item xs={4}>
-                                                    <RHFTextField name="sender.address.province" label="Tỉnh/TP" fullWidth />
+                                                    <RHFTextField name="sender.address.province" label="Tỉnh/TP" fullWidth required />
                                                 </Grid>
 
                                             </Grid>
@@ -231,25 +231,25 @@ const CreateOrder = () => {
                                             </Typography>
                                             <Grid container spacing={2}>
                                                 <Grid item xs={6}>
-                                                    <RHFTextField name="receiver.name" label="Họ tên" fullWidth />
+                                                    <RHFTextField name="receiver.name" label="Họ tên" fullWidth required />
                                                 </Grid>
                                                 <Grid item xs={6}>
-                                                    <RHFTextField name="receiver.phone" label="Điện thoại" fullWidth />
+                                                    <RHFTextField name="receiver.phone" label="Điện thoại" fullWidth required />
                                                 </Grid>
                                                 <Grid item xs={8}>
-                                                    <RHFTextField name="receiver.address.street" label="Địa chỉ" fullWidth />
+                                                    <RHFTextField name="receiver.address.street" label="Địa chỉ" fullWidth required />
                                                 </Grid>
                                                 <Grid item xs={4}>
                                                     <RHFTextField name="receiver.address.zipcode" label="Mã bưu điện" fullWidth />
                                                 </Grid>
                                                 <Grid item xs={4}>
-                                                    <RHFTextField name="receiver.address.commune" label="Xã" fullWidth />
+                                                    <RHFTextField name="receiver.address.commune" label="Xã" fullWidth required />
                                                 </Grid>
                                                 <Grid item xs={4}>
-                                                    <RHFTextField name="receiver.address.district" label="Quận/Huyện" fullWidth />
+                                                    <RHFTextField name="receiver.address.district" label="Quận/Huyện" fullWidth required />
                                                 </Grid>
                                                 <Grid item xs={4}>
-                                                    <RHFTextField name="receiver.address.province" label="Tỉnh/TP" fullWidth />
+                                                    <RHFTextField name="receiver.address.province" label="Tỉnh/TP" fullWidth required />
                                                 </Grid>
                                             </Grid>
 
@@ -258,7 +258,7 @@ const CreateOrder = () => {
                                             </Typography>
                                             <Grid container spacing={2}>
                                                 <Grid item xs={12}>
-                                                    <RHFSelect name="type" label="Loại hàng gửi">
+                                                    <RHFSelect name="type" label="Loại hàng gửi" required>
                                                         <option value="DOCUMENT">Tài liệu</option>
                                                         <option value="GOOD">Hàng hóa</option>
                                                     </RHFSelect>
@@ -271,16 +271,16 @@ const CreateOrder = () => {
                                                             <div class='border-2 p-4 rounded border-secondary' style={{ display: "flex", marginTop: 10 }} key={field.id}>
                                                                 <Grid container spacing={2}>
                                                                     <Grid item xs={6}>
-                                                                        <RHFTextField name={`goods[${index}].name`} label="Tên" fullWidth />
+                                                                        <RHFTextField name={`goods[${index}].name`} label="Tên" fullWidth required />
                                                                     </Grid>
                                                                     <Grid item xs={6}>
-                                                                        <RHFTextField type="number" name={`goods[${index}].value`} label="Giá" fullWidth />
+                                                                        <RHFTextField type="number" name={`goods[${index}].value`} label="Giá" fullWidth required />
                                                                     </Grid>
                                                                     <Grid item xs={6}>
                                                                         <RHFTextField name={`goods[${index}].attachDocument`} label="Tài liệu đi kèm" fullWidth />
                                                                     </Grid>
                                                                     <Grid item xs={6}>
-                                                                        <RHFTextField type="number" name={`goods[${index}].quantity`} label="Số lượng" fullWidth />
+                                                                        <RHFTextField type="number" name={`goods[${index}].quantity`} label="Số lượng" fullWidth required />
                                                                     </Grid>
                                                                 </Grid>
 
@@ -302,7 +302,7 @@ const CreateOrder = () => {
 
                                             <Grid container spacing={2}>
                                                 <Grid item xs={12}>
-                                                    <RHFSelect name="senderInstructor" label="Chỉ dẫn khi không phát được bưu gửi">
+                                                    <RHFSelect name="senderInstructor" label="Chỉ dẫn khi không phát được bưu gửi" required>
                                                         <option value="IMMEDIATE_RETURN">Chuyển hoàn ngay</option>
                                                         <option value="CALL_SENDER">Gọi điện cho người gửi/BC gửi</option>
                                                         <option value="CANCEL">Hủy đơn hàng</option>
@@ -315,7 +315,7 @@ const CreateOrder = () => {
                                                     <RHFTextField name="specialService" label="Dịch vụ đặc biệt" style={{ width: '100%' }} />
                                                 </Grid>
                                                 <Grid item xs={8}>
-                                                    <RHFTextField disabled name="sendTime" label="Thời gian gửi" style={{ width: '100%' }} />
+                                                    <RHFTextField disabled name="sendTime" label="Thời gian gửi" style={{ width: '100%' }} required />
                                                 </Grid>
                                             </Grid>
 
@@ -326,21 +326,21 @@ const CreateOrder = () => {
                                                 <Grid item xs={6}>
                                                     <Typography>Người gửi</Typography>
 
-                                                    <RHFTextField style={{ marginTop: '10px' }} type="number" name="price.mainTax" label="Cước chính" fullWidth />
-                                                    <RHFTextField style={{ marginTop: '10px', marginBottom: '10px' }} type="number" name="price.subTax" label="Phụ phí" fullWidth />
+                                                    <RHFTextField style={{ marginTop: '10px' }} type="number" name="price.mainTax" label="Cước chính" fullWidth required />
+                                                    <RHFTextField style={{ marginTop: '10px', marginBottom: '10px' }} type="number" name="price.subTax" label="Phụ phí" fullWidth required />
                                                     <RHFTextField type="number" name="price.transportTax" label="Phí vận chuyển" fullWidth />
-                                                    <RHFTextField style={{ marginTop: '10px', marginBottom: '10px' }} type="number" name="price.totalTax" label="Tổng cước" fullWidth />
-                                                    <RHFTextField type="number" name="price.otherTax" label="Cước khác" fullWidth />
-                                                    <RHFTextField style={{ marginTop: '10px' }} type="number" name="price.totalPrice" label="Tổng thu" fullWidth />
+                                                    <RHFTextField style={{ marginTop: '10px', marginBottom: '10px' }} type="number" name="price.totalTax" label="Tổng cước" fullWidth required />
+                                                    <RHFTextField type="number" name="price.otherTax" label="Cước khác" fullWidth required />
+                                                    <RHFTextField style={{ marginTop: '10px' }} type="number" name="price.totalPrice" label="Tổng thu" fullWidth required />
 
                                                 </Grid>
 
                                                 <Grid item xs={6}>
                                                     <Typography>Người nhận</Typography>
 
-                                                    <RHFTextField style={{ marginTop: '10px' }} type="number" name="cashOnDelivery.cod" label="COD" fullWidth />
-                                                    <RHFTextField style={{ marginTop: '10px', marginBottom: '10px' }} type="number" name="cashOnDelivery.other" label="Thu khác" fullWidth />
-                                                    <RHFTextField type="number" name="cashOnDelivery.totalCOD" label="Tổng thu" fullWidth />
+                                                    <RHFTextField style={{ marginTop: '10px' }} type="number" name="cashOnDelivery.cod" label="COD" fullWidth required />
+                                                    <RHFTextField style={{ marginTop: '10px', marginBottom: '10px' }} type="number" name="cashOnDelivery.other" label="Thu khác" fullWidth required />
+                                                    <RHFTextField type="number" name="cashOnDelivery.totalCOD" label="Tổng thu" fullWidth required />
                                                 </Grid>
                                             </Grid>
 
@@ -349,10 +349,10 @@ const CreateOrder = () => {
                                             </Typography>
                                             <Grid container spacing={2}>
                                                 <Grid item xs={4}>
-                                                    <RHFTextField type="number" name="actualWeight" label="Khối lượng thực tế" fullWidth />
+                                                    <RHFTextField type="number" name="actualWeight" label="Khối lượng thực tế" fullWidth  required/>
                                                 </Grid>
                                                 <Grid item xs={4}>
-                                                    <RHFTextField type="number" name="volumetricWeight" label="Khối lượng quy đổi" fullWidth />
+                                                    <RHFTextField type="number" name="volumetricWeight" label="Khối lượng quy đổi" fullWidth required />
                                                 </Grid>
                                                 <Grid item xs={12}>
                                                     <RHFTextField name="businessInstructions" label="Hướng dẫn kinh doanh" fullWidth />

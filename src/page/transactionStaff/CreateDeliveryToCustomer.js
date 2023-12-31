@@ -24,8 +24,8 @@ import {
     listP2PTransactionOrders
 } from "../../api/transport";
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
-import {getPointInventory, listGatheringPoints} from "../../api/point";
-import {listTransactionShippers} from "../../api/actor";
+import { getPointInventory, listGatheringPoints } from "../../api/point";
+import { listTransactionShippers } from "../../api/actor";
 import Sidebar from "../../component/layout/Sidebar";
 
 const CreateDeliveryToCustomer = () => {
@@ -88,25 +88,25 @@ const CreateDeliveryToCustomer = () => {
 
     const columns = [
         { field: 'id', headerName: 'ID', flex: 1, sortable: false },
-        { field: 'senderName', headerName: 'Người gửi', flex: 2, sortable: false },
+        { field: 'senderName', headerName: 'Người gửi', flex: 1, sortable: false },
         { field: 'senderAddress', headerName: 'Địa chỉ gửi', flex: 2, sortable: false },
-        { field: 'receiverName', headerName: 'Người nhận', flex: 2, sortable: false },
+        { field: 'receiverName', headerName: 'Người nhận', flex: 1, sortable: false },
         { field: 'receiverAddress', headerName: 'Địa chỉ nhận', flex: 2, sortable: false },
         { field: 'COD', headerName: 'COD', flex: 1, sortable: true },
-        {
-            field: 'action',
-            headerName: 'Action',
-            flex: 1,
-            sortable: false,
-            renderCell: (params) => (
-                <>
-                    <IconButton onClick={() => handleViewDetail(params.row.id)}>
-                        <VisibilityIcon />
-                    </IconButton>
-                </>
+        // {
+        //     field: 'action',
+        //     headerName: 'Action',
+        //     flex: 1,
+        //     sortable: false,
+        //     renderCell: (params) => (
+        //         <>
+        //             <IconButton onClick={() => handleViewDetail(params.row.id)}>
+        //                 <VisibilityIcon />
+        //             </IconButton>
+        //         </>
 
-            ),
-        },
+        //     ),
+        // },
     ];
     const theme = createTheme({
         typography: {
@@ -131,12 +131,14 @@ const CreateDeliveryToCustomer = () => {
             <div class="drawer lg:drawer-open">
                 <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
                 <div class="drawer-content flex flex-col items-left">
+
                     {/* <!-- Page content here --> */}
                     <div class="mx-10">
-                        <div class='mt-10'></div>
-                        <div>
+                        <div class='mt-10'>
+                            <Typography variant="h4" marginBottom={5} fontWeight={700}>Tạo đơn gửi cho khách hàng</Typography>
+
                             {/* Search Fields */}
-                            <div class='mb-5'>
+                            {/* <div class='mb-5'>
                                 <Grid container spacing={2}>
                                     <Grid item xs={6} sm={3}>
                                         <TextField
@@ -148,63 +150,64 @@ const CreateDeliveryToCustomer = () => {
                                     </Grid>
 
                                 </Grid>
-                            </div>
-
-                            <DataGrid
-                                rows={orders}
-                                columns={columns}
-                                pageSize={10}
-                                rowsPerPageOptions={[5, 10, 15]}
-                                sortModel={sortModel}
-                                onSortModelChange={(model) => setSortModel(model)}
-                                checkboxSelection
-                                onRowSelectionModelChange={(item) => {
-                                    setOrderSelection(item);
-                                }}
-                                rowSelectionModel={orderSelection}
-                            />
-                            <div className='flex justify-end mt-5'>
-                                <FormControl fullWidth>
-                                    <InputLabel id="gathering-point-select-label">Chọn shipper</InputLabel>
-                                    <Select
-                                        className="w-full max-w-xs"
-                                        labelId="gathering-point-select-label"
-                                        id="gathering-point-select"
-                                        value={selectedShipper}
-                                        label="Select shipper"
-                                        onChange={(e) => {
-                                            setSelectedShipper(e.target.value)
-                                        }}
-                                    >
-                                        {shippers.map(i => (
-                                            <MenuItem disabled={i.id === id} value={i.id}>{i.name}</MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                            </div>
-                            <div class="flex justify-end mt-5">
-                                <Button variant="contained" sx={{ bgcolor: 'primary.main' }} disabled={!orderSelection.length} onClick={() => setSendOrderDialog(true)}>
-                                    Tạo đơn gửi
-                                </Button>
-                            </div>
-                            <Dialog
-                                sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 500 } }}
-                                maxWidth="xs"
-                                open={sendOrderDialog}
-                            >
-                                <DialogTitle>Send Order</DialogTitle>
-                                <DialogContent dividers>
-                                    <Typography>
-                                        Tạo {orderSelection.length} đơn gửi cho shipper ?
-                                    </Typography>
-                                </DialogContent>
-                                <DialogActions>
-                                    <Button onClick={() => setSendOrderDialog(false)}>
-                                        Cancel
+                            </div> */}
+                            <div>
+                                <DataGrid
+                                    rows={orders}
+                                    columns={columns}
+                                    pageSize={10}
+                                    rowsPerPageOptions={[5, 10, 15]}
+                                    sortModel={sortModel}
+                                    onSortModelChange={(model) => setSortModel(model)}
+                                    checkboxSelection
+                                    onRowSelectionModelChange={(item) => {
+                                        setOrderSelection(item);
+                                    }}
+                                    rowSelectionModel={orderSelection}
+                                />
+                                <div className='flex justify-end mt-5'>
+                                    <FormControl fullWidth>
+                                        <InputLabel id="gathering-point-select-label">Chọn shipper</InputLabel>
+                                        <Select
+                                            className="w-full max-w-xs"
+                                            labelId="gathering-point-select-label"
+                                            id="gathering-point-select"
+                                            value={selectedShipper}
+                                            label="Select shipper"
+                                            onChange={(e) => {
+                                                setSelectedShipper(e.target.value)
+                                            }}
+                                        >
+                                            {shippers.map(i => (
+                                                <MenuItem disabled={i.id === id} value={i.id}>{i.name}</MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
+                                </div>
+                                <div class="flex justify-end mt-5">
+                                    <Button variant="contained" sx={{ bgcolor: 'primary.main' }} disabled={!orderSelection.length} onClick={() => setSendOrderDialog(true)}>
+                                        Tạo đơn gửi
                                     </Button>
-                                    <Button onClick={createTransactionToCustomer}>Ok</Button>
-                                </DialogActions>
-                            </Dialog>
+                                </div>
+                                <Dialog
+                                    sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 500 } }}
+                                    maxWidth="xs"
+                                    open={sendOrderDialog}
+                                >
+                                    <DialogTitle>Send Order</DialogTitle>
+                                    <DialogContent dividers>
+                                        <Typography>
+                                            Tạo {orderSelection.length} đơn gửi cho shipper ?
+                                        </Typography>
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <Button onClick={() => setSendOrderDialog(false)}>
+                                            Cancel
+                                        </Button>
+                                        <Button onClick={createTransactionToCustomer}>Ok</Button>
+                                    </DialogActions>
+                                </Dialog>
+                            </div>
                         </div>
                     </div>
 
