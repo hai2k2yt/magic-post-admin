@@ -141,7 +141,7 @@ export default function ManageGatheringPoint() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     useEffect(() => {
         async function fetchData() {
@@ -180,9 +180,9 @@ export default function ManageGatheringPoint() {
         setPage(0);
     };
 
-    const editPlace = (id) => {
-        navigate(`/place/edit/${id}`);
-    }
+    // const editPlace = (id) => {
+    //     navigate(`/place/edit/${id}`);
+    // }
 
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
