@@ -79,7 +79,7 @@ const defaultValues = {
     ],
     specialService: '',
     senderInstructor: 'CANCEL',
-    sendTime: formatDatetime.format(new Date()),
+    sendTime: new Date().toISOString(),
     price: {
         mainTax: 0,
         subTax: 0,
@@ -177,8 +177,6 @@ const CreateOrder = () => {
 
     const onSubmit = async (data) => {
         try {
-            const date = Date.parse(data.sendTime)
-            console.log(date)
             await createOrder(id, data)
         }catch (e) {
             console.log(e);
