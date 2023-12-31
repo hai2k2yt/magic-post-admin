@@ -92,7 +92,8 @@ const CreateGatheringAccountForm = () => {
             if (data.type === 'GATHERING_LEADER') {
                 const res = await createGatheringLeader(data.gatheringPoint, body)
             } else if (data.type === "GATHERING_STAFF") {
-                const res = await createGatheringStaff(data.gatheringPoint, body)
+                const pointId = localStorage.getItem('pointId')
+                const res = await createGatheringStaff(pointId, body)
             }
         } catch (e) {
             console.log(e);
@@ -130,15 +131,17 @@ const CreateGatheringAccountForm = () => {
                                     {role === ROLES[1] && <option value="GATHERING_STAFF">Nhân viên tập kết</option>}
                                 </RHFSelect>
                             </Grid>
-                            <Grid item xs={12}>
-                                <Typography>Điểm tập kết</Typography>
-                                <RHFSelect name="gatheringPoint">
-                                    <option value="">-- Chọn --</option>
-                                    {points.map(i => (
-                                        <option value={i.id}>{i.name}</option>
-                                    ))}
-                                </RHFSelect>
-                            </Grid>
+                            {role === ROLES[0] &&
+                                <Grid item xs={12}>
+                                    <Typography>Điểm tập kết</Typography>
+                                    <RHFSelect name="gatheringPoint">
+                                        <option value="">-- Chọn --</option>
+                                        {points.map(i => (
+                                            <option value={i.id}>{i.name}</option>
+                                        ))}
+                                    </RHFSelect>
+                                </Grid>
+                            }
                         </Grid>
                     </div>
                     <div class='flex justify-end m-5'>

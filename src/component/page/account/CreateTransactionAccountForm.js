@@ -84,7 +84,8 @@ const CreateTransactionAccountForm = () => {
             if (data.type === 'TRANSACTION_LEADER') {
                 const res = await createTransactionLeader(data.transactionPoint, body)
             } else if (data.type === "TRANSACTION_STAFF") {
-                const res = await createTransactionStaff(data.transactionPoint, body)
+                const pointId = localStorage.getItem('pointId')
+                const res = await createTransactionStaff(pointId, body)
             }
         } catch (e) {
             console.log(e);
@@ -119,19 +120,23 @@ const CreateTransactionAccountForm = () => {
                                 <Typography>Loại tài khoản</Typography>
                                 <RHFSelect name="type">
                                     <option value="">Chọn</option>
-                                    {role === ROLES[0] && <option value="TRANSACTION_LEADER">Trưởng điểm giao dịch</option>}
-                                    {role === ROLES[2] && <option value="TRANSACTION_STAFF">Nhân viên giao dịch</option>}
+                                    {role === ROLES[0] &&
+                                        <option value="TRANSACTION_LEADER">Trưởng điểm giao dịch</option>}
+                                    {role === ROLES[2] &&
+                                        <option value="TRANSACTION_STAFF">Nhân viên giao dịch</option>}
                                 </RHFSelect>
                             </Grid>
-                            <Grid item xs={12}>
-                                <Typography>Điểm giao dịch</Typography>
-                                <RHFSelect name="transactionPoint">
-                                    <option value="">-- Chọn --</option>
-                                    {points.map(i => (
-                                        <option value={i.id}>{i.name}</option>
-                                    ))}
-                                </RHFSelect>
-                            </Grid>
+                            {role === ROLES[0] &&
+                                <Grid item xs={12}>
+                                    <Typography>Điểm giao dịch</Typography>
+                                    <RHFSelect name="transactionPoint">
+                                        <option value="">-- Chọn --</option>
+                                        {points.map(i => (
+                                            <option value={i.id}>{i.name}</option>
+                                        ))}
+                                    </RHFSelect>
+                                </Grid>
+                            }
                         </Grid>
                     </div>
                     <div class='flex justify-end m-5'>
