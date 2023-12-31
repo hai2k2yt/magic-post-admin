@@ -104,7 +104,7 @@ const CreateGatheringPoint = () => {
             console.log(data);
             const res = await createTransactionPoint(selectedPoint, data)
             if (res.name !== '') {
-                alert('Tạo điểm tập kết thành công');
+                alert('Tạo điểm giao dịch thành công');
                 
             }
         }catch (e) {

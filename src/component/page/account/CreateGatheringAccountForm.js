@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import {
     Box,
@@ -10,40 +10,51 @@ import {
     IconButton,
     Badge,
 } from '@mui/material';
-import {FormProvider, RHFSelect, RHFTextField} from "../../../component/hook-form";
-import {useForm} from "react-hook-form";
-import {yupResolver} from "@hookform/resolvers/yup";
-import {LoadingButton} from '@mui/lab';
+import { FormProvider, RHFSelect, RHFTextField } from "../../../component/hook-form";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { LoadingButton } from '@mui/lab';
 
 import {
     createGatheringLeader,
     createGatheringStaff,
 
 } from "../../../api/user";
-import {listGatheringPoints} from "../../../api/point";
+import { listGatheringPoints } from "../../../api/point";
 import ROLES from "../../../page/auth/Role";
 
 
 const pointId = localStorage.getItem('pointId')
 
 const defaultValues = {
-
-    username: "",
-    email: "",
-    password: "",
-    phone: "",
+    username: '',
+    email: '',
+    password: '',
+    phone: '',
     type: '',
     gatheringPoint: pointId || ''
 
 };
 
 const validationSchema = yup.object().shape({
-    username: yup.string().required('Tên user là bắt buộc'),
-    email: yup.string().email('Email không hợp lệ').required('Email là bắt buộc'),
-    password: yup.string().required('Mật khẩu là bắt buộc'),
-    phone: yup.string().required('Số điện thoại là bắt buộc'),
+    username: yup.string().required('Tên tài khoản là bắt buộc').matches(/(^[A-Za-zỳọáầảấờễàạằệếýộậốũứĩõúữịỗìềểẩớặòùồợãụủíỹắẫựỉỏừỷởóéửỵẳẹèẽổẵẻỡơôưăêâđ]{2,16})([ ]{0,1})([A-Za-zỳọáầảấờễàạằệếýộậốũứĩõúữịỗìềểẩớặòùồợãụủíỹắẫựỉỏừỷởóéửỵẳẹèẽổẵẻỡơôưăêâđ]{2,16})?([ ]{0,1})?([A-Za-zỳọáầảấờễàạằệếýộậốũứĩõúữịỗìềểẩớặòùồợãụủíỹắẫựỉỏừỷởóéửỵẳẹèẽổẵẻỡơôưăêâđ]{2,16})?([ ]{0,1})?([A-Za-zỳọáầảấờễàạằệếýộậốũứĩõúữịỗìềểẩớặòùồợãụủíỹắẫựỉỏừỷởóéửỵẳẹèẽổẵẻỡơôưăêâđ]{2,16})$/, "Tên không hợp lệ"),
+    email: yup.string().required('Email là bắt buộc').email("Email không hợp lệ"),
+    password: yup.string().required('Mật khẩu là bắt buộc').test(
+        "regex",
+        "Mật khẩu cần có tối thiểu 6 ký tự, 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt",
+        val => {
+            let regExp = new RegExp(
+                "^(?=.*\\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,}$"
+            );
+            console.log(regExp.test(val), regExp, val);
+            return regExp.test(val);
+        }
+    ),
+    confirmPassword: yup.string().required('Nhập lại mật khẩu là bắt buộc').oneOf([yup.ref('password'), null], 'Mật khẩu không khớp'),
+    phone: yup.string().required('Số điện thoại là bắt buộc').matches(/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/, "Số điện thoại không hợp lệ"),
     type: yup.string().required('Loại tài khoản là bắt buộc'),
-    gatheringPoint: yup.string().required('Điểm tập kết là bắt buộc'),
+
+    gatheringPoint: yup.string().required('Điểm giao dịch là bắt buộc'),
 });
 
 const role = localStorage.getItem('role');
@@ -58,7 +69,8 @@ const CreateGatheringAccountForm = () => {
                 const data = response?.map(item => (
                     {
                         id: item.id,
-                        name: item.name
+                        name: item.name,
+                        leaderId: item.gatheringLeaderId
                     }
                 ))
                 setPoints(data);
@@ -79,7 +91,7 @@ const CreateGatheringAccountForm = () => {
 
     const {
         handleSubmit,
-        formState: {errors, isSubmitting},
+        formState: { errors, isSubmitting },
     } = methods;
 
 
@@ -92,12 +104,18 @@ const CreateGatheringAccountForm = () => {
         }
         try {
             if (data.type === 'GATHERING_LEADER') {
+                console.log(data.gatheringPoint);
                 const res = await createGatheringLeader(data.gatheringPoint, body)
+                console.log(res);
+                alert('Tạo tài khoản thành công')
             } else if (data.type === "GATHERING_STAFF") {
                 const res = await createGatheringStaff(data.gatheringPoint, body)
+                console.log(res);
+                alert('Tạo tài khoản thành công')
             }
         } catch (e) {
             console.log(e);
+
         }
     };
 
@@ -105,31 +123,37 @@ const CreateGatheringAccountForm = () => {
     return (
         <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
             <Box p={2}>
-                <Paper elevation={3} style={{padding: '20px'}}>
+                <Paper elevation={3} style={{ padding: '20px' }}>
                     <div class='m-5'>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <Typography>Họ tên</Typography>
-                                <RHFTextField name="username" fullWidth/>
+                                <RHFTextField name="username" fullWidth />
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography>Email</Typography>
-                                <RHFTextField name="email" fullWidth/>
+                                <RHFTextField name="email" fullWidth />
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography>Mật khẩu</Typography>
-                                <RHFTextField type="password" name="password" fullWidth/>
+                                <RHFTextField type="password" name="password" fullWidth />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Typography>Nhập lại mật khẩu</Typography>
+                                <RHFTextField type="password" name="confirmPassword" fullWidth />
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography>Số điện thoại</Typography>
-                                <RHFTextField name="phone" fullWidth/>
+                                <RHFTextField name="phone" fullWidth />
                             </Grid>
                             <Grid item xs={12}>
-                                <Typography>Loại account</Typography>
+                                <Typography>Loại tài khoản</Typography>
                                 <RHFSelect name="type">
                                     <option value="">Chọn</option>
-                                    {role === ROLES[0] && <option value="GATHERING_LEADER">Trưởng điểm tập kết</option>}
-                                    {role === ROLES[1] && <option value="GATHERING_STAFF">Nhân viên tập kết</option>}
+                                    {role === ROLES[0] &&
+                                        <option value="GATHERING_LEADER">Trưởng điểm tập kết</option>}
+                                    {role === ROLES[1] &&
+                                        <option value="GATHERING_STAFF">Nhân viên tập kết</option>}
                                 </RHFSelect>
                             </Grid>
 
@@ -137,8 +161,8 @@ const CreateGatheringAccountForm = () => {
                                 <Typography>Điểm tập kết</Typography>
                                 <RHFSelect disabled={role !== ROLES[0]} name="gatheringPoint">
                                     <option value="">-- Chọn --</option>
-                                    {points.map(i => (
-                                        <option value={i.id}>{i.name}</option>
+                                    {points.filter(i => i.leaderId === null).map(i => (
+                                        <option key={i.id} value={i.id}>{i.name}</option>
                                     ))}
                                 </RHFSelect>
                             </Grid>
