@@ -161,7 +161,7 @@ const CreateGatheringAccountForm = () => {
                                 <Typography>Điểm tập kết</Typography>
                                 <RHFSelect disabled={role !== ROLES[0]} name="gatheringPoint">
                                     <option value="">-- Chọn --</option>
-                                    {points.filter(i => i.leaderId === null).map(i => (
+                                    {points.filter(role === ROLES[0] ? i => i.leaderId === null : i => i).map(i => (
                                         <option key={i.id} value={i.id}>{i.name}</option>
                                     ))}
                                 </RHFSelect>

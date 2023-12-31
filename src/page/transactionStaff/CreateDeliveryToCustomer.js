@@ -80,7 +80,7 @@ const CreateDeliveryToCustomer = () => {
             expressOrderIdList: orderSelection,
             shipperId: selectedShipper
         })
-        navigate(`/order/transaction/${id}/customer`);
+        navigate(`/order/transaction/customer`);
     }
 
 
