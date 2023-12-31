@@ -107,7 +107,7 @@ const CreateDeliveryGatheringToGatheringPoint = () => {
                 const dataPlace = gatherPlace?.map(item => (
                     {
                         id: item.id,
-                        address: `${item.address.street}, ${item.address.zipcode}/${item.address.commune}-${item.address.district}-${item.address.province}`
+                        address: `${item.address.street}, ${item.address.commune}-${item.address.district}-${item.address.province}`
                     }
                 ))
                 setGatheringPoints(dataPlace)
