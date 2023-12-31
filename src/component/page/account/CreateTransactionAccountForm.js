@@ -16,13 +16,16 @@ import {createTransactionLeader, createTransactionStaff} from "../../../api/user
 import {listTransactionPoints} from "../../../api/point";
 import ROLES from "../../../page/auth/Role";
 
+const pointId = localStorage.getItem('pointId')
+
+
 const defaultValues = {
     username: "",
     email: "",
     password: "",
     phone: "",
     type: '',
-    transactionPoint: ''
+    transactionPoint: pointId || ''
 
 };
 
@@ -119,19 +122,23 @@ const CreateTransactionAccountForm = () => {
                                 <Typography>Loại tài khoản</Typography>
                                 <RHFSelect name="type">
                                     <option value="">Chọn</option>
-                                    {role === ROLES[0] && <option value="TRANSACTION_LEADER">Trưởng điểm giao dịch</option>}
-                                    {role === ROLES[2] && <option value="TRANSACTION_STAFF">Nhân viên giao dịch</option>}
+                                    {role === ROLES[0] &&
+                                        <option value="TRANSACTION_LEADER">Trưởng điểm giao dịch</option>}
+                                    {role === ROLES[2] &&
+                                        <option value="TRANSACTION_STAFF">Nhân viên giao dịch</option>}
                                 </RHFSelect>
                             </Grid>
+
                             <Grid item xs={12}>
                                 <Typography>Điểm giao dịch</Typography>
-                                <RHFSelect name="transactionPoint">
+                                <RHFSelect disabled={role !== ROLES[0]} name="transactionPoint">
                                     <option value="">-- Chọn --</option>
                                     {points.map(i => (
                                         <option value={i.id}>{i.name}</option>
                                     ))}
                                 </RHFSelect>
                             </Grid>
+
                         </Grid>
                     </div>
                     <div class='flex justify-end m-5'>

@@ -24,6 +24,8 @@ import {listGatheringPoints} from "../../../api/point";
 import ROLES from "../../../page/auth/Role";
 
 
+const pointId = localStorage.getItem('pointId')
+
 const defaultValues = {
 
     username: "",
@@ -31,7 +33,7 @@ const defaultValues = {
     password: "",
     phone: "",
     type: '',
-    gatheringPoint: ''
+    gatheringPoint: pointId || ''
 
 };
 
@@ -41,7 +43,7 @@ const validationSchema = yup.object().shape({
     password: yup.string().required('Mật khẩu là bắt buộc'),
     phone: yup.string().required('Số điện thoại là bắt buộc'),
     type: yup.string().required('Loại tài khoản là bắt buộc'),
-    gatheringPoint: yup.string().required('Điểm giao dịch là bắt buộc'),
+    gatheringPoint: yup.string().required('Điểm tập kết là bắt buộc'),
 });
 
 const role = localStorage.getItem('role');
@@ -130,15 +132,17 @@ const CreateGatheringAccountForm = () => {
                                     {role === ROLES[1] && <option value="GATHERING_STAFF">Nhân viên tập kết</option>}
                                 </RHFSelect>
                             </Grid>
+
                             <Grid item xs={12}>
                                 <Typography>Điểm tập kết</Typography>
-                                <RHFSelect name="gatheringPoint">
+                                <RHFSelect disabled={role !== ROLES[0]} name="gatheringPoint">
                                     <option value="">-- Chọn --</option>
                                     {points.map(i => (
                                         <option value={i.id}>{i.name}</option>
                                     ))}
                                 </RHFSelect>
                             </Grid>
+
                         </Grid>
                     </div>
                     <div class='flex justify-end m-5'>
