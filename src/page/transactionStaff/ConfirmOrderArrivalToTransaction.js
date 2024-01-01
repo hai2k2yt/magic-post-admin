@@ -49,8 +49,35 @@ const ConfirmOrderArrivalToTransaction = () => {
                         sendFrom: item.from.name,
                         sendTo: item.to.name,
                         departureTime: item.departureTime,
-                        arrivalTime: item.arrivalTime,
-                        status: item.status
+                        // arrivalTime: item.arrivalTime,
+                        status: (() => {
+                            switch (item?.status) {
+                                case 'POSTED':
+                                    return 'Điểm giao dịch đã nhận hàng';
+                                case 'TRANSPORTING_FROM_SRC_TRANSACTION':
+                                    return 'Trung chuyển đến điểm tập kết';
+                                case 'TRANSPORTED_TO_SRC_GATHERING':
+                                    return 'Đến điểm tập kết';
+                                case ' TRANSPORTING_FROM_SRC_GATHERING':
+                                    return 'Trung chuyển đến điểm tập kết';
+                                case 'TRANSPORTED_TO_DES_GATHERING':
+                                    return 'Đến điểm tập kết đích';
+                                case 'TRANSPORTING_FROM_DES_GATHERING':
+                                    return 'Trung chuyển đến giao dịch đích';
+                                case 'TRANSPORTED_TO_DES_TRANSACTION':
+                                    return 'Đến điểm giao dịch đích';
+                                case 'SHIPPING':
+                                    return 'Đang giao hàng'
+                                case 'DELIVERED':
+                                    return 'Giao hàng thành công'
+                                case 'CANCELING':
+                                    return 'Người nhận không nhận hàng'
+                                case 'CANCELED':
+                                    return 'Đơn hàng đã hủy'
+                                default:
+                                    return 'Không xác định';
+                            }
+                        })()
                     }
                 ))
                 setOrders(data);
@@ -62,13 +89,16 @@ const ConfirmOrderArrivalToTransaction = () => {
         fetchData();
     }, [])
 
-    const handleViewDetail = (orderId) => {
-        navigate(`/order-detail/${orderId}`);
-    };
+    // const handleViewDetail = (orderId) => {
+    //     navigate(`/order-detail/${orderId}`);
+    // };
 
     const confirmTransactionArrival = async () => {
         await confirmMultiP2PTransactionArrival(id, orderSelection)
-        navigate('/order/manage');
+        setSendOrderDialog(false)
+        setOrders(orders.filter(item => !orderSelection.includes(item.id)))
+        setOrderSelection([])
+        
     }
 
 
@@ -79,22 +109,22 @@ const ConfirmOrderArrivalToTransaction = () => {
         { field: 'sendFrom', headerName: 'Nơi gửi', flex: 2, sortable: false },
         { field: 'sendTo', headerName: 'Nơi nhận', flex: 2, sortable: false },
         { field: 'departureTime', headerName: 'Thời gian gửi', flex: 2, sortable: false },
-        { field: 'arrivalTime', headerName: 'Thời gian nhận', flex: 2, sortable: false },
+        // { field: 'arrivalTime', headerName: 'Thời gian nhận', flex: 2, sortable: false },
         { field: 'status', headerName: 'Trạng thái đơn hàng', flex: 1, sortable: true },
-        {
-            field: 'action',
-            headerName: 'Action',
-            flex: 1,
-            sortable: false,
-            renderCell: (params) => (
-                <>
-                    <IconButton onClick={() => handleViewDetail(params.row.id)}>
-                        <VisibilityIcon />
-                    </IconButton>
-                </>
+        // {
+        //     field: 'action',
+        //     headerName: 'Action',
+        //     flex: 1,
+        //     sortable: false,
+        //     renderCell: (params) => (
+        //         <>
+        //             <IconButton onClick={() => handleViewDetail(params.row.id)}>
+        //                 <VisibilityIcon />
+        //             </IconButton>
+        //         </>
 
-            ),
-        },
+        //     ),
+        // },
     ];
     const theme = createTheme({
         typography: {
@@ -121,9 +151,9 @@ const ConfirmOrderArrivalToTransaction = () => {
                 <div class="drawer-content flex flex-col items-left">
                     {/* <!-- Page content here --> */}
                     <div class="mx-10">
-                        <div class='mt-10'></div>
-                        <div>
-                            {/* Search Fields */}
+                        {/* <div class='mt-10'></div> */}
+                        {/* <div>
+                            Search Fields
                             <div class='mb-5'>
                                 <Grid container spacing={2}>
                                     <Grid item xs={6} sm={3}>
@@ -141,7 +171,7 @@ const ConfirmOrderArrivalToTransaction = () => {
                                                 value={selectedProvince}
                                                 onChange={(e) => setSelectedProvince(e.target.value)}
                                             >
-                                                {/* Address options */}
+                                                Address options
                                             </Select>
                                         </FormControl>
                                     </Grid>
@@ -152,7 +182,7 @@ const ConfirmOrderArrivalToTransaction = () => {
                                                 value={selectedDistrict}
                                                 onChange={(e) => setSelectedDistrict(e.target.value)}
                                             >
-                                                {/* Address options */}
+                                                Address options
                                             </Select>
                                         </FormControl>
                                     </Grid>
@@ -162,54 +192,54 @@ const ConfirmOrderArrivalToTransaction = () => {
                                             <Select
                                                 value={selectedStatus}
                                                 onChange={(e) => setSelectedStatus(e.target.value)}
-                                            >
-                                                {/* Status options */}
+                                        
                                             </Select>
                                         </FormControl>
                                     </Grid>
                                 </Grid>
-                            </div>
-
-                            <DataGrid
-                                rows={orders}
-                                columns={columns}
-                                pageSize={10}
-                                rowsPerPageOptions={[5, 10, 15]}
-                                sortModel={sortModel}
-                                onSortModelChange={(model) => setSortModel(model)}
-                                checkboxSelection
-                                onRowSelectionModelChange={(item) => {
-                                    setOrderSelection(item);
-                                }}
-                                rowSelectionModel={orderSelection}
-                            />
-                            <div class="flex justify-end mt-5">
-                                <Button variant="contained" sx={{ bgcolor: 'primary.main' }} disabled={!orderSelection.length} onClick={() => setSendOrderDialog(true)}>
-                                    Xác nhận đến
-                                </Button>
-                            </div>
-                            <Dialog
-                                sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 500 } }}
-                                maxWidth="xs"
-                                open={sendOrderDialog}
-                            >
-                                <DialogTitle>Send Order</DialogTitle>
-                                <DialogContent dividers>
-                                    <Typography>
-                                        Xác nhận {orderSelection.length} đơn hàng đã đến điểm tập kết?
-                                    </Typography>
-                                </DialogContent>
-                                <DialogActions>
-                                    <Button onClick={() => setSendOrderDialog(false)}>
-                                        Cancel
-                                    </Button>
-                                    <Button onClick={confirmTransactionArrival}>Ok</Button>
-                                </DialogActions>
-                            </Dialog>
+                            </div> */}
+                        <Typography variant='h4' fontWeight={700} my={5}>
+                            Đơn hàng mới tới điểm giao dịch
+                        </Typography>
+                        <DataGrid
+                            rows={orders}
+                            columns={columns}
+                            pageSize={10}
+                            rowsPerPageOptions={[5, 10, 15]}
+                            sortModel={sortModel}
+                            onSortModelChange={(model) => setSortModel(model)}
+                            checkboxSelection
+                            onRowSelectionModelChange={(item) => {
+                                setOrderSelection(item);
+                            }}
+                            rowSelectionModel={orderSelection}
+                        />
+                        <div class="flex justify-end mt-5">
+                            <Button variant="contained" sx={{ bgcolor: 'primary.main' }} disabled={!orderSelection.length} onClick={() => setSendOrderDialog(true)}>
+                                Xác nhận đến
+                            </Button>
                         </div>
+                        <Dialog
+                            sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 500 } }}
+                            maxWidth="xs"
+                            open={sendOrderDialog}
+                        >
+                            <DialogTitle>Xác nhận đơn hàng</DialogTitle>
+                            <DialogContent dividers>
+                                <Typography>
+                                    Xác nhận {orderSelection.length} đơn hàng đã đến điểm giao dịch?
+                                </Typography>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={() => setSendOrderDialog(false)}>
+                                    Hủy
+                                </Button>
+                                <Button onClick={confirmTransactionArrival}>Xác nhận</Button>
+                            </DialogActions>
+                        </Dialog>
                     </div>
-
                 </div>
+
                 <Sidebar />
             </div>
         </ThemeProvider>

@@ -104,7 +104,8 @@ const MainNavbar = () => {
                     <li><a href="/home">Trang chủ</a></li>
                     <li><a href="/intro">Giới thiệu</a></li>
                     <li><a href="/order/view">Tra cứu bưu gửi</a></li>
-                        {/* {role !== null
+
+                    {/* {role !== null
                             ? <div class="dropdown dropdown-end">
 
                                 <div tabindex="0" role="button" class="mr-5 m-1 btn btn-ghost btn-circle avatar">
@@ -170,8 +171,8 @@ const MainNavbar = () => {
                                 <a class="btn btn-neutral" href="/login">Đăng nhập</a>
                             </div>
                         } */}
-                        <li><div><a class="btn btn-neutral" href="/login">Đăng nhập</a></div></li>
-                        
+                    <li><div><a class="btn btn-neutral" href="/login">Đăng nhập</a></div></li>
+
                 </ul>
             </div>
             {/*Menu for tablet & phone*/}
@@ -180,17 +181,14 @@ const MainNavbar = () => {
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 510 511" id="Menu"><path fill="#ffffff" fill-rule="evenodd" d="M256 368.5C193.868 368.5 143.5 318.132 143.5 256C143.5 193.868 193.868 143.5 256 143.5C318.132 143.5 368.5 193.868 368.5 256C368.5 318.132 318.132 368.5 256 368.5ZM256 156C200.772 156 156 200.772 156 256C156 311.228 200.772 356 256 356C311.228 356 356 311.228 356 256C356 200.772 311.228 156 256 156Z" clip-rule="evenodd" class="color000000 svgShape"></path><path fill="#ffffff" d="M206.5 268C199.596 268 194 262.404 194 255.5 194 248.596 199.596 243 206.5 243 213.404 243 219 248.596 219 255.5 219 262.404 213.404 268 206.5 268zM256.5 268C249.596 268 244 262.404 244 255.5 244 248.596 249.596 243 256.5 243 263.404 243 269 248.596 269 255.5 269 262.404 263.404 268 256.5 268zM306.5 268C299.596 268 294 262.404 294 255.5 294 248.596 299.596 243 306.5 243 313.404 243 319 248.596 319 255.5 319 262.404 313.404 268 306.5 268z" class="color000000 svgShape"></path></svg>
                 </div>
                 <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-primary rounded-box w-52 mt-4">
+                    
                     <li><a href="/home">Trang chủ</a></li>
                     <li><a href="/intro">Giới thiệu</a></li>
                     <li><a href="/order/view">Tra cứu bưu gửi</a></li>
-                    {
-                        role === '' ? (
-                            <li><a href="/login">Đăng nhập</a></li>
-                        ) : (
-                            <></>
-                        )
-                    }
-                    
+                    <li><a hred="/login">Đăng nhập</a></li>
+
+
+
                 </ul>
             </div>
 

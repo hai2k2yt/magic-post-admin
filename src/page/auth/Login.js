@@ -57,6 +57,7 @@ const Login = () => {
             localStorage.removeItem('phone');
         }
         if (emailErr === '' && errorMsg === '') {
+            console.log(email, password)
             try {
 
                 e.preventDefault();

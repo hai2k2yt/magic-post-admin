@@ -23,17 +23,14 @@ import {
     confirmMultiP2PTransactionArrival, createP2CTransactionOrder,
     listP2PTransactionOrders
 } from "../../api/transport";
-import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
 import { getPointInventory, listGatheringPoints } from "../../api/point";
 import { listTransactionShippers } from "../../api/actor";
 import Sidebar from "../../component/layout/Sidebar";
 
 const CreateDeliveryToCustomer = () => {
-    const navigate = useNavigate();
     const id = localStorage.getItem('pointId')
     const [orders, setOrders] = useState([]);
     const [orderSelection, setOrderSelection] = useState([])
-    const [searchOrder, setSearchOrder] = useState('');
     const [shippers, setShippers] = useState([]);
     const [selectedShipper, setSelectedShipper] = useState([])
     const [sortModel, setSortModel] = useState([]);
@@ -51,7 +48,34 @@ const CreateDeliveryToCustomer = () => {
                         senderAddress: item.sender.address.street,
                         receiverName: item.receiver.name,
                         receiverAddress: item.receiver.address.street,
-                        COD: item.totalCOD
+                        status: (() => {
+                            switch (item?.status) {
+                                case 'POSTED':
+                                    return 'Điểm giao dịch đã nhận hàng';
+                                case 'TRANSPORTING_FROM_SRC_TRANSACTION':
+                                    return 'Trung chuyển đến điểm tập kết';
+                                case 'TRANSPORTED_TO_SRC_GATHERING':
+                                    return 'Đến điểm tập kết';
+                                case ' TRANSPORTING_FROM_SRC_GATHERING':
+                                    return 'Trung chuyển đến điểm tập kết';
+                                case 'TRANSPORTED_TO_DES_GATHERING':
+                                    return 'Đến điểm tập kết đích';
+                                case 'TRANSPORTING_FROM_DES_GATHERING':
+                                    return 'Trung chuyển đến giao dịch đích';
+                                case 'TRANSPORTED_TO_DES_TRANSACTION':
+                                    return 'Đến điểm giao dịch đích';
+                                case 'SHIPPING':
+                                    return 'Đang giao hàng'
+                                case 'DELIVERED':
+                                    return 'Giao hàng thành công'
+                                case 'CANCELING':
+                                    return 'Người nhận không nhận hàng'
+                                case 'CANCELED':
+                                    return 'Đơn hàng đã hủy'
+                                default:
+                                    return 'Không xác định';
+                            }
+                        })()
                     }
                 ))
                 setOrders(data);
@@ -71,16 +95,23 @@ const CreateDeliveryToCustomer = () => {
         fetchData();
     }, [])
 
-    const handleViewDetail = (orderId) => {
-        navigate(`/order-detail/${orderId}`);
-    };
+    // const handleViewDetail = (orderId) => {
+    //     navigate(`/order-detail/${orderId}`);
+    // };
 
     const createTransactionToCustomer = async () => {
-        await createP2CTransactionOrder(id, {
-            expressOrderIdList: orderSelection,
-            shipperId: selectedShipper
-        })
-        navigate(`/order/transaction/customer`);
+        try {
+            const res = await createP2CTransactionOrder(id, {
+                expressOrderIdList: orderSelection,
+                shipperId: selectedShipper
+            })
+            console.log(res)
+            alert('Cập nhật đơn hàng thành công')
+            setSendOrderDialog(false)
+        } catch (e) {
+            console.log(e)
+        }
+
     }
 
 
@@ -92,21 +123,7 @@ const CreateDeliveryToCustomer = () => {
         { field: 'senderAddress', headerName: 'Địa chỉ gửi', flex: 2, sortable: false },
         { field: 'receiverName', headerName: 'Người nhận', flex: 1, sortable: false },
         { field: 'receiverAddress', headerName: 'Địa chỉ nhận', flex: 2, sortable: false },
-        { field: 'COD', headerName: 'COD', flex: 1, sortable: true },
-        // {
-        //     field: 'action',
-        //     headerName: 'Action',
-        //     flex: 1,
-        //     sortable: false,
-        //     renderCell: (params) => (
-        //         <>
-        //             <IconButton onClick={() => handleViewDetail(params.row.id)}>
-        //                 <VisibilityIcon />
-        //             </IconButton>
-        //         </>
-
-        //     ),
-        // },
+        { field: 'status', headerName: 'Trạng thái', flex: 1, sortable: true },
     ];
     const theme = createTheme({
         typography: {
@@ -167,7 +184,7 @@ const CreateDeliveryToCustomer = () => {
                                 />
                                 <div className='flex justify-end mt-5'>
                                     <FormControl fullWidth>
-                                        <InputLabel id="gathering-point-select-label">Chọn shipper</InputLabel>
+                                        <InputLabel id="gathering-point-select-label">Chọn nhân viên giao hàng</InputLabel>
                                         <Select
                                             className="w-full max-w-xs"
                                             labelId="gathering-point-select-label"
@@ -194,17 +211,17 @@ const CreateDeliveryToCustomer = () => {
                                     maxWidth="xs"
                                     open={sendOrderDialog}
                                 >
-                                    <DialogTitle>Send Order</DialogTitle>
+                                    <DialogTitle>Gửi đơn</DialogTitle>
                                     <DialogContent dividers>
                                         <Typography>
-                                            Tạo {orderSelection.length} đơn gửi cho shipper ?
+                                            Tạo {orderSelection.length} đơn giao?
                                         </Typography>
                                     </DialogContent>
                                     <DialogActions>
                                         <Button onClick={() => setSendOrderDialog(false)}>
-                                            Cancel
+                                            Hủy
                                         </Button>
-                                        <Button onClick={createTransactionToCustomer}>Ok</Button>
+                                        <Button onClick={createTransactionToCustomer}>Tạo đơn</Button>
                                     </DialogActions>
                                 </Dialog>
                             </div>

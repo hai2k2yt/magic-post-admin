@@ -30,9 +30,9 @@ const ConfirmGatheringOrderArrival = () => {
     const id = localStorage.getItem('pointId')
     const navigate = useNavigate()
     const [orders, setOrders] = useState([])
-    const handleViewDetail = (orderId) => {
-        navigate(`/order-detail/${orderId}`);
-    };
+    // const handleViewDetail = (orderId) => {
+    //     navigate(`/order-detail/${orderId}`);
+    // };
 
     const columns = [
         { field: 'id', headerName: 'ID', flex: 1, sortable: false },
@@ -48,11 +48,12 @@ const ConfirmGatheringOrderArrival = () => {
             sortable: false,
             renderCell: (params) => (
                 <>
-                    <IconButton onClick={() => handleViewDetail(params.row.OrderID)}>
+                    {/* <IconButton onClick={() => handleViewDetail(params.row.OrderID)}>
                         <VisibilityIcon />
-                    </IconButton>
+                    </IconButton> */}
                     <IconButton onClick={async () => {
                         await confirmP2PGatheringArrival(id, params.row.id)
+                        setOrders(orders.filter(order => order.id !== params.row.id))
                     }}>
                         <CheckIcon />
                     </IconButton>
@@ -74,7 +75,34 @@ const ConfirmGatheringOrderArrival = () => {
                         sendTo: item.to.name,
                         departureTime: item.departureTime,
                         arrivalTime: item.arrivalTime,
-                        status: item.status
+                        status: (() => {
+                            switch (item?.status) {
+                                case 'POSTED':
+                                    return 'Điểm giao dịch đã nhận hàng';
+                                case 'TRANSPORTING_FROM_SRC_TRANSACTION':
+                                    return 'Trung chuyển đến điểm tập kết';
+                                case 'TRANSPORTED_TO_SRC_GATHERING':
+                                    return 'Đến điểm tập kết';
+                                case ' TRANSPORTING_FROM_SRC_GATHERING':
+                                    return 'Trung chuyển đến điểm tập kết';
+                                case 'TRANSPORTED_TO_DES_GATHERING':
+                                    return 'Đến điểm tập kết đích';
+                                case 'TRANSPORTING_FROM_DES_GATHERING':
+                                    return 'Trung chuyển đến giao dịch đích';
+                                case 'TRANSPORTED_TO_DES_TRANSACTION':
+                                    return 'Đến điểm giao dịch đích';
+                                case 'SHIPPING':
+                                    return 'Đang giao hàng'
+                                case 'DELIVERED':
+                                    return 'Giao hàng thành công'
+                                case 'CANCELING':
+                                    return 'Người nhận không nhận hàng'
+                                case 'CANCELED':
+                                    return 'Đơn hàng đã hủy'
+                                default:
+                                    return 'Không xác định';
+                            }
+                        })()
                     }
                 ))
                 setOrders(data);

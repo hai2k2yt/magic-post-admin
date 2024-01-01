@@ -4,12 +4,11 @@ export const confirmP2PTransactionArrival = (transactionPointId, p2pTransportOrd
 
 export const confirmMultiP2PTransactionArrival = (transactionPointId, body) => put(`/transaction-points/${transactionPointId}/p2p-transport-orders/confirm-arrival`, body)
 
-
 export const confirmP2CTransactionDelivery = (transactionPointId, p2cTransportOrderId, expressOrderId, body) => put(`/transaction-points/${transactionPointId}/p2c-transport-orders/${p2cTransportOrderId}/express-orders/${expressOrderId}/confirm-delivery`, body)
 
 export const cancelP2CTransaction = (transactionPointId, p2cTransportOrderId, expressOrderId, body) => put(`/transaction-points/${transactionPointId}/p2c-transport-orders/${p2cTransportOrderId}/express-orders/${expressOrderId}/cancel`, body)
 
-export const confirmP2PGatheringArrival = (gatheringPointId, p2pTransportOrderId, body) => put(`/gathering-points/${gatheringPointId}/p2p-transport-orders/${p2pTransportOrderId}/confirm-arrival`, body)
+export const confirmP2PGatheringArrival = (gatheringPointId, p2pTransportOrderId) => put(`/gathering-points/${gatheringPointId}/p2p-transport-orders/${p2pTransportOrderId}/confirm-arrival`)
 
 export const listP2PTransactionOrders = (transactionPointId) => get(`/transaction-points/${transactionPointId}/p2p-transport-orders`)
 
